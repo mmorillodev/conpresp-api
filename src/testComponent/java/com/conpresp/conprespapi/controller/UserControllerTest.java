@@ -37,8 +37,6 @@ public class UserControllerTest {
     @Test
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
         var request = new UserRequest("name", "email@mail.com", "password");
-        var user = new User();
-        user.setId("ID");
 
         makeRequest(request)
                 .andExpect(status().isCreated())
