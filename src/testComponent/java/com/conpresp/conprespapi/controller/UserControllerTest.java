@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class UserControllerTest {
 
     @Autowired
@@ -32,20 +34,15 @@ public class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
-    private UserRepository userRepository;
-
     @Test
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
         var request = new UserRequest("name", "email@mail.com", "password");
         var user = new User();
         user.setId("ID");
 
-        when(userRepository.save(any())).thenReturn(user);
-
         makeRequest(request)
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "http://locahost:8080/users/ID"));
+                .andExpect(header().string("location", "http://localhost/users/1"));
     }
 
     private ResultActions makeRequest(Object payload) throws Exception {

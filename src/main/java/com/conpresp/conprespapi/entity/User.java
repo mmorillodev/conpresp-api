@@ -1,7 +1,10 @@
 package com.conpresp.conprespapi.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +14,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Getter @Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class User implements UserDetails {
 
@@ -19,10 +24,13 @@ public class User implements UserDetails {
 
     private Profile profile;
 
+    @NonNull
     private String name;
 
+    @NonNull
     private String email;
 
+    @NonNull
     private String password;
 
     @Enumerated(EnumType.STRING)

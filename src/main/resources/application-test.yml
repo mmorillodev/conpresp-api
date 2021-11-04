@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    password: ''
+    username: sa
+    url: jdbc:h2:mem:alura-forum
+  h2:
+    console:
+      path: /admin
+      enabled: 'true'
+  jpa:
+    defer-datasource-initialization: 'true'
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: 'true '
+        show_sql: 'true'
