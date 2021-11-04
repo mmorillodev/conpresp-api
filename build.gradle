@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'idea'
 }
 
 group = 'com.conpresp'
@@ -22,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.h2database:h2'
 
 	compileOnly 'org.projectlombok:lombok'
 
@@ -33,4 +35,40 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+sourceSets {
+	component {
+		java {
+			srcDir "$projectDir/src/testComponent/java"
+			compileClasspath += main.output + test.output
+			runtimeClasspath += main.output + test.output
+		}
+
+		resources {
+			srcDir "$projectDir/src/testComponent/resources"
+		}
+	}
+}
+
+idea {
+	module {
+		testSourceDirs += project.sourceSets.component.java.srcDirs
+		testSourceDirs += project.sourceSets.component.resources.srcDirs
+	}
+}
+
+configurations {
+	componentImplementation.extendsFrom testImplementation
+	componentRuntime.extendsFrom testRuntime
+}
+
+task component(type: Test) {
+	testClassesDirs = sourceSets.component.output.classesDirs
+	classpath = sourceSets.component.runtimeClasspath
+	useJUnitPlatform()
+}
+
+task allTests() {
+	dependsOn(component)
 }

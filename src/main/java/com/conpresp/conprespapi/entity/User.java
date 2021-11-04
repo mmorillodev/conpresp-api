@@ -17,7 +17,6 @@ public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @OneToMany
     private Profile profile;
 
     private String name;
@@ -27,12 +26,12 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserStatus status;
+    private UserStatus status = UserStatus.ACTIVE;
 
     private LocalDateTime created_at = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "owner_id")
     private User created_by;
 
     private LocalDateTime updated_at = LocalDateTime.now();
