@@ -1,6 +1,8 @@
 package com.conpresp.conprespapi.controller;
 
+import com.conpresp.conprespapi.dto.UserListResponse;
 import com.conpresp.conprespapi.dto.UserRequest;
+import com.conpresp.conprespapi.dto.UserResponse;
 import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -39,7 +42,21 @@ public class UserController {
     }
 
     @GetMapping
-    public String hello(){
-        return "Hello World";
+    public UserListResponse getAll() {
+        var users = userService.getUsers();
+
+        return new UserListResponse(
+                users.stream().map(
+                        user ->
+                                new UserResponse(
+                                        user.getId(),
+                                        user.getProfile(),
+                                        user.getName(),
+                                        user.getEmail(),
+                                        user.getStatus(),
+                                        user.getCreated_at()
+                                )).collect(Collectors.toList()),
+                users.size()
+        );
     }
 }

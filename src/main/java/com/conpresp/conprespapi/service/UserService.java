@@ -5,7 +5,7 @@ import com.conpresp.conprespapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,5 +17,9 @@ public class UserService {
         var createdUser = userRepository.save(user);
 
         return createdUser.getId();
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }
