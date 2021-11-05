@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles("default")
 public class UserControllerTest {
 
     @Autowired
@@ -34,7 +34,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
-        var request = new UserRequest("name", "email@mail.com", "password");
+        var request = new UserRequest("Nask", "Nask@mail.com", "159");
 
         var response = makeRequest(request)
                 .andExpect(status().isCreated())
