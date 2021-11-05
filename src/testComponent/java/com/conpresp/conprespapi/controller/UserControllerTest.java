@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserControllerTest {
 
     @Autowired
@@ -85,6 +85,30 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.users[0].name").value("Nask"));
     }
 
+    @Test
+    public void shouldReturnUserById() throws Exception {
+        var request = new UserRequest("Matheus", "matheus@mail.com", "123");
+
+        var response = makePostRequest(request)
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("location"))
+                .andReturn();
+
+        var location = response.getResponse().getHeader("location");
+        var uuid = location.substring(location.lastIndexOf("/") + 1);
+
+        makeGetRequestById(uuid)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(uuid))
+                .andExpect(jsonPath("$.name").value("Matheus"));
+    }
+
+    @Test
+    public void shouldReturnNotFoundByInvalidId() throws Exception {
+        makeGetRequestById("abskajs")
+                .andExpect(status().isNotFound());
+    }
+
     private ResultActions makePostRequest(Object payload) throws Exception {
         return mockMvc
                 .perform(
@@ -97,6 +121,13 @@ public class UserControllerTest {
     private ResultActions makeGetRequest() throws Exception {
         return mockMvc
                 .perform(get("/users").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
+    }
+
+    private ResultActions makeGetRequestById(String uuid) throws Exception {
+        return mockMvc
+                .perform(get("/users/" + uuid)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
     }
 
     private ResultActions makeDeleteRequest(String uuid) throws Exception {
