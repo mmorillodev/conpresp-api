@@ -2,11 +2,13 @@ package com.conpresp.conprespapi.repository;
 
 import com.conpresp.conprespapi.DatabaseContainerInitializer;
 import com.conpresp.conprespapi.entity.User;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ContextConfiguration(initializers = {DatabaseContainerInitializer.class})
@@ -24,10 +26,10 @@ public class UserRepositoryTest {
         var savedEntity = userRepository.save(getUserEntity());
         var retrievedEntityOptional = userRepository.findById(savedEntity.getId().toString());
 
-        Assertions.assertTrue(retrievedEntityOptional.isPresent());
-        Assertions.assertEquals(retrievedEntityOptional.get().getName(), "Test name");
-        Assertions.assertEquals(retrievedEntityOptional.get().getEmail(), "testmail@mail.com");
-        Assertions.assertEquals(retrievedEntityOptional.get().getPassword(), "testpassowrd");
+        assertTrue(retrievedEntityOptional.isPresent());
+        assertEquals(retrievedEntityOptional.get().getName(), "Test name");
+        assertEquals(retrievedEntityOptional.get().getEmail(), "testmail@mail.com");
+        assertEquals(retrievedEntityOptional.get().getPassword(), "testpassowrd");
     }
 
     private User getUserEntity() {
