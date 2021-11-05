@@ -58,23 +58,13 @@ sourceSets {
 			compileClasspath += main.output + test.output
 			runtimeClasspath += main.output + test.output
 		}
-
-		resources {
-			srcDir "$projectDir/src/testIntegration/resources"
-		}
 	}
-}
 
-sourceSets {
 	integration {
 		java {
 			srcDir "$projectDir/src/testIntegration/java"
 			compileClasspath += main.output + test.output
 			runtimeClasspath += main.output + test.output
-		}
-
-		resources {
-			srcDir "$projectDir/src/testIntegration/resources"
 		}
 	}
 }
@@ -83,11 +73,7 @@ idea {
 	module {
 		testSourceDirs += project.sourceSets.component.java.srcDirs
 		testSourceDirs += project.sourceSets.component.resources.srcDirs
-	}
-}
 
-idea {
-	module {
 		testSourceDirs += project.sourceSets.integration.java.srcDirs
 		testSourceDirs += project.sourceSets.integration.resources.srcDirs
 	}
@@ -106,9 +92,9 @@ task integration(type: Test) {
 }
 
 task allTests() {
-	dependsOn(test)
-	dependsOn(component)
-	dependsOn(integration)
+	dependsOn test
+	dependsOn component
+	dependsOn integration
 
 	finalizedBy(jacocoTestReport)
 }

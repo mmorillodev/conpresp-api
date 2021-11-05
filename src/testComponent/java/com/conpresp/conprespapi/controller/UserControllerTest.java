@@ -2,7 +2,6 @@ package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,7 +44,7 @@ public class UserControllerTest {
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        Assertions.assertDoesNotThrow(() -> UUID.fromString(uuid));
+        assertDoesNotThrow(() -> UUID.fromString(uuid));
     }
 
     private ResultActions makeRequest(Object payload) throws Exception {
