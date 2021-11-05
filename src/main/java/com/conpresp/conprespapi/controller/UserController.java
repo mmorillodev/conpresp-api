@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -56,7 +55,8 @@ public class UserController {
                                         user.getEmail(),
                                         user.getStatus(),
                                         user.getCreated_at()
-                                )).collect(Collectors.toList()),
+                                )
+                ).collect(Collectors.toList()),
                 users.size()
         );
     }
@@ -64,8 +64,8 @@ public class UserController {
     @DeleteMapping("/{uuid}")
     public ResponseEntity<?> deleteUser(@PathVariable String uuid) {
         return userService.getUserById(uuid).map(record -> {
-           userService.deleteById(uuid);
-           return ResponseEntity.noContent().build();
+            userService.deleteById(uuid);
+            return ResponseEntity.noContent().build();
         }).orElse(ResponseEntity.notFound().build());
     }
 }
