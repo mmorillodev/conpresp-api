@@ -45,9 +45,12 @@ sourceSets {
 			compileClasspath += main.output + test.output
 			runtimeClasspath += main.output + test.output
 		}
-
-		resources {
-			srcDir "$projectDir/src/testComponent/resources"
+	}
+	integration {
+		java {
+			srcDir "$projectDir/src/testIntegration/java"
+			compileClasspath += main.output + test.output
+			runtimeClasspath += main.output + test.output
 		}
 	}
 }
@@ -56,6 +59,9 @@ idea {
 	module {
 		testSourceDirs += project.sourceSets.component.java.srcDirs
 		testSourceDirs += project.sourceSets.component.resources.srcDirs
+
+		testSourceDirs += project.sourceSets.integration.java.srcDirs
+		testSourceDirs += project.sourceSets.integration.resources.srcDirs
 	}
 }
 
@@ -67,6 +73,12 @@ configurations {
 task component(type: Test) {
 	testClassesDirs = sourceSets.component.output.classesDirs
 	classpath = sourceSets.component.runtimeClasspath
+	useJUnitPlatform()
+}
+
+task integration(type: Test) {
+	testClassesDirs = sourceSets.integration.output.classesDirs
+	classpath = sourceSets.integration.runtimeClasspath
 	useJUnitPlatform()
 }
 
