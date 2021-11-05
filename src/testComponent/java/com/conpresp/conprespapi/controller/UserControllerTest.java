@@ -1,23 +1,21 @@
 package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.dto.UserRequest;
-import com.conpresp.conprespapi.entity.User;
-import com.conpresp.conprespapi.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import java.util.UUID;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,9 +36,15 @@ public class UserControllerTest {
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
         var request = new UserRequest("name", "email@mail.com", "password");
 
-        makeRequest(request)
+        var response = makeRequest(request)
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "http://localhost/users/1"));
+                .andExpect(header().exists("location"))
+                .andReturn();
+
+        var location = response.getResponse().getHeader("location");
+        var uuid = location.substring(location.lastIndexOf("/") + 1);
+
+        Assertions.assertDoesNotThrow(() -> UUID.fromString(uuid));
     }
 
     private ResultActions makeRequest(Object payload) throws Exception {

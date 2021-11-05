@@ -8,7 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -28,12 +30,12 @@ class UserServiceTest {
 
         var actualID = userService.createUser(user);
 
-        assertEquals("ID", actualID);
+        assertDoesNotThrow(() -> UUID.fromString(actualID));
     }
 
     private User getMockedUser() {
         var user = new User();
-        user.setId("ID");
+        user.setId(UUID.randomUUID().toString());
 
         return user;
     }

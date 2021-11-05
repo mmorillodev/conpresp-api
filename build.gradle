@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.5.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'jacoco'
 	id 'java'
 	id 'idea'
 }
@@ -13,6 +14,12 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+
+	componentImplementation.extendsFrom testImplementation
+	componentRuntime.extendsFrom testRuntime
+
+	integrationImplementation.extendsFrom testImplementation
+	integrationRuntime.extendsFrom testRuntime
 }
 
 repositories {
@@ -25,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.h2database:h2'
+	implementation 'mysql:mysql-connector-java'
 
 	compileOnly 'org.projectlombok:lombok'
 
@@ -32,6 +40,11 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	integrationImplementation 'org.springframework.boot:spring-boot-starter-test'
+	integrationImplementation 'org.testcontainers:mysql:1.16.2'
+	integrationImplementation 'org.testcontainers:testcontainers:1.16.2'
+	integrationImplementation 'org.testcontainers:junit-jupiter:1.16.0'
 }
 
 test {
@@ -45,12 +58,23 @@ sourceSets {
 			compileClasspath += main.output + test.output
 			runtimeClasspath += main.output + test.output
 		}
+
+		resources {
+			srcDir "$projectDir/src/testIntegration/resources"
+		}
 	}
+}
+
+sourceSets {
 	integration {
 		java {
 			srcDir "$projectDir/src/testIntegration/java"
 			compileClasspath += main.output + test.output
 			runtimeClasspath += main.output + test.output
+		}
+
+		resources {
+			srcDir "$projectDir/src/testIntegration/resources"
 		}
 	}
 }
@@ -59,15 +83,14 @@ idea {
 	module {
 		testSourceDirs += project.sourceSets.component.java.srcDirs
 		testSourceDirs += project.sourceSets.component.resources.srcDirs
-
-		testSourceDirs += project.sourceSets.integration.java.srcDirs
-		testSourceDirs += project.sourceSets.integration.resources.srcDirs
 	}
 }
 
-configurations {
-	componentImplementation.extendsFrom testImplementation
-	componentRuntime.extendsFrom testRuntime
+idea {
+	module {
+		testSourceDirs += project.sourceSets.integration.java.srcDirs
+		testSourceDirs += project.sourceSets.integration.resources.srcDirs
+	}
 }
 
 task component(type: Test) {
@@ -83,5 +106,9 @@ task integration(type: Test) {
 }
 
 task allTests() {
+	dependsOn(test)
 	dependsOn(component)
+	dependsOn(integration)
+
+	finalizedBy(jacocoTestReport)
 }
