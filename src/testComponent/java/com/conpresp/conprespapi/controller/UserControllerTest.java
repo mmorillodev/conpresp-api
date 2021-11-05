@@ -17,8 +17,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -64,6 +63,28 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.users[1].name").value("Matheus"));
     }
 
+    @Test
+    public void shouldDeleteUser() throws Exception {
+        var request1 = new UserRequest("Nask", "Nask@mail.com", "159");
+        var request2 = new UserRequest("Matheus", "matheus@mail.com", "123");
+
+        makePostRequest(request1);
+
+        var response = makePostRequest(request2)
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("location"))
+                .andReturn();
+
+        var location = response.getResponse().getHeader("location");
+        var uuid = location.substring(location.lastIndexOf("/") + 1);
+
+        makeDeleteRequest(uuid);
+        makeGetRequest()
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total").value(1))
+                .andExpect(jsonPath("$.users[0].name").value("Nask"));
+    }
+
     private ResultActions makePostRequest(Object payload) throws Exception {
         return mockMvc
                 .perform(
@@ -76,5 +97,12 @@ public class UserControllerTest {
     private ResultActions makeGetRequest() throws Exception {
         return mockMvc
                 .perform(get("/users").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
+    }
+
+    private ResultActions makeDeleteRequest(String uuid) throws Exception {
+        return mockMvc
+                .perform(delete("/users/" + uuid)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -58,5 +59,13 @@ public class UserController {
                                 )).collect(Collectors.toList()),
                 users.size()
         );
+    }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<?> deleteUser(@PathVariable String uuid) {
+        return userService.getUserById(uuid).map(record -> {
+           userService.deleteById(uuid);
+           return ResponseEntity.noContent().build();
+        }).orElse(ResponseEntity.notFound().build());
     }
 }
