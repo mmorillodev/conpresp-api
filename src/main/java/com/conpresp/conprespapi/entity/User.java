@@ -1,11 +1,6 @@
 package com.conpresp.conprespapi.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.NonNull;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,7 +10,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity

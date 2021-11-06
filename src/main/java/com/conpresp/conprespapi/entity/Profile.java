@@ -8,7 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 public class Profile implements GrantedAuthority {
 

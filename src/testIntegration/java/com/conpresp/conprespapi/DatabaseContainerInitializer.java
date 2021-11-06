@@ -16,9 +16,9 @@ public class DatabaseContainerInitializer implements ApplicationContextInitializ
         mysqlServerContainer.start();
 
         TestPropertyValues.of(
-            "spring.datasource.url=" + mysqlServerContainer.getJdbcUrl(),
-            "spring.datasource.username=" + mysqlServerContainer.getUsername(),
-            "spring.datasource.password=" + mysqlServerContainer.getPassword()
+                "spring.datasource.url=" + mysqlServerContainer.getJdbcUrl(),
+                "spring.datasource.username=" + mysqlServerContainer.getUsername(),
+                "spring.datasource.password=" + mysqlServerContainer.getPassword()
         ).applyTo(applicationContext.getEnvironment());
     }
 }
