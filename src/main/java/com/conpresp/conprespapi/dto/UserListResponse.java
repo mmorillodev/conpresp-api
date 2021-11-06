@@ -7,7 +7,8 @@ import lombok.Setter;
 import java.util.List;
 
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class UserListResponse {
     private List<UserResponse> users;
     private int total;

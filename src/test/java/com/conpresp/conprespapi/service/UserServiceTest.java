@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void shouldReturnTheInsertedUserID() {
+    void shouldReturnTheInsertedUserID() {
         var user = getMockedUser();
         when(userRepository.save(any())).thenReturn(user);
 

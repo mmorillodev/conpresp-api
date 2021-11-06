@@ -71,7 +71,7 @@ public class UserController {
                     user.getEmail(),
                     user.getStatus(),
                     user.getCreated_at());
-         return ResponseEntity.ok().body(user2);
+            return ResponseEntity.ok().body(user2);
         }).orElse(ResponseEntity.notFound().build());
     }
 
