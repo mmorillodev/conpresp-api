@@ -1,2 +1,4 @@
-package com.conpresp.conprespapi.dto;public class LoginRequest {
+package com.conpresp.conprespapi.dto;
+
+public class AuthRequest {
 }
