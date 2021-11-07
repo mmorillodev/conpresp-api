@@ -77,7 +77,7 @@ public class UserController {
 
     @DeleteMapping("/{uuid}")
     public ResponseEntity<?> deleteUser(@PathVariable String uuid) {
-        return userService.getUserById(uuid).map(record -> {
+        return userService.getUserById(uuid).map(user -> {
             userService.deleteById(uuid);
             return ResponseEntity.noContent().build();
         }).orElse(ResponseEntity.notFound().build());
