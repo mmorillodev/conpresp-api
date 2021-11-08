@@ -64,14 +64,14 @@ public class UserController {
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getUserByUuid(@PathVariable String uuid) {
         return userService.getUserById(uuid).map(user -> {
-            var user2 = new UserResponse(
+            var returnedUser = new UserResponse(
                     user.getId(),
                     user.getProfile(),
                     user.getName(),
                     user.getEmail(),
                     user.getStatus(),
                     user.getCreated_at());
-         return ResponseEntity.ok().body(user2);
+         return ResponseEntity.ok().body(returnedUser);
         }).orElse(ResponseEntity.notFound().build());
     }
 
