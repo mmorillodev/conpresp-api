@@ -30,7 +30,7 @@ public class AuthenticationController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest authRequest) {
+    public ResponseEntity<?> authenticate(@Valid @RequestBody AuthRequest authRequest) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword());
         try {
             Authentication auth = authenticationManager.authenticate(token);
@@ -38,7 +38,7 @@ public class AuthenticationController {
 
             return ResponseEntity.ok(new AuthResponse(jwt, "Bearer"));
         } catch (AuthenticationException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }
