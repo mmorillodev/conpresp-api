@@ -1,6 +1,8 @@
 package com.conpresp.conprespapi.config.security;
 
+import com.conpresp.conprespapi.repository.UserRepository;
 import com.conpresp.conprespapi.service.AuthenticationService;
+import com.conpresp.conprespapi.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +14,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
+    private final AuthenticationService authenticationService;
+    private final TokenService tokenService;
+    private final UserRepository userRepository;
+
     @Autowired
-    private AuthenticationService authenticationService;
+    public SecurityConfigurations(AuthenticationService authenticationService,TokenService tokenService, UserRepository userRepository) {
+        this.authenticationService = authenticationService;
+        this.tokenService = tokenService;
+        this.userRepository = userRepository;
+    }
 
     @Bean
     @Override
@@ -45,5 +56,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(new TokenFilterAuthentication(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 }
