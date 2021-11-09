@@ -52,6 +52,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/users").permitAll()
+                .antMatchers("/auth").permitAll()
                 .anyRequest().authenticated();
 
         http.httpBasic().disable();
