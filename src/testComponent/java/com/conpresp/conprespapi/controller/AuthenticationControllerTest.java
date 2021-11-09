@@ -44,6 +44,16 @@ class AuthenticationControllerTest {
                 .andExpect(jsonPath("$.token").exists());
     }
 
+    @Test
+    void shouldReturnUnauthorizedWhenBadCredentials() throws Exception {
+        AuthRequest request = new AuthRequest("mail@mail.com", "122345634");
+
+        makePostRequest(request, "/auth")
+                .andDo(print())
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.cause").value("Bad credentials"));
+    }
+
     private void insertAUser() throws Exception {
         var request = new UserRequest("Nask", "mail@mail.com", "122345634");
 

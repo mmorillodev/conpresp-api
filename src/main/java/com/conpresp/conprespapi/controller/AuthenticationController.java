@@ -32,14 +32,9 @@ public class AuthenticationController {
     @PostMapping
     public ResponseEntity<?> authenticate(@Valid @RequestBody AuthRequest authRequest) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword());
-        try {
-            Authentication auth = authenticationManager.authenticate(token);
-            String jwt = tokenService.generateToken(auth);
+        Authentication auth = authenticationManager.authenticate(token);
+        String jwt = tokenService.generateToken(auth);
 
-            return ResponseEntity.ok(new AuthResponse(jwt, "Bearer"));
-        } catch (AuthenticationException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
+        return ResponseEntity.ok(new AuthResponse(jwt, "Bearer"));
     }
 }
