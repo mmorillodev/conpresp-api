@@ -7,6 +7,7 @@ import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder  = passwordEncoder;
     }
 
     @PostMapping
@@ -33,7 +36,7 @@ public class UserController {
                 new User(
                         userRequest.getName(),
                         userRequest.getEmail(),
-                        userRequest.getPassword()
+                        passwordEncoder.encode(userRequest.getPassword())
                 )
         );
 
