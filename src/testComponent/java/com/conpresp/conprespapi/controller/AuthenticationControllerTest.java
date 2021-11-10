@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ComponentTest
-@WithMockUser(roles = {"ADMINISTRATOR"})
+@WithMockUser(authorities = {"ADMINISTRATOR"})
 class AuthenticationControllerTest {
 
     @Autowired
