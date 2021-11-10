@@ -27,12 +27,13 @@ public class UserRepositoryTest {
         var retrievedEntityOptional = userRepository.findById(savedEntity.getId().toString());
 
         assertTrue(retrievedEntityOptional.isPresent());
-        assertEquals(retrievedEntityOptional.get().getName(), "Test name");
+        assertEquals(retrievedEntityOptional.get().getFirstName(), "Test");
+        assertEquals(retrievedEntityOptional.get().getLastName(), "name");
         assertEquals(retrievedEntityOptional.get().getEmail(), "testmail@mail.com");
         assertEquals(retrievedEntityOptional.get().getPassword(), "testpassowrd");
     }
 
     private User getUserEntity() {
-        return new User("Test name", "testmail@mail.com", "testpassowrd");
+        return new User("Test", "name", "testmail@mail.com", "testpassowrd");
     }
 }

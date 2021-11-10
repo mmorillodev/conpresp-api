@@ -35,7 +35,7 @@ class AuthenticationControllerTest {
     void shouldReturnABearerTokenWhenValidAuthEntries() throws Exception {
         insertAUser();
 
-        AuthRequest request = new AuthRequest("mail@mail.com", "122345634");
+        AuthRequest request = new AuthRequest("Nask@mail.com", "123456789");
 
         makePostRequest(request, "/auth")
                 .andDo(print())
@@ -55,7 +55,7 @@ class AuthenticationControllerTest {
     }
 
     private void insertAUser() throws Exception {
-        var request = new UserRequest("Nask", "mail@mail.com", "122345634");
+        var  request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789");
 
         makePostRequest(request, "/users");
     }
