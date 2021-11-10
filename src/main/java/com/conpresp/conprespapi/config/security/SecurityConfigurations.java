@@ -52,6 +52,8 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/users").hasRole("MODERATOR")
+                .antMatchers(HttpMethod.POST, "/users").hasRole("ADMINISTRATOR")
                 .antMatchers("/auth").permitAll()
                 .anyRequest().authenticated();
 

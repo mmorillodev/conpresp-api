@@ -20,6 +20,7 @@ public class User implements UserDetails {
     private String id = UUID.randomUUID().toString();
 
     @NonNull
+    @ManyToOne
     private Profile profile;
 
     @NonNull
@@ -51,7 +52,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new Profile());
+        return Collections.singletonList(profile);
     }
 
     @Override
