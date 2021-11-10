@@ -27,7 +27,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
-        var request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789");
+        var request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR");
 
         var response = makePostRequest(request)
                 .andExpect(status().isCreated())
@@ -42,8 +42,8 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnTheListOfUsers() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789");
-        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890");
+        var request1 = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR");
+        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
 
         makePostRequest(request1);
         makePostRequest(request2);
@@ -57,8 +57,8 @@ public class UserControllerTest {
 
     @Test
     public void shouldDeleteUser() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789");
-        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890");
+        var request1 = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR");
+        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
 
         makePostRequest(request1);
 
@@ -79,7 +79,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnUserById() throws Exception {
-        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890");
+        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
 
         var response = makePostRequest(request)
                 .andExpect(status().isCreated())
@@ -96,6 +96,16 @@ public class UserControllerTest {
     }
 
     @Test
+    void shouldReturnBadRequestWhenInvalidProfileSent() throws Exception {
+        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID");
+
+        makePostRequest(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("profile")))
+                .andExpect(jsonPath("$..error", Matchers.hasItem("Invalid profile name! Options: MODERATOR, ADMINISTRATOR, COMMON")));
+    }
+
+    @Test
     public void shouldReturnNotFoundByInvalidId() throws Exception {
         makeGetRequestById("invalidId")
                 .andExpect(status().isNotFound());
@@ -107,13 +117,13 @@ public class UserControllerTest {
 
         makePostRequest(userRequest)
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("firstName", "lastName", "email", "password")))
+                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("firstName", "lastName", "email", "password", "profile")))
                 .andExpect(jsonPath("$..error", Matchers.hasItem("must not be blank")));
     }
 
     @Test
     public void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask","Nask@mail.com", "123");
+        var userRequest = new UserRequest("Raphael", "Nask","Nask@mail.com", "123", "MODERATOR");
 
         makePostRequest(userRequest)
                 .andExpect(status().isBadRequest())
@@ -123,7 +133,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnBadRequestAndMessageWhenEmailIsInvalid() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask","invalidemail", "123456789");
+        var userRequest = new UserRequest("Raphael", "Nask","invalidemail", "123456789", "MODERATOR");
 
 
         makePostRequest(userRequest)

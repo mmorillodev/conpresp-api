@@ -19,6 +19,7 @@ public class User implements UserDetails {
     @Id
     private String id = UUID.randomUUID().toString();
 
+    @NonNull
     private Profile profile;
 
     @NonNull

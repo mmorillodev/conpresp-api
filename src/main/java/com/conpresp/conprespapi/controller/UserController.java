@@ -4,6 +4,7 @@ import com.conpresp.conprespapi.dto.UserListResponse;
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.conpresp.conprespapi.dto.UserResponse;
 import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +21,29 @@ public class UserController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileRepository profileRepository;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, ProfileRepository profileRepository) {
         this.userService = userService;
         this.passwordEncoder  = passwordEncoder;
+        this.profileRepository = profileRepository;
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(
+    public ResponseEntity<?> createUser(
             @Valid @RequestBody UserRequest userRequest,
             UriComponentsBuilder uriComponentsBuilder
     ) {
+        var profile = profileRepository.findByName(userRequest.getProfile()).orElse(null);
+
+        if (profile == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         var id = userService.createUser(
                 new User(
+                        profile,
                         userRequest.getFirstName(),
                         userRequest.getLastName(),
                         userRequest.getEmail(),
