@@ -78,6 +78,11 @@ public class UserControllerTest {
     }
 
     @Test
+    public void shouldReturnNotFoundByDeletingInvalidUser() throws Exception {
+        makeDeleteRequest("InvalidUserId").andExpect(status().isNotFound());
+    }
+
+    @Test
     public void shouldReturnUserById() throws Exception {
         var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
 
