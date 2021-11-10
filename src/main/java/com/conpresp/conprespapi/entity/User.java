@@ -10,8 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
@@ -23,7 +22,10 @@ public class User implements UserDetails {
     private Profile profile;
 
     @NonNull
-    private String name;
+    private String firstName;
+
+    @NonNull
+    private String lastName;
 
     @NonNull
     private String email;

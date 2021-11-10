@@ -34,7 +34,8 @@ public class UserController {
     ) {
         var id = userService.createUser(
                 new User(
-                        userRequest.getName(),
+                        userRequest.getFirstName(),
+                        userRequest.getLastName(),
                         userRequest.getEmail(),
                         passwordEncoder.encode(userRequest.getPassword())
                 )
@@ -54,7 +55,8 @@ public class UserController {
                                 new UserResponse(
                                         user.getId(),
                                         user.getProfile(),
-                                        user.getName(),
+                                        user.getFirstName(),
+                                        user.getLastName(),
                                         user.getEmail(),
                                         user.getStatus(),
                                         user.getCreated_at()
@@ -70,7 +72,8 @@ public class UserController {
             var returnedUser = new UserResponse(
                     user.getId(),
                     user.getProfile(),
-                    user.getName(),
+                    user.getFirstName(),
+                    user.getLastName(),
                     user.getEmail(),
                     user.getStatus(),
                     user.getCreated_at());

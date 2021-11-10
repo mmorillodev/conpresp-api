@@ -16,7 +16,9 @@ public class UserResponse {
 
     private Profile profile;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
