@@ -30,6 +30,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @NonNull
+    @Column(unique = true)
     private String email;
 
     @NonNull

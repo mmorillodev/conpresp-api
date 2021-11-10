@@ -29,7 +29,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
-        var request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR");
+        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
 
         var response = makePostRequest(request)
                 .andExpect(status().isCreated())
@@ -43,8 +43,20 @@ public class UserControllerTest {
     }
 
     @Test
+    public void shouldReturnAnErrorWhenTryingToInsertAUserWithAExistingEmail() throws Exception {
+        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
+        var request2 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
+
+        makePostRequest(request);
+
+        makePostRequest(request2)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.cause").value("Duplicate entry"));
+    }
+
+    @Test
     public void shouldReturnTheListOfUsers() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR");
+        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
         var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
 
         makePostRequest(request1);
@@ -59,7 +71,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldDeleteUser() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR");
+        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
         var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
 
         makePostRequest(request1);
@@ -130,7 +142,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask","Nask@mail.com", "123", "MODERATOR");
+        var userRequest = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR");
 
         makePostRequest(userRequest)
                 .andExpect(status().isBadRequest())
@@ -140,7 +152,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnBadRequestAndMessageWhenEmailIsInvalid() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask","invalidemail", "123456789", "MODERATOR");
+        var userRequest = new UserRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR");
 
 
         makePostRequest(userRequest)

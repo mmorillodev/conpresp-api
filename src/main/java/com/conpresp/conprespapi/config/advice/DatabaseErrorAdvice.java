@@ -1,18 +1,18 @@
 package com.conpresp.conprespapi.config.advice;
 
 import com.conpresp.conprespapi.dto.ErrorResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class AuthenticationErrorAdvice {
+public class DatabaseErrorAdvice {
 
-    @ExceptionHandler(BadCredentialsException.class)
-    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-    public ErrorResponse handle(BadCredentialsException e) {
-        return new ErrorResponse(e.getMessage());
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorResponse handle(DataIntegrityViolationException e) {
+        return new ErrorResponse("Duplicate entry");
     }
 }
