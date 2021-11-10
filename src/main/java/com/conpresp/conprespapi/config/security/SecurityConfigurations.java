@@ -25,6 +25,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     private final TokenService tokenService;
     private final UserRepository userRepository;
 
+    private static final String ROLE_MODERATOR = "MODERATOR";
+    private static final String ROLE_ADMINISTRATOR = "ADMINISTRATOR";
+
     @Autowired
     public SecurityConfigurations(AuthenticationService authenticationService,TokenService tokenService, UserRepository userRepository) {
         this.authenticationService = authenticationService;
@@ -51,9 +54,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/users").hasAnyRole("MODERATOR", "ADMINISTRATOR")
-                .antMatchers(HttpMethod.POST, "/users").hasRole("ADMINISTRATOR")
-                .antMatchers(HttpMethod.DELETE, "/users").hasRole("ADMINISTRATOR")
+                .antMatchers(HttpMethod.GET, "/users").hasAnyRole(ROLE_MODERATOR, ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.POST, "/users").hasRole(ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.DELETE, "/users").hasRole(ROLE_ADMINISTRATOR)
                 .antMatchers("/auth").permitAll()
                 .anyRequest().authenticated();
 
