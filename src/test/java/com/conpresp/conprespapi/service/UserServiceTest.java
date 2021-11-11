@@ -1,5 +1,6 @@
 package com.conpresp.conprespapi.service;
 
+import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -8,10 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.crossstore.ChangeSetPersister;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -32,6 +35,19 @@ class UserServiceTest {
         var actualID = userService.createUser(user);
 
         assertDoesNotThrow(() -> UUID.fromString(actualID));
+    }
+
+    @Test
+    void shouldReturnUpdatedUser() throws ChangeSetPersister.NotFoundException {
+        var user = getMockedUser();
+        var updateRequest = new UserUpdateRequest("Matheus", "Morillo", "nask@gmeil.com");
+
+        when(userRepository.save(any())).thenReturn(user);
+
+        var actualID = userService.createUser(user);
+        var updatedUser = userService.updateUser(actualID, updateRequest);
+
+        assertEquals("Matheus", updatedUser.getFirstName());
     }
 
     private User getMockedUser() {

@@ -3,10 +3,12 @@ package com.conpresp.conprespapi.controller;
 import com.conpresp.conprespapi.dto.UserListResponse;
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.conpresp.conprespapi.dto.UserResponse;
+import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -90,6 +92,26 @@ public class UserController {
          return ResponseEntity.ok().body(returnedUser);
         }).orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{uuid}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable String uuid,
+                           @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+        try {
+            var updatedUser = userService.updateUser(uuid, userUpdateRequest);
+            return ResponseEntity.ok(new UserResponse(
+                    uuid,
+                    updatedUser.getProfile(),
+                    updatedUser.getFirstName(),
+                    updatedUser.getLastName(),
+                    updatedUser.getEmail(),
+                    updatedUser.getStatus(),
+                    updatedUser.getCreated_at()
+            ));
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @DeleteMapping("/{uuid}")
     public ResponseEntity<?> deleteUser(@PathVariable String uuid) {

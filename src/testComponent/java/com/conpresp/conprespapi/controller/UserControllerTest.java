@@ -2,6 +2,7 @@ package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.dto.UserRequest;
+import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -161,6 +162,33 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].error").value("must be a well-formed email address"));
     }
 
+    @Test
+    public void shoudUpdateAUser() throws Exception {
+        var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR");
+
+        var response = makePostRequest(userRequest).andReturn();
+
+        var location = response.getResponse().getHeader("location");
+        var uuid = location.substring(location.lastIndexOf("/") + 1);
+
+        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
+
+        makePutRequest(uuid, userUpdateRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName").value("Rodrigo"))
+                .andExpect(jsonPath("$.lastName").value("Nascimento"))
+                .andExpect(jsonPath("$.email").value("Nask@Hotmail.com"));
+
+    }
+
+    @Test
+    public void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
+        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
+
+        makePutRequest("InvalidId", userUpdateRequest)
+                .andExpect(status().isNotFound());
+    }
+
     private ResultActions makePostRequest(Object payload) throws Exception {
         return mockMvc
                 .perform(
@@ -187,5 +215,13 @@ public class UserControllerTest {
                 .perform(delete("/users/" + uuid)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
+    }
+
+    private ResultActions makePutRequest(String uuid, Object payload) throws Exception {
+        return mockMvc
+                .perform(put("/users/" + uuid)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(payload)));
     }
 }
