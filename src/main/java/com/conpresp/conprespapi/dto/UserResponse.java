@@ -27,6 +27,8 @@ public class UserResponse {
 
     private LocalDateTime created_at;
 
+    private LocalDateTime updated_at;
+
     public static UserResponse fromUser(User u) {
         return new UserResponse(
                 u.getId(),
@@ -35,7 +37,8 @@ public class UserResponse {
                 u.getLastName(),
                 u.getEmail(),
                 u.getStatus(),
-                u.getCreated_at()
+                u.getCreated_at(),
+                u.getUpdated_at()
         );
     }
 }

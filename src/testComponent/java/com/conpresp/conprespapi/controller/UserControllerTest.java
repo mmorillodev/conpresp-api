@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ComponentTest
@@ -163,7 +164,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shoudUpdateAUser() throws Exception {
+    public void shouldUpdateAUser() throws Exception {
         var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR");
 
         var response = makePostRequest(userRequest).andReturn();
@@ -177,7 +178,8 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("Rodrigo"))
                 .andExpect(jsonPath("$.lastName").value("Nascimento"))
-                .andExpect(jsonPath("$.email").value("Nask@Hotmail.com"));
+                .andExpect(jsonPath("$.email").value("Nask@Hotmail.com"))
+                .andExpect(jsonPath("$.updated_at").exists()).andDo(print());
 
     }
 
