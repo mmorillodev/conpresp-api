@@ -43,15 +43,7 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
 
-        var id = userService.createUser(
-                new User(
-                        profile,
-                        userRequest.getFirstName(),
-                        userRequest.getLastName(),
-                        userRequest.getEmail(),
-                        passwordEncoder.encode(userRequest.getPassword())
-                )
-        );
+        var id = userService.createUser(userRequest.toUser(passwordEncoder, profile));
 
         var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
@@ -62,18 +54,7 @@ public class UserController {
         var users = userService.getUsers();
 
         return new UserListResponse(
-                users.stream().map(
-                        user ->
-                                new UserResponse(
-                                        user.getId(),
-                                        user.getProfile(),
-                                        user.getFirstName(),
-                                        user.getLastName(),
-                                        user.getEmail(),
-                                        user.getStatus(),
-                                        user.getCreated_at()
-                                )
-                ).collect(Collectors.toList()),
+                users.stream().map(UserResponse::fromUser).collect(Collectors.toList()),
                 users.size()
         );
     }
@@ -81,15 +62,7 @@ public class UserController {
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getUserByUuid(@PathVariable String uuid) {
         return userService.getUserById(uuid).map(user -> {
-            var returnedUser = new UserResponse(
-                    user.getId(),
-                    user.getProfile(),
-                    user.getFirstName(),
-                    user.getLastName(),
-                    user.getEmail(),
-                    user.getStatus(),
-                    user.getCreated_at());
-         return ResponseEntity.ok().body(returnedUser);
+         return ResponseEntity.ok().body(UserResponse.fromUser(user));
         }).orElse(ResponseEntity.notFound().build());
     }
 
@@ -98,15 +71,7 @@ public class UserController {
                            @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
         try {
             var updatedUser = userService.updateUser(uuid, userUpdateRequest);
-            return ResponseEntity.ok(new UserResponse(
-                    uuid,
-                    updatedUser.getProfile(),
-                    updatedUser.getFirstName(),
-                    updatedUser.getLastName(),
-                    updatedUser.getEmail(),
-                    updatedUser.getStatus(),
-                    updatedUser.getCreated_at()
-            ));
+            return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.notFound().build();
         }

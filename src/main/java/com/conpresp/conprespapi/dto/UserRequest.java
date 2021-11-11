@@ -1,9 +1,12 @@
 package com.conpresp.conprespapi.dto;
 
+import com.conpresp.conprespapi.entity.Profile;
+import com.conpresp.conprespapi.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -32,4 +35,14 @@ public class UserRequest {
 
     @NotBlank @Pattern(regexp = "MODERATOR|ADMINISTRATOR|COMMON", message = "Invalid profile name! Options: MODERATOR, ADMINISTRATOR, COMMON")
     private String profile;
+
+    public User toUser(PasswordEncoder passwordEncoder, Profile profile) {
+        return new User(
+                profile,
+                this.getFirstName(),
+                this.getLastName(),
+                this.getEmail(),
+                passwordEncoder.encode(this.getPassword())
+        );
+    }
 }

@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.crossstore.ChangeSetPersister;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -43,6 +44,7 @@ class UserServiceTest {
         var updateRequest = new UserUpdateRequest("Matheus", "Morillo", "nask@gmeil.com");
 
         when(userRepository.save(any())).thenReturn(user);
+        when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
         var actualID = userService.createUser(user);
         var updatedUser = userService.updateUser(actualID, updateRequest);
