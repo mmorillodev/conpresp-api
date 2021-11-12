@@ -24,6 +24,10 @@ public class User implements UserDetails {
     private Profile profile;
 
     @NonNull
+    @ManyToOne
+    private UserGroup userGroup;
+
+    @NonNull
     private String firstName;
 
     @NonNull

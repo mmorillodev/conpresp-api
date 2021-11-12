@@ -1,8 +1,12 @@
 package com.conpresp.conprespapi.service;
 
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
+import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.entity.UserGroup;
+import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +29,9 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private GroupRepository groupRepository;
+
     @InjectMocks
     private UserService userService;
 
@@ -41,15 +48,16 @@ class UserServiceTest {
     @Test
     void shouldReturnUpdatedUser() throws ChangeSetPersister.NotFoundException {
         var user = getMockedUser();
-        var updateRequest = new UserUpdateRequest("Matheus", "Morillo", "nask@gmeil.com");
+        var updateRequest = new UserUpdateRequest("Matheus", "Morillo", "nask@gmeil.com", "DHP");
 
         when(userRepository.save(any())).thenReturn(user);
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
         var actualID = userService.createUser(user);
-        var updatedUser = userService.updateUser(actualID, updateRequest);
+        var updatedUser = userService.updateUser(actualID, new UserGroup("UAM"), updateRequest);
 
         assertEquals("Matheus", updatedUser.getFirstName());
+        assertEquals("UAM", updatedUser.getUserGroup().getName());
     }
 
     private User getMockedUser() {

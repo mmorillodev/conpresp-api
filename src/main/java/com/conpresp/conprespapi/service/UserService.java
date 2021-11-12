@@ -1,6 +1,7 @@
 package com.conpresp.conprespapi.service;
 
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
+import com.conpresp.conprespapi.entity.UserGroup;
 import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,13 @@ public class UserService {
         userRepository.deleteById(uuid);
     }
 
-    public User updateUser(String uuid, UserUpdateRequest userUpdateRequest) throws ChangeSetPersister.NotFoundException {
+    public User updateUser(String uuid, UserGroup userGroup, UserUpdateRequest userUpdateRequest) throws ChangeSetPersister.NotFoundException {
         var user = userRepository.findById(uuid).orElseThrow(ChangeSetPersister.NotFoundException::new);
         user.setFirstName(userUpdateRequest.getFirstName());
         user.setLastName(userUpdateRequest.getLastName());
         user.setEmail(userUpdateRequest.getEmail());
         user.setUpdated_at(LocalDateTime.now());
+        user.setUserGroup(userGroup);
 
         userRepository.save(user);
 

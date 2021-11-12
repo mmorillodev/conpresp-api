@@ -4,7 +4,7 @@ import com.conpresp.conprespapi.dto.UserListResponse;
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.conpresp.conprespapi.dto.UserResponse;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
-import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,14 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final ProfileRepository profileRepository;
+    private final GroupRepository groupRepository;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder, ProfileRepository profileRepository) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, ProfileRepository profileRepository, GroupRepository groupRepository) {
         this.userService = userService;
         this.passwordEncoder  = passwordEncoder;
         this.profileRepository = profileRepository;
+        this.groupRepository = groupRepository;
     }
 
     @PostMapping
@@ -38,12 +40,13 @@ public class UserController {
             UriComponentsBuilder uriComponentsBuilder
     ) {
         var profile = profileRepository.findByName(userRequest.getProfile()).orElse(null);
+        var group = groupRepository.findByName(userRequest.getUserGroup()).orElse(null);
 
         if (profile == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        var id = userService.createUser(userRequest.toUser(passwordEncoder, profile));
+        var id = userService.createUser(userRequest.toUser(passwordEncoder, profile, group));
 
         var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
@@ -69,8 +72,10 @@ public class UserController {
     @PutMapping("/{uuid}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable String uuid,
                            @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+        var group = groupRepository.findByName(userUpdateRequest.getGroup()).orElse(null);
+
         try {
-            var updatedUser = userService.updateUser(uuid, userUpdateRequest);
+            var updatedUser = userService.updateUser(uuid, group, userUpdateRequest);
             return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.notFound().build();

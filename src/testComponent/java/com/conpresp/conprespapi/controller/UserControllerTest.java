@@ -31,7 +31,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
-        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
+        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
         var response = makePostRequest(request)
                 .andExpect(status().isCreated())
@@ -46,8 +46,8 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnAnErrorWhenTryingToInsertAUserWithAExistingEmail() throws Exception {
-        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
-        var request2 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
+        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request2 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
         makePostRequest(request);
 
@@ -58,8 +58,8 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnTheListOfUsers() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
-        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
+        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
         makePostRequest(request1);
         makePostRequest(request2);
@@ -73,8 +73,8 @@ public class UserControllerTest {
 
     @Test
     public void shouldDeleteUser() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR");
-        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
+        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
         makePostRequest(request1);
 
@@ -100,7 +100,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnUserById() throws Exception {
-        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR");
+        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
         var response = makePostRequest(request)
                 .andExpect(status().isCreated())
@@ -113,12 +113,13 @@ public class UserControllerTest {
         makeGetRequestById(uuid)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(uuid))
-                .andExpect(jsonPath("$.firstName").value("Matheus"));
+                .andExpect(jsonPath("$.firstName").value("Matheus"))
+                .andExpect(jsonPath("$.userGroup").value("UAM"));
     }
 
     @Test
     void shouldReturnBadRequestWhenInvalidProfileSent() throws Exception {
-        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID");
+        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID", "UAM");
 
         makePostRequest(request)
                 .andExpect(status().isBadRequest())
@@ -138,13 +139,13 @@ public class UserControllerTest {
 
         makePostRequest(userRequest)
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("firstName", "lastName", "email", "password", "profile")))
+                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("firstName", "lastName", "email", "password", "profile", "userGroup")))
                 .andExpect(jsonPath("$..error", Matchers.hasItem("must not be blank")));
     }
 
     @Test
     public void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR");
+        var userRequest = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR", "UAM");
 
         makePostRequest(userRequest)
                 .andExpect(status().isBadRequest())
@@ -154,7 +155,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnBadRequestAndMessageWhenEmailIsInvalid() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR");
+        var userRequest = new UserRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR", "UAM");
 
 
         makePostRequest(userRequest)
@@ -165,27 +166,28 @@ public class UserControllerTest {
 
     @Test
     public void shouldUpdateAUser() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR");
+        var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR", "UAM");
 
         var response = makePostRequest(userRequest).andReturn();
 
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
+        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com", "DHP");
 
         makePutRequest(uuid, userUpdateRequest)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("Rodrigo"))
                 .andExpect(jsonPath("$.lastName").value("Nascimento"))
                 .andExpect(jsonPath("$.email").value("Nask@Hotmail.com"))
-                .andExpect(jsonPath("$.updated_at").exists()).andDo(print());
+                .andExpect(jsonPath("$.updated_at").exists()).andDo(print())
+                .andExpect(jsonPath("$.userGroup").value("DHP"));
 
     }
 
     @Test
     public void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
-        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
+        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com", "UAM");
 
         makePutRequest("InvalidId", userUpdateRequest)
                 .andExpect(status().isNotFound());

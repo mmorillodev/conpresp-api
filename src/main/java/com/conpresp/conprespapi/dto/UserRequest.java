@@ -1,5 +1,6 @@
 package com.conpresp.conprespapi.dto;
 
+import com.conpresp.conprespapi.entity.UserGroup;
 import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
 import lombok.AllArgsConstructor;
@@ -36,9 +37,13 @@ public class UserRequest {
     @NotBlank @Pattern(regexp = "MODERATOR|ADMINISTRATOR|COMMON", message = "Invalid profile name! Options: MODERATOR, ADMINISTRATOR, COMMON")
     private String profile;
 
-    public User toUser(PasswordEncoder passwordEncoder, Profile profile) {
+    @NotBlank @Pattern(regexp = "UAM|DHP|CONPRESP", message = "Invalid Group name! Options: UAM, DHP, CONPRESP")
+    private String userGroup;
+
+    public User toUser(PasswordEncoder passwordEncoder, Profile profile, UserGroup userGroup) {
         return new User(
                 profile,
+                userGroup,
                 this.getFirstName(),
                 this.getLastName(),
                 this.getEmail(),

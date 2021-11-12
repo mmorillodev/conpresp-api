@@ -3,12 +3,11 @@ package com.conpresp.conprespapi.repository;
 import com.conpresp.conprespapi.DatabaseContainerInitializer;
 import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
-import org.junit.Before;
+import com.conpresp.conprespapi.entity.UserGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,16 +19,19 @@ public class UserRepositoryTest {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final GroupRepository groupRepository;
 
     @Autowired
-    public UserRepositoryTest(UserRepository userRepository, ProfileRepository profileRepository) {
+    public UserRepositoryTest(UserRepository userRepository, ProfileRepository profileRepository, GroupRepository groupRepository) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
+        this.groupRepository = groupRepository;
     }
 
     @BeforeEach
     void setup() {
         profileRepository.save(new Profile("ADMINISTRATOR"));
+        groupRepository.save(new UserGroup("UAM"));
     }
 
     @Test
@@ -47,6 +49,7 @@ public class UserRepositoryTest {
     private User getUserEntity() {
         return new User(
                 profileRepository.findByName("ADMINISTRATOR").get(),
+                groupRepository.findByName("UAM").get(),
                 "Test",
                 "name",
                 "testmail@mail.com",

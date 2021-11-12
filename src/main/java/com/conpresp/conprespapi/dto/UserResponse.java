@@ -2,6 +2,7 @@ package com.conpresp.conprespapi.dto;
 
 import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.entity.UserGroup;
 import com.conpresp.conprespapi.entity.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
 public class UserResponse {
     private String id;
 
-    private Profile profile;
+    private String profile;
+
+    private String userGroup;
 
     private String firstName;
 
@@ -32,7 +35,8 @@ public class UserResponse {
     public static UserResponse fromUser(User u) {
         return new UserResponse(
                 u.getId(),
-                u.getProfile(),
+                u.getProfile().getName(),
+                u.getUserGroup().getName(),
                 u.getFirstName(),
                 u.getLastName(),
                 u.getEmail(),

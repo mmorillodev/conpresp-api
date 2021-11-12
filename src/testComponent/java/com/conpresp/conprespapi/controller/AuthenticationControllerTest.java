@@ -54,7 +54,7 @@ class AuthenticationControllerTest {
     }
 
     private void insertAUser() throws Exception {
-        var  request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR");
+        var  request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
         makePostRequest(request, "/users");
     }
