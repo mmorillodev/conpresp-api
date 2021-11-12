@@ -173,21 +173,20 @@ public class UserControllerTest {
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com", "DHP");
+        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
 
         makePutRequest(uuid, userUpdateRequest)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("Rodrigo"))
                 .andExpect(jsonPath("$.lastName").value("Nascimento"))
                 .andExpect(jsonPath("$.email").value("Nask@Hotmail.com"))
-                .andExpect(jsonPath("$.updated_at").exists()).andDo(print())
-                .andExpect(jsonPath("$.userGroup").value("DHP"));
+                .andExpect(jsonPath("$.updated_at").exists()).andDo(print());
 
     }
 
     @Test
     public void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
-        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com", "UAM");
+        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
 
         makePutRequest("InvalidId", userUpdateRequest)
                 .andExpect(status().isNotFound());

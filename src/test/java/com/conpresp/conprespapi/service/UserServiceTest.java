@@ -48,16 +48,15 @@ class UserServiceTest {
     @Test
     void shouldReturnUpdatedUser() throws ChangeSetPersister.NotFoundException {
         var user = getMockedUser();
-        var updateRequest = new UserUpdateRequest("Matheus", "Morillo", "nask@gmeil.com", "DHP");
+        var updateRequest = new UserUpdateRequest("Matheus", "Morillo", "nask@gmeil.com");
 
         when(userRepository.save(any())).thenReturn(user);
         when(userRepository.findById(any())).thenReturn(Optional.of(user));
 
         var actualID = userService.createUser(user);
-        var updatedUser = userService.updateUser(actualID, new UserGroup("UAM"), updateRequest);
+        var updatedUser = userService.updateUser(actualID, updateRequest);
 
         assertEquals("Matheus", updatedUser.getFirstName());
-        assertEquals("UAM", updatedUser.getUserGroup().getName());
     }
 
     private User getMockedUser() {

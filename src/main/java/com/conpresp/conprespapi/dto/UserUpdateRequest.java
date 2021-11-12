@@ -24,7 +24,4 @@ public class UserUpdateRequest {
     @Email
     private String email;
 
-    @NotBlank @Pattern(regexp = "UAM|DHP|CONPRESP", message = "Invalid Group name! Options: UAM, DHP, CONPRESP")
-    private String group;
-
 }

@@ -72,10 +72,9 @@ public class UserController {
     @PutMapping("/{uuid}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable String uuid,
                            @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
-        var group = groupRepository.findByName(userUpdateRequest.getGroup()).orElse(null);
 
         try {
-            var updatedUser = userService.updateUser(uuid, group, userUpdateRequest);
+            var updatedUser = userService.updateUser(uuid, userUpdateRequest);
             return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.notFound().build();

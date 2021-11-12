@@ -36,13 +36,12 @@ public class UserService {
         userRepository.deleteById(uuid);
     }
 
-    public User updateUser(String uuid, UserGroup userGroup, UserUpdateRequest userUpdateRequest) throws ChangeSetPersister.NotFoundException {
+    public User updateUser(String uuid, UserUpdateRequest userUpdateRequest) throws ChangeSetPersister.NotFoundException {
         var user = userRepository.findById(uuid).orElseThrow(ChangeSetPersister.NotFoundException::new);
         user.setFirstName(userUpdateRequest.getFirstName());
         user.setLastName(userUpdateRequest.getLastName());
         user.setEmail(userUpdateRequest.getEmail());
         user.setUpdated_at(LocalDateTime.now());
-        user.setUserGroup(userGroup);
 
         userRepository.save(user);
 
