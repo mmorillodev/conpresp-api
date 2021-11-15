@@ -1,11 +1,15 @@
 package com.conpresp.conprespapi.service;
 
+import com.conpresp.conprespapi.dto.UserRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
-import com.conpresp.conprespapi.entity.UserGroup;
 import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.exception.ResourceCreationException;
+import com.conpresp.conprespapi.repository.GroupRepository;
+import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,8 +22,24 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String createUser(User user) {
-        var createdUser = userRepository.save(user);
+    @Autowired
+    private ProfileRepository profileRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public String createUser(UserRequest userRequest) throws ResourceCreationException {
+        var profile = profileRepository.findByName(userRequest.getProfile()).orElse(null);
+        var group = groupRepository.findByName(userRequest.getUserGroup()).orElse(null);
+
+        if (profile == null || group == null) {
+            throw new ResourceCreationException();
+        }
+
+        var createdUser = userRepository.save(userRequest.toUser(passwordEncoder, profile, group));
 
         return createdUser.getId();
     }

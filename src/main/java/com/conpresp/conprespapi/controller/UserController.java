@@ -4,6 +4,7 @@ import com.conpresp.conprespapi.dto.UserListResponse;
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.conpresp.conprespapi.dto.UserResponse;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
+import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.service.UserService;
@@ -21,35 +22,32 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-    private final ProfileRepository profileRepository;
-    private final GroupRepository groupRepository;
+    @Autowired
+    private UserService userService;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder, ProfileRepository profileRepository, GroupRepository groupRepository) {
-        this.userService = userService;
-        this.passwordEncoder  = passwordEncoder;
-        this.profileRepository = profileRepository;
-        this.groupRepository = groupRepository;
-    }
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ProfileRepository profileRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
 
     @PostMapping
-    public ResponseEntity<?> createUser(
+    public ResponseEntity<Void> createUser(
             @Valid @RequestBody UserRequest userRequest,
             UriComponentsBuilder uriComponentsBuilder
     ) {
-        var profile = profileRepository.findByName(userRequest.getProfile()).orElse(null);
-        var group = groupRepository.findByName(userRequest.getUserGroup()).orElse(null);
+        try {
+            var id = userService.createUser(userRequest);
 
-        if (profile == null) {
+            var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(id).toUri();
+            return ResponseEntity.created(uri).build();
+
+        } catch (ResourceCreationException e) {
             return ResponseEntity.badRequest().build();
         }
-
-        var id = userService.createUser(userRequest.toUser(passwordEncoder, profile, group));
-
-        var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(id).toUri();
-        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping
@@ -64,14 +62,14 @@ public class UserController {
 
     @GetMapping("/{uuid}")
     public ResponseEntity<?> getUserByUuid(@PathVariable String uuid) {
-        return userService.getUserById(uuid).map(user -> {
-         return ResponseEntity.ok().body(UserResponse.fromUser(user));
-        }).orElse(ResponseEntity.notFound().build());
+        return userService.getUserById(uuid).map(user ->
+                ResponseEntity.ok().body(UserResponse.fromUser(user))
+        ).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{uuid}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable String uuid,
-                           @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+                                                   @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
 
         try {
             var updatedUser = userService.updateUser(uuid, userUpdateRequest);
