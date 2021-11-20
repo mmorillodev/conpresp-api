@@ -2,7 +2,7 @@ package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.MockMvcTestBuilder;
-import com.conpresp.conprespapi.dto.UserRequest;
+import com.conpresp.conprespapi.dto.UserCreateRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ class UserControllerTest {
 
     @Test
     void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
-        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
         var response = userMockMvc.post(request)
                 .andExpect(status().isCreated())
@@ -48,8 +48,8 @@ class UserControllerTest {
 
     @Test
     void shouldReturnAnErrorWhenTryingToInsertAUserWithAExistingEmail() throws Exception {
-        var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
-        var request2 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request2 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
         userMockMvc.post(request);
 
@@ -60,8 +60,8 @@ class UserControllerTest {
 
     @Test
     void shouldReturnTheListOfUsers() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
-        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
+        var request1 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request2 = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
         userMockMvc.post(request1);
         userMockMvc.post(request2);
@@ -75,8 +75,8 @@ class UserControllerTest {
 
     @Test
     void shouldDeleteUser() throws Exception {
-        var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
-        var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
+        var request1 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request2 = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
         userMockMvc.post(request1);
 
@@ -103,7 +103,7 @@ class UserControllerTest {
 
     @Test
     void shouldReturnUserById() throws Exception {
-        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
+        var request = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
         var response = userMockMvc.post(request)
                 .andExpect(status().isCreated())
@@ -123,7 +123,7 @@ class UserControllerTest {
     // TODO: move those bean validation tests to test module
     @Test
     void shouldReturnBadRequestWhenInvalidProfileSent() throws Exception {
-        var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID", "UAM");
+        var request = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID", "UAM");
 
         userMockMvc.post(request)
                 .andExpect(status().isBadRequest())
@@ -139,7 +139,7 @@ class UserControllerTest {
 
     @Test
     void shouldReturnBadRequestWhenBodyIsInvalid() throws Exception {
-        var userRequest = new UserRequest();
+        var userRequest = new UserCreateRequest();
 
         userMockMvc.post(userRequest)
                 .andExpect(status().isBadRequest())
@@ -149,7 +149,7 @@ class UserControllerTest {
 
     @Test
     void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR", "UAM");
+        var userRequest = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR", "UAM");
 
         userMockMvc.post(userRequest)
                 .andExpect(status().isBadRequest())
@@ -159,7 +159,7 @@ class UserControllerTest {
 
     @Test
     void shouldReturnBadRequestAndMessageWhenEmailIsInvalid() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR", "UAM");
+        var userRequest = new UserCreateRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR", "UAM");
 
 
         userMockMvc.post(userRequest)
@@ -170,7 +170,7 @@ class UserControllerTest {
 
     @Test
     void shouldUpdateAUser() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR", "UAM");
+        var userRequest = new UserCreateRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR", "UAM");
 
         var response = userMockMvc.post(userRequest).andReturn();
 

@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.service;
 
-import com.conpresp.conprespapi.dto.UserRequest;
+import com.conpresp.conprespapi.dto.UserCreateRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
@@ -30,15 +30,15 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String createUser(UserRequest userRequest) throws ResourceCreationException {
-        var profile = profileRepository.findByName(userRequest.getProfile()).orElse(null);
-        var group = groupRepository.findByName(userRequest.getUserGroup()).orElse(null);
+    public String createUser(UserCreateRequest userCreateRequest) throws ResourceCreationException {
+        var profile = profileRepository.findByName(userCreateRequest.getProfile()).orElse(null);
+        var group = groupRepository.findByName(userCreateRequest.getUserGroup()).orElse(null);
 
         if (profile == null || group == null) {
             throw new ResourceCreationException();
         }
 
-        var createdUser = userRepository.save(userRequest.toUser(passwordEncoder, profile, group));
+        var createdUser = userRepository.save(userCreateRequest.toUser(passwordEncoder, profile, group));
 
         return createdUser.getId();
     }

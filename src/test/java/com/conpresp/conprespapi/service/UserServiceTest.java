@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.service;
 
-import com.conpresp.conprespapi.dto.UserRequest;
+import com.conpresp.conprespapi.dto.UserCreateRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
@@ -71,8 +71,8 @@ class UserServiceTest {
         assertEquals("other@mail.com", updatedUser.getEmail());
     }
 
-    private UserRequest getMockedUserRequest() {
-        return new UserRequest(
+    private UserCreateRequest getMockedUserRequest() {
+        return new UserCreateRequest(
                 "Matheus",
                 "Nask",
                 "matheus.nask@mail.com",

@@ -1,7 +1,7 @@
 package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.dto.UserListResponse;
-import com.conpresp.conprespapi.dto.UserRequest;
+import com.conpresp.conprespapi.dto.UserCreateRequest;
 import com.conpresp.conprespapi.dto.UserResponse;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
@@ -36,11 +36,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Void> createUser(
-            @Valid @RequestBody UserRequest userRequest,
+            @Valid @RequestBody UserCreateRequest userCreateRequest,
             UriComponentsBuilder uriComponentsBuilder
     ) {
         try {
-            var id = userService.createUser(userRequest);
+            var id = userService.createUser(userCreateRequest);
 
             var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(id).toUri();
             return ResponseEntity.created(uri).build();

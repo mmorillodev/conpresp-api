@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
+public class UserCreateRequest {
 
     @NotBlank
     private String firstName;

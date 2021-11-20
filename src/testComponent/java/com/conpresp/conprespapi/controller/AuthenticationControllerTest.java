@@ -3,7 +3,7 @@ package com.conpresp.conprespapi.controller;
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.MockMvcTestBuilder;
 import com.conpresp.conprespapi.dto.AuthRequest;
-import com.conpresp.conprespapi.dto.UserRequest;
+import com.conpresp.conprespapi.dto.UserCreateRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +62,7 @@ class AuthenticationControllerTest {
     }
 
     private void insertAUser() throws Exception {
-        var  request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var  request = new UserCreateRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
         userMockMvc.post(request);
     }
