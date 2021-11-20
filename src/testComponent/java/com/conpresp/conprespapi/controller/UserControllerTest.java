@@ -120,6 +120,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.userGroup").value("UAM"));
     }
 
+    // TODO: move those bean validation tests to test module
     @Test
     void shouldReturnBadRequestWhenInvalidProfileSent() throws Exception {
         var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID", "UAM");
