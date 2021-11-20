@@ -9,7 +9,6 @@ import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -44,39 +43,32 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    @BeforeEach
-    void setupBasicMocks() {
-        var user = getMockedUser();
-        when(userRepository.save(any())).thenReturn(user);
-        when(passwordEncoder.encode(any())).thenReturn("123456678");
-        when(profileRepository.findByName(any())).thenReturn(Optional.of(new Profile("MODERATOR")));
-        when(groupRepository.findByName(any())).thenReturn(Optional.of(new UserGroup("UAM")));
-    }
-
     @Test
     void shouldReturnTheInsertedUserID() throws ResourceCreationException {
+        var profile = new Profile("MODERATOR");
+        var userGroup = new UserGroup("UAM");
+
+        when(passwordEncoder.encode(any())).thenReturn("123456678");
+        when(profileRepository.findByName("MODERATOR")).thenReturn(Optional.of(profile));
+        when(groupRepository.findByName("UAM")).thenReturn(Optional.of(userGroup));
+        when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
         var actualID = userService.createUser(getMockedUserRequest());
 
         assertDoesNotThrow(() -> UUID.fromString(actualID));
     }
 
     @Test
-    void shouldReturnUpdatedUser() throws ChangeSetPersister.NotFoundException, ResourceCreationException {
-        var updateRequest = new UserUpdateRequest("Matheus", "Morillo", "nask@gmeil.com");
+    void shouldReturnUpdatedUser() throws ChangeSetPersister.NotFoundException {
+        var updateRequest = new UserUpdateRequest("Name", "Last name", "other@mail.com");
 
-        when(userRepository.findById(any())).thenReturn(Optional.of(getMockedUser()));
+        when(userRepository.findById("UUID")).thenReturn(Optional.of(new User()));
 
-        var actualID = userService.createUser(getMockedUserRequest());
-        var updatedUser = userService.updateUser(actualID, updateRequest);
+        var updatedUser = userService.updateUser("UUID", updateRequest);
 
-        assertEquals("Matheus", updatedUser.getFirstName());
-    }
-
-    private User getMockedUser() {
-        var user = new User();
-        user.setId(UUID.randomUUID().toString());
-
-        return user;
+        assertEquals("Name", updatedUser.getFirstName());
+        assertEquals("Last name", updatedUser.getLastName());
+        assertEquals("other@mail.com", updatedUser.getEmail());
     }
 
     private UserRequest getMockedUserRequest() {

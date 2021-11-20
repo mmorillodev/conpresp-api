@@ -1,8 +1,6 @@
 package com.conpresp.conprespapi.dto;
 
-import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
-import com.conpresp.conprespapi.entity.UserGroup;
 import com.conpresp.conprespapi.entity.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,9 +26,9 @@ public class UserResponse {
 
     private UserStatus status;
 
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     public static UserResponse fromUser(User u) {
         return new UserResponse(
@@ -41,8 +39,8 @@ public class UserResponse {
                 u.getLastName(),
                 u.getEmail(),
                 u.getStatus(),
-                u.getCreated_at(),
-                u.getUpdated_at()
+                u.getCreatedAt(),
+                u.getUpdatedAt()
         );
     }
 }

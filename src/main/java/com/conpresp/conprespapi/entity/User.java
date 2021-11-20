@@ -43,17 +43,17 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status = UserStatus.ACTIVE;
 
-    private LocalDateTime created_at = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private User created_by;
+    private User createdBy;
 
-    private LocalDateTime updated_at = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User updated_by;
+    private User updatedBy;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
