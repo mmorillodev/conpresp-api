@@ -27,9 +27,13 @@ public class UserResponse {
 
     private UserStatus status;
 
+    private String createdBy;
+
     private Timestamp createdAt;
 
     private Timestamp updatedAt;
+
+    private String updatedBy;
 
     public static UserResponse fromUser(User u) {
         return new UserResponse(
@@ -40,8 +44,10 @@ public class UserResponse {
                 u.getLastName(),
                 u.getEmail(),
                 u.getStatus(),
+                u.getCreatedBy(),
                 u.getCreatedAt(),
-                u.getUpdatedAt()
+                u.getUpdatedAt(),
+                u.getUpdatedBy()
         );
     }
 }
