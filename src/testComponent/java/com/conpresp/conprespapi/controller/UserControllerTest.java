@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ComponentTest
 @WithMockUser(authorities = {"ADMINISTRATOR"})
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,7 +32,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
+    void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
         var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
         var response = userMockMvc.post(request)
@@ -47,7 +47,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnAnErrorWhenTryingToInsertAUserWithAExistingEmail() throws Exception {
+    void shouldReturnAnErrorWhenTryingToInsertAUserWithAExistingEmail() throws Exception {
         var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
         var request2 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
@@ -59,7 +59,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnTheListOfUsers() throws Exception {
+    void shouldReturnTheListOfUsers() throws Exception {
         var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
         var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
@@ -74,7 +74,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldDeleteUser() throws Exception {
+    void shouldDeleteUser() throws Exception {
         var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
         var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
@@ -97,12 +97,12 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnNotFoundByDeletingInvalidUser() throws Exception {
+    void shouldReturnNotFoundByDeletingInvalidUser() throws Exception {
         userMockMvc.appendPathVar("InvalidUserId").delete().andExpect(status().isNotFound());
     }
 
     @Test
-    public void shouldReturnUserById() throws Exception {
+    void shouldReturnUserById() throws Exception {
         var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
         var response = userMockMvc.post(request)
@@ -132,13 +132,13 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnNotFoundByInvalidId() throws Exception {
+    void shouldReturnNotFoundByInvalidId() throws Exception {
         userMockMvc.appendPathVar("invalidId").get()
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void shouldReturnBadRequestWhenBodyIsInvalid() throws Exception {
+    void shouldReturnBadRequestWhenBodyIsInvalid() throws Exception {
         var userRequest = new UserRequest();
 
         userMockMvc.post(userRequest)
@@ -148,7 +148,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
+    void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
         var userRequest = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR", "UAM");
 
         userMockMvc.post(userRequest)
@@ -158,7 +158,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnBadRequestAndMessageWhenEmailIsInvalid() throws Exception {
+    void shouldReturnBadRequestAndMessageWhenEmailIsInvalid() throws Exception {
         var userRequest = new UserRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR", "UAM");
 
 
@@ -169,7 +169,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldUpdateAUser() throws Exception {
+    void shouldUpdateAUser() throws Exception {
         var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR", "UAM");
 
         var response = userMockMvc.post(userRequest).andReturn();
@@ -189,7 +189,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
+    void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
         var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
 
         userMockMvc.appendPathVar("InvalidId").put(userUpdateRequest)

@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-public class User implements UserDetails {
+public class User extends Auditable implements UserDetails {
 
     @Id
     private String id = UUID.randomUUID().toString();
@@ -42,18 +41,6 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserStatus status = UserStatus.ACTIVE;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User createdBy;
-
-    private LocalDateTime updatedAt = LocalDateTime.now();
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User updatedBy;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
