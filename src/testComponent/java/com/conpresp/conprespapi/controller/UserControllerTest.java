@@ -1,21 +1,19 @@
 package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.ComponentTest;
+import com.conpresp.conprespapi.MockMvcTestBuilder;
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -26,14 +24,18 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private MockMvcTestBuilder userMockMvc;
+
+    @BeforeEach
+    void setup() {
+        this.userMockMvc = new MockMvcTestBuilder("/users", mockMvc);
+    }
 
     @Test
     public void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
         var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
-        var response = makePostRequest(request)
+        var response = userMockMvc.post(request)
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("location"))
                 .andReturn();
@@ -49,9 +51,9 @@ public class UserControllerTest {
         var request = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
         var request2 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
-        makePostRequest(request);
+        userMockMvc.post(request);
 
-        makePostRequest(request2)
+        userMockMvc.post(request2)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.cause").value("Duplicate entry"));
     }
@@ -61,10 +63,10 @@ public class UserControllerTest {
         var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
         var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
-        makePostRequest(request1);
-        makePostRequest(request2);
+        userMockMvc.post(request1);
+        userMockMvc.post(request2);
 
-        makeGetRequest()
+        userMockMvc.get()
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.total").value(2))
                 .andExpect(jsonPath("$.users[0].firstName").value("Raphael"))
@@ -76,9 +78,9 @@ public class UserControllerTest {
         var request1 = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
         var request2 = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
-        makePostRequest(request1);
+        userMockMvc.post(request1);
 
-        var response = makePostRequest(request2)
+        var response = userMockMvc.post(request2)
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("location"))
                 .andReturn();
@@ -86,8 +88,9 @@ public class UserControllerTest {
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        makeDeleteRequest(uuid);
-        makeGetRequest()
+        userMockMvc.appendPathVar(uuid).delete();
+
+        userMockMvc.get()
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.total").value(1))
                 .andExpect(jsonPath("$.users[0].firstName").value("Raphael"));
@@ -95,14 +98,14 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnNotFoundByDeletingInvalidUser() throws Exception {
-        makeDeleteRequest("InvalidUserId").andExpect(status().isNotFound());
+        userMockMvc.appendPathVar("InvalidUserId").delete().andExpect(status().isNotFound());
     }
 
     @Test
     public void shouldReturnUserById() throws Exception {
         var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
 
-        var response = makePostRequest(request)
+        var response = userMockMvc.post(request)
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("location"))
                 .andReturn();
@@ -110,7 +113,7 @@ public class UserControllerTest {
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        makeGetRequestById(uuid)
+        userMockMvc.appendPathVar(uuid).get()
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(uuid))
                 .andExpect(jsonPath("$.firstName").value("Matheus"))
@@ -121,7 +124,7 @@ public class UserControllerTest {
     void shouldReturnBadRequestWhenInvalidProfileSent() throws Exception {
         var request = new UserRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID", "UAM");
 
-        makePostRequest(request)
+        userMockMvc.post(request)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("profile")))
                 .andExpect(jsonPath("$..error", Matchers.hasItem("Invalid profile name! Options: MODERATOR, ADMINISTRATOR, COMMON")));
@@ -129,7 +132,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnNotFoundByInvalidId() throws Exception {
-        makeGetRequestById("invalidId")
+        userMockMvc.appendPathVar("invalidId").get()
                 .andExpect(status().isNotFound());
     }
 
@@ -137,7 +140,7 @@ public class UserControllerTest {
     public void shouldReturnBadRequestWhenBodyIsInvalid() throws Exception {
         var userRequest = new UserRequest();
 
-        makePostRequest(userRequest)
+        userMockMvc.post(userRequest)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("firstName", "lastName", "email", "password", "profile", "userGroup")))
                 .andExpect(jsonPath("$..error", Matchers.hasItem("must not be blank")));
@@ -147,7 +150,7 @@ public class UserControllerTest {
     public void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
         var userRequest = new UserRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR", "UAM");
 
-        makePostRequest(userRequest)
+        userMockMvc.post(userRequest)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[0].field").value("password"))
                 .andExpect(jsonPath("$[0].error").value("size must be between 8 and 32"));
@@ -158,7 +161,7 @@ public class UserControllerTest {
         var userRequest = new UserRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR", "UAM");
 
 
-        makePostRequest(userRequest)
+        userMockMvc.post(userRequest)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[0].field").value("email"))
                 .andExpect(jsonPath("$[0].error").value("must be a well-formed email address"));
@@ -168,14 +171,14 @@ public class UserControllerTest {
     public void shouldUpdateAUser() throws Exception {
         var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR", "UAM");
 
-        var response = makePostRequest(userRequest).andReturn();
+        var response = userMockMvc.post(userRequest).andReturn();
 
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
         var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
 
-        makePutRequest(uuid, userUpdateRequest)
+        userMockMvc.appendPathVar(uuid).put(userUpdateRequest)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("Rodrigo"))
                 .andExpect(jsonPath("$.lastName").value("Nascimento"))
@@ -188,43 +191,7 @@ public class UserControllerTest {
     public void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
         var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
 
-        makePutRequest("InvalidId", userUpdateRequest)
+        userMockMvc.appendPathVar("InvalidId").put(userUpdateRequest)
                 .andExpect(status().isNotFound());
-    }
-
-    private ResultActions makePostRequest(Object payload) throws Exception {
-        return mockMvc
-                .perform(
-                        post("/users")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(payload))
-                );
-    }
-
-    private ResultActions makeGetRequest() throws Exception {
-        return mockMvc
-                .perform(get("/users").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
-    }
-
-    private ResultActions makeGetRequestById(String uuid) throws Exception {
-        return mockMvc
-                .perform(get("/users/" + uuid)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON));
-    }
-
-    private ResultActions makeDeleteRequest(String uuid) throws Exception {
-        return mockMvc
-                .perform(delete("/users/" + uuid)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON));
-    }
-
-    private ResultActions makePutRequest(String uuid, Object payload) throws Exception {
-        return mockMvc
-                .perform(put("/users/" + uuid)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(payload)));
     }
 }

@@ -1,18 +1,17 @@
 package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.ComponentTest;
+import com.conpresp.conprespapi.MockMvcTestBuilder;
 import com.conpresp.conprespapi.dto.AuthRequest;
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,13 +29,22 @@ class AuthenticationControllerTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private MockMvcTestBuilder userMockMvc;
+    private MockMvcTestBuilder authMockMvc;
+
+    @BeforeEach
+    void setup() {
+        userMockMvc = new MockMvcTestBuilder("/users", mockMvc);
+        authMockMvc = new MockMvcTestBuilder("/auth", mockMvc);
+    }
+
     @Test
     void shouldReturnABearerTokenWhenValidAuthEntries() throws Exception {
         insertAUser();
 
         AuthRequest request = new AuthRequest("Nask@mail.com", "123456789");
 
-        makePostRequest(request, "/auth")
+        authMockMvc.post(request)
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.type").value("Bearer"))
@@ -47,7 +55,7 @@ class AuthenticationControllerTest {
     void shouldReturnUnauthorizedWhenBadCredentials() throws Exception {
         AuthRequest request = new AuthRequest("mail@mail.com", "122345634");
 
-        makePostRequest(request, "/auth")
+        authMockMvc.post(request)
                 .andDo(print())
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.cause").value("Bad credentials"));
@@ -56,15 +64,6 @@ class AuthenticationControllerTest {
     private void insertAUser() throws Exception {
         var  request = new UserRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR", "UAM");
 
-        makePostRequest(request, "/users");
-    }
-
-    private ResultActions makePostRequest(Object payload, String resourcePath) throws Exception {
-        return mockMvc
-                .perform(
-                        post(resourcePath)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(payload))
-                );
+        userMockMvc.post(request);
     }
 }
