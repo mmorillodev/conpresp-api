@@ -28,9 +28,13 @@ public class UserResponse {
 
     private UserStatus status;
 
+    private String createdBy;
+
     private LocalDateTime created_at;
 
     private LocalDateTime updated_at;
+
+    private String updatedBy;
 
     public static UserResponse fromUser(User u) {
         return new UserResponse(
@@ -41,8 +45,10 @@ public class UserResponse {
                 u.getLastName(),
                 u.getEmail(),
                 u.getStatus(),
+                u.getCreated_by().getId(),
                 u.getCreated_at(),
-                u.getUpdated_at()
+                u.getUpdated_at(),
+                u.getUpdated_by().getId()
         );
     }
 }

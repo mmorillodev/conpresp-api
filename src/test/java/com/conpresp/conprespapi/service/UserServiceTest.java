@@ -55,7 +55,7 @@ class UserServiceTest {
 
     @Test
     void shouldReturnTheInsertedUserID() throws ResourceCreationException {
-        var actualID = userService.createUser(getMockedUserRequest());
+        var actualID = userService.createUser(getMockedUserRequest(), "any");
 
         assertDoesNotThrow(() -> UUID.fromString(actualID));
     }
@@ -66,7 +66,7 @@ class UserServiceTest {
 
         when(userRepository.findById(any())).thenReturn(Optional.of(getMockedUser()));
 
-        var actualID = userService.createUser(getMockedUserRequest());
+        var actualID = userService.createUser(getMockedUserRequest(), "any");
         var updatedUser = userService.updateUser(actualID, updateRequest);
 
         assertEquals("Matheus", updatedUser.getFirstName());

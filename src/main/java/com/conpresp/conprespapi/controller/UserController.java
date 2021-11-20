@@ -37,10 +37,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Void> createUser(
             @Valid @RequestBody UserRequest userRequest,
+            @RequestHeader("authorization") String token,
             UriComponentsBuilder uriComponentsBuilder
     ) {
         try {
-            var id = userService.createUser(userRequest);
+            var id = userService.createUser(userRequest, token);
 
             var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(id).toUri();
             return ResponseEntity.created(uri).build();

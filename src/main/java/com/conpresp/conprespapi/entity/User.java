@@ -45,12 +45,14 @@ public class User implements UserDetails {
 
     private LocalDateTime created_at = LocalDateTime.now();
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User created_by;
 
     private LocalDateTime updated_at = LocalDateTime.now();
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User updated_by;

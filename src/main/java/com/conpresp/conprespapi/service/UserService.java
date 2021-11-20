@@ -29,17 +29,23 @@ public class UserService {
     private GroupRepository groupRepository;
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String createUser(UserRequest userRequest) throws ResourceCreationException {
+    public String createUser(UserRequest userRequest, String token) throws ResourceCreationException {
         var profile = profileRepository.findByName(userRequest.getProfile()).orElse(null);
         var group = groupRepository.findByName(userRequest.getUserGroup()).orElse(null);
 
-        if (profile == null || group == null) {
+        var loggedUserID = tokenService.getUserId(token);
+        var loggedUser = userRepository.findById(loggedUserID).orElse(null);
+
+        if (profile == null || group == null || loggedUser == null) {
             throw new ResourceCreationException();
         }
 
-        var createdUser = userRepository.save(userRequest.toUser(passwordEncoder, profile, group));
+        var createdUser = userRepository.save(userRequest.toUser(passwordEncoder, profile, group, loggedUser, loggedUser));
 
         return createdUser.getId();
     }

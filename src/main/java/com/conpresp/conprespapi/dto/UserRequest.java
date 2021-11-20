@@ -40,14 +40,16 @@ public class UserRequest {
     @NotBlank @Pattern(regexp = "UAM|DHP|CONPRESP", message = "Invalid Group name! Options: UAM, DHP, CONPRESP")
     private String userGroup;
 
-    public User toUser(PasswordEncoder passwordEncoder, Profile profile, UserGroup userGroup) {
+    public User toUser(PasswordEncoder passwordEncoder, Profile profile, UserGroup userGroup, User createdBy, User updatedBy) {
         return new User(
                 profile,
                 userGroup,
                 this.getFirstName(),
                 this.getLastName(),
                 this.getEmail(),
-                passwordEncoder.encode(this.getPassword())
+                passwordEncoder.encode(this.getPassword()),
+                createdBy,
+                updatedBy
         );
     }
 }

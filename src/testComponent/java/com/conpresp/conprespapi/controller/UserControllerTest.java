@@ -3,6 +3,7 @@ package com.conpresp.conprespapi.controller;
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.dto.UserRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -166,7 +167,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldUpdateAUser() throws Exception {
-        var userRequest = new UserRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR", "UAM");
+        var userRequest = new UserRequest("Raphael", "Nask", "Nask@gmail.com", "123456789", "MODERATOR", "UAM");
 
         var response = makePostRequest(userRequest).andReturn();
 
@@ -192,10 +193,18 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    private <T> T decodeJSON(String content, Class<T> target) throws JsonProcessingException {
+        return objectMapper.readValue(content, target);
+    }
+
     private ResultActions makePostRequest(Object payload) throws Exception {
+        return makePostRequest(payload, "/users");
+    }
+
+    private ResultActions makePostRequest(Object payload, String url) throws Exception {
         return mockMvc
                 .perform(
-                        post("/users")
+                        post(url)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(payload))
                 );
