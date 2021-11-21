@@ -5,6 +5,7 @@ import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.entity.UserGroup;
+import com.conpresp.conprespapi.exception.PasswordException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
@@ -44,7 +45,7 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    void shouldReturnTheInsertedUserID() throws ResourceCreationException {
+    void shouldReturnTheInsertedUserID() throws ResourceCreationException, PasswordException {
         var profile = new Profile("MODERATOR");
         var userGroup = new UserGroup("UAM");
 
@@ -60,9 +61,10 @@ class UserServiceTest {
 
     @Test
     void shouldReturnUpdatedUser() throws ChangeSetPersister.NotFoundException {
-        var updateRequest = new UserUpdateRequest("Name", "Last name", "other@mail.com");
+        var updateRequest = new UserUpdateRequest("COMMON","Name", "Last name", "other@mail.com");
 
         when(userRepository.findById("UUID")).thenReturn(Optional.of(new User()));
+        when(profileRepository.findByName(any())).thenReturn(Optional.of(new Profile()));
 
         var updatedUser = userService.updateUser("UUID", updateRequest);
 
@@ -76,6 +78,7 @@ class UserServiceTest {
                 "Matheus",
                 "Nask",
                 "matheus.nask@mail.com",
+                "123456789",
                 "123456789",
                 "MODERATOR",
                 "UAM"

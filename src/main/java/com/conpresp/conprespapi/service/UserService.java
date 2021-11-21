@@ -3,6 +3,7 @@ package com.conpresp.conprespapi.service;
 import com.conpresp.conprespapi.dto.UserCreateRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.exception.PasswordException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,7 +32,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String createUser(UserCreateRequest userCreateRequest) throws ResourceCreationException {
+    public String createUser(UserCreateRequest userCreateRequest) throws ResourceCreationException, PasswordException {
+        if (!Objects.equals(userCreateRequest.getPassword(), userCreateRequest.getConfirmPassword())) {
+            throw new PasswordException();
+        }
+
         var profile = profileRepository.findByName(userCreateRequest.getProfile()).orElse(null);
         var group = groupRepository.findByName(userCreateRequest.getUserGroup()).orElse(null);
 
@@ -56,7 +62,9 @@ public class UserService {
     }
 
     public User updateUser(String uuid, UserUpdateRequest userUpdateRequest) throws ChangeSetPersister.NotFoundException {
+        var profile = profileRepository.findByName(userUpdateRequest.getProfile()).orElseThrow(ChangeSetPersister.NotFoundException::new);
         var user = userRepository.findById(uuid).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        user.setProfile(profile);
         user.setFirstName(userUpdateRequest.getFirstName());
         user.setLastName(userUpdateRequest.getLastName());
         user.setEmail(userUpdateRequest.getEmail());

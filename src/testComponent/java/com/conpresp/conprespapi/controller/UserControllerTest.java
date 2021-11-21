@@ -33,7 +33,7 @@ class UserControllerTest {
 
     @Test
     void shouldCreateAUserAndReturnCreatedHTTPCodeAlongWithALocationHeader() throws Exception {
-        var request = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "123456789", "MODERATOR", "UAM");
 
         var response = userMockMvc.post(request)
                 .andExpect(status().isCreated())
@@ -48,8 +48,8 @@ class UserControllerTest {
 
     @Test
     void shouldReturnAnErrorWhenTryingToInsertAUserWithAExistingEmail() throws Exception {
-        var request = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
-        var request2 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var request = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "123456789","MODERATOR", "UAM");
+        var request2 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "123456789","MODERATOR", "UAM");
 
         userMockMvc.post(request);
 
@@ -59,9 +59,19 @@ class UserControllerTest {
     }
 
     @Test
+    void shouldReturnBadRequestWhenTryingToCreateAUserWithDifferentPasswords() throws Exception {
+        var request = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "12345678910","MODERATOR", "UAM");
+
+
+        userMockMvc.post(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.cause").value("The given password are not the same."));
+    }
+
+    @Test
     void shouldReturnTheListOfUsers() throws Exception {
-        var request1 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
-        var request2 = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
+        var request1 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "123456789","MODERATOR", "UAM");
+        var request2 = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "123456789", "123456789","MODERATOR", "UAM");
 
         userMockMvc.post(request1);
         userMockMvc.post(request2);
@@ -75,8 +85,8 @@ class UserControllerTest {
 
     @Test
     void shouldDeleteUser() throws Exception {
-        var request1 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "MODERATOR", "UAM");
-        var request2 = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
+        var request1 = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123456789", "123456789","MODERATOR", "UAM");
+        var request2 = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "123456789", "123456789","MODERATOR", "UAM");
 
         userMockMvc.post(request1);
 
@@ -103,7 +113,7 @@ class UserControllerTest {
 
     @Test
     void shouldReturnUserById() throws Exception {
-        var request = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "MODERATOR", "UAM");
+        var request = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "123456789", "123456789","MODERATOR", "UAM");
 
         var response = userMockMvc.post(request)
                 .andExpect(status().isCreated())
@@ -123,12 +133,22 @@ class UserControllerTest {
     // TODO: move those bean validation tests to test module
     @Test
     void shouldReturnBadRequestWhenInvalidProfileSent() throws Exception {
-        var request = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "INVALID", "UAM");
+        var request = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "123456789","INVALID", "UAM");
 
         userMockMvc.post(request)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("profile")))
                 .andExpect(jsonPath("$..error", Matchers.hasItem("Invalid profile name! Options: MODERATOR, ADMINISTRATOR, COMMON")));
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenInvalidGroupSent() throws Exception {
+        var request = new UserCreateRequest("Matheus", "Morillo", "matheus@mail.com", "1234567890", "123456789","COMMON", "invalid");
+
+        userMockMvc.post(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("userGroup")))
+                .andExpect(jsonPath("$..error", Matchers.hasItem("Invalid Group name! Options: UAM, DHP, CONPRESP")));
     }
 
     @Test
@@ -143,13 +163,13 @@ class UserControllerTest {
 
         userMockMvc.post(userRequest)
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("firstName", "lastName", "email", "password", "profile", "userGroup")))
+                .andExpect(jsonPath("$..field", Matchers.containsInAnyOrder("firstName", "lastName", "email", "password", "confirmPassword", "profile", "userGroup")))
                 .andExpect(jsonPath("$..error", Matchers.hasItem("must not be blank")));
     }
 
     @Test
     void shouldReturnBadRequestAndMinimumPasswordSizeWhenLessThan8Characters() throws Exception {
-        var userRequest = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123", "MODERATOR", "UAM");
+        var userRequest = new UserCreateRequest("Raphael", "Nask", "Nask@mail.com", "123", "123","MODERATOR", "UAM");
 
         userMockMvc.post(userRequest)
                 .andExpect(status().isBadRequest())
@@ -159,7 +179,7 @@ class UserControllerTest {
 
     @Test
     void shouldReturnBadRequestAndMessageWhenEmailIsInvalid() throws Exception {
-        var userRequest = new UserCreateRequest("Raphael", "Nask", "invalidemail", "123456789", "MODERATOR", "UAM");
+        var userRequest = new UserCreateRequest("Raphael", "Nask", "invalidemail", "123456789", "123456789","MODERATOR", "UAM");
 
 
         userMockMvc.post(userRequest)
@@ -170,17 +190,18 @@ class UserControllerTest {
 
     @Test
     void shouldUpdateAUser() throws Exception {
-        var userRequest = new UserCreateRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "MODERATOR", "UAM");
+        var userRequest = new UserCreateRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "123456789","MODERATOR", "UAM");
 
         var response = userMockMvc.post(userRequest).andReturn();
 
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
+        var userUpdateRequest = new UserUpdateRequest("COMMON","Rodrigo", "Nascimento", "Nask@Hotmail.com");
 
         userMockMvc.appendPathVar(uuid).put(userUpdateRequest)
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.profile").value("COMMON"))
                 .andExpect(jsonPath("$.firstName").value("Rodrigo"))
                 .andExpect(jsonPath("$.lastName").value("Nascimento"))
                 .andExpect(jsonPath("$.email").value("Nask@Hotmail.com"))
@@ -190,7 +211,7 @@ class UserControllerTest {
 
     @Test
     void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
-        var userUpdateRequest = new UserUpdateRequest("Rodrigo", "Nascimento", "Nask@Hotmail.com");
+        var userUpdateRequest = new UserUpdateRequest("COMMON", "Rodrigo", "Nascimento", "Nask@Hotmail.com");
 
         userMockMvc.appendPathVar("InvalidId").put(userUpdateRequest)
                 .andExpect(status().isNotFound());

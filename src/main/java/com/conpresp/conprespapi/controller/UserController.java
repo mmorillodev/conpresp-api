@@ -1,9 +1,7 @@
 package com.conpresp.conprespapi.controller;
 
-import com.conpresp.conprespapi.dto.UserListResponse;
-import com.conpresp.conprespapi.dto.UserCreateRequest;
-import com.conpresp.conprespapi.dto.UserResponse;
-import com.conpresp.conprespapi.dto.UserUpdateRequest;
+import com.conpresp.conprespapi.dto.*;
+import com.conpresp.conprespapi.exception.PasswordException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
@@ -35,7 +33,7 @@ public class UserController {
     private GroupRepository groupRepository;
 
     @PostMapping
-    public ResponseEntity<Void> createUser(
+    public ResponseEntity<?> createUser(
             @Valid @RequestBody UserCreateRequest userCreateRequest,
             UriComponentsBuilder uriComponentsBuilder
     ) {
@@ -47,6 +45,8 @@ public class UserController {
 
         } catch (ResourceCreationException e) {
             return ResponseEntity.badRequest().build();
+        } catch (PasswordException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("The given password are not the same."));
         }
     }
 

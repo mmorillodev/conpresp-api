@@ -34,6 +34,9 @@ public class UserCreateRequest {
     @Size(min = 8, max = 32)
     private String password;
 
+    @NotBlank
+    private String confirmPassword;
+
     @NotBlank @Pattern(regexp = "MODERATOR|ADMINISTRATOR|COMMON", message = "Invalid profile name! Options: MODERATOR, ADMINISTRATOR, COMMON")
     private String profile;
 

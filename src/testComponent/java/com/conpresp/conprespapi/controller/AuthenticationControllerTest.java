@@ -62,7 +62,7 @@ class AuthenticationControllerTest {
     }
 
     private void insertAUser() throws Exception {
-        var  request = new UserCreateRequest("Raphael", "Nask","Nask@mail.com", "123456789", "MODERATOR", "UAM");
+        var  request = new UserCreateRequest("Raphael", "Nask","Nask@mail.com", "123456789", "123456789", "MODERATOR", "UAM");
 
         userMockMvc.post(request);
     }

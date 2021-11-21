@@ -15,6 +15,9 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class UserUpdateRequest {
     @NotBlank
+    private String profile;
+
+    @NotBlank
     private String firstName;
 
     @NotBlank
