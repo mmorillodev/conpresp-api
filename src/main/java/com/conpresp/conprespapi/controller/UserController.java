@@ -1,7 +1,8 @@
 package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.dto.*;
-import com.conpresp.conprespapi.exception.PasswordException;
+import com.conpresp.conprespapi.exception.NotEqualsException;
+import com.conpresp.conprespapi.exception.PasswordInUseException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
@@ -45,7 +46,7 @@ public class UserController {
 
         } catch (ResourceCreationException e) {
             return ResponseEntity.badRequest().build();
-        } catch (PasswordException e) {
+        } catch (NotEqualsException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse("The given password are not the same."));
         }
     }
@@ -76,6 +77,21 @@ public class UserController {
             return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{uuid}/change-password")
+    public ResponseEntity<?> updatePassword(@PathVariable String uuid,
+                                            @Valid @RequestBody UserPasswordRequest userPasswordRequest) {
+        try {
+            var updatedUser = userService.updatePassword(uuid, userPasswordRequest);
+            return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
+        }catch (ChangeSetPersister.NotFoundException e){
+            return ResponseEntity.notFound().build();
+        } catch (NotEqualsException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("The given password are not the same."));
+        } catch (PasswordInUseException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("The new password cannot be the same as the current password."));
         }
     }
 

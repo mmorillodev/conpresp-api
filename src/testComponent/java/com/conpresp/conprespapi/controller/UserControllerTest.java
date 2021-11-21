@@ -3,11 +3,13 @@ package com.conpresp.conprespapi.controller;
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.MockMvcTestBuilder;
 import com.conpresp.conprespapi.dto.UserCreateRequest;
+import com.conpresp.conprespapi.dto.UserPasswordRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,6 +27,8 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     private MockMvcTestBuilder userMockMvc;
+
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setup() {
@@ -215,5 +219,22 @@ class UserControllerTest {
 
         userMockMvc.appendPathVar("InvalidId").put(userUpdateRequest)
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldUpdateAUserPassword() throws Exception {
+        var userRequest = new UserCreateRequest("Raphael", "Nask","Nask@gmail.com", "123456789", "123456789","MODERATOR", "UAM");
+
+        var response = userMockMvc.post(userRequest).andReturn();
+
+        var location = response.getResponse().getHeader("location");
+        var uuid = location.substring(location.lastIndexOf("/") + 1);
+
+        var userPasswordRequest = new UserPasswordRequest("12345678910", "12345678910");
+
+        userMockMvc.appendPathVar(uuid).appendPathVar("change-password").put(userPasswordRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value("Nask@gmail.com"));
+
     }
 }

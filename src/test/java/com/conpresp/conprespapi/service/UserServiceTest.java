@@ -1,11 +1,13 @@
 package com.conpresp.conprespapi.service;
 
 import com.conpresp.conprespapi.dto.UserCreateRequest;
+import com.conpresp.conprespapi.dto.UserPasswordRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.Profile;
 import com.conpresp.conprespapi.entity.User;
 import com.conpresp.conprespapi.entity.UserGroup;
-import com.conpresp.conprespapi.exception.PasswordException;
+import com.conpresp.conprespapi.exception.NotEqualsException;
+import com.conpresp.conprespapi.exception.PasswordInUseException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
@@ -21,8 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -45,11 +46,11 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    void shouldReturnTheInsertedUserID() throws ResourceCreationException, PasswordException {
+    void shouldReturnTheInsertedUserID() throws ResourceCreationException, NotEqualsException {
         var profile = new Profile("MODERATOR");
         var userGroup = new UserGroup("UAM");
 
-        when(passwordEncoder.encode(any())).thenReturn("123456678");
+        when(passwordEncoder.encode(any())).thenReturn("1234566789");
         when(profileRepository.findByName("MODERATOR")).thenReturn(Optional.of(profile));
         when(groupRepository.findByName("UAM")).thenReturn(Optional.of(userGroup));
         when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
@@ -64,13 +65,44 @@ class UserServiceTest {
         var updateRequest = new UserUpdateRequest("COMMON","Name", "Last name", "other@mail.com");
 
         when(userRepository.findById("UUID")).thenReturn(Optional.of(new User()));
-        when(profileRepository.findByName(any())).thenReturn(Optional.of(new Profile()));
+        when(profileRepository.findByName("COMMON")).thenReturn(Optional.of(new Profile()));
 
         var updatedUser = userService.updateUser("UUID", updateRequest);
 
         assertEquals("Name", updatedUser.getFirstName());
         assertEquals("Last name", updatedUser.getLastName());
         assertEquals("other@mail.com", updatedUser.getEmail());
+    }
+
+    @Test
+    void shouldUpdateAUserPassword() throws ChangeSetPersister.NotFoundException, NotEqualsException, PasswordInUseException, ResourceCreationException {
+        var userPasswordRequest = new UserPasswordRequest("123456789", "123456789");
+
+        when(passwordEncoder.encode(any())).thenReturn("123456789");
+        when(userRepository.findById("UUID")).thenReturn(Optional.of(new User()));
+
+        var updatedUser = userService.updatePassword("UUID", userPasswordRequest);
+
+        assertEquals(userPasswordRequest.getPassword(), updatedUser.getPassword());
+    }
+
+    @Test
+    void shouldThrowNotEqualsExceptionWhenTriyngUpdateAUserWithDifferentPassword() {
+        var userPasswordRequest = new UserPasswordRequest("different", "passwords");
+        Exception notEqualsException = assertThrows(NotEqualsException.class, () -> {
+            var updatedPassword = userService.updatePassword("UUID", userPasswordRequest);
+        });
+    }
+
+    @Test
+    void shouldThrowPasswordInUseWhenTryingUpdateAUserWithCurrentPassword() {
+        var userPasswordRequest = new UserPasswordRequest("123456789", "123456789");
+        when(userRepository.findById("UUID")).thenReturn(Optional.of(new User()));
+        when(passwordEncoder.matches(any(), any())).thenReturn(true);
+
+        Exception passwordInUseException = assertThrows(PasswordInUseException.class, () -> {
+            var userUpdate = userService.updatePassword("UUID", userPasswordRequest);
+        });
     }
 
     private UserCreateRequest getMockedUserRequest() {

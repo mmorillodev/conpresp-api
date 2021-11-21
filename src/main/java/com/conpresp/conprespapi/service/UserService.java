@@ -1,9 +1,11 @@
 package com.conpresp.conprespapi.service;
 
 import com.conpresp.conprespapi.dto.UserCreateRequest;
+import com.conpresp.conprespapi.dto.UserPasswordRequest;
 import com.conpresp.conprespapi.dto.UserUpdateRequest;
 import com.conpresp.conprespapi.entity.User;
-import com.conpresp.conprespapi.exception.PasswordException;
+import com.conpresp.conprespapi.exception.NotEqualsException;
+import com.conpresp.conprespapi.exception.PasswordInUseException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.GroupRepository;
 import com.conpresp.conprespapi.repository.ProfileRepository;
@@ -32,9 +34,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String createUser(UserCreateRequest userCreateRequest) throws ResourceCreationException, PasswordException {
+    public String createUser(UserCreateRequest userCreateRequest) throws ResourceCreationException, NotEqualsException {
         if (!Objects.equals(userCreateRequest.getPassword(), userCreateRequest.getConfirmPassword())) {
-            throw new PasswordException();
+            throw new NotEqualsException();
         }
 
         var profile = profileRepository.findByName(userCreateRequest.getProfile()).orElse(null);
@@ -69,6 +71,23 @@ public class UserService {
         user.setLastName(userUpdateRequest.getLastName());
         user.setEmail(userUpdateRequest.getEmail());
 
+        userRepository.save(user);
+
+        return user;
+    }
+
+    public User updatePassword(String uuid, UserPasswordRequest userPasswordRequest) throws ChangeSetPersister.NotFoundException, NotEqualsException, PasswordInUseException {
+        if (!Objects.equals(userPasswordRequest.getPassword(), userPasswordRequest.getConfirmPassword())) {
+            throw new NotEqualsException();
+        }
+
+        var user = userRepository.findById(uuid).orElseThrow(ChangeSetPersister.NotFoundException::new);
+
+        if (passwordEncoder.matches(userPasswordRequest.getPassword(), user.getPassword())) {
+            throw new PasswordInUseException();
+        }
+
+        user.setPassword(passwordEncoder.encode(userPasswordRequest.getPassword()));
         userRepository.save(user);
 
         return user;
