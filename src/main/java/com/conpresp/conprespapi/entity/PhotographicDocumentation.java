@@ -17,5 +17,5 @@ public class PhotographicDocumentation {
 
     @NonNull
     @Lob
-    private Base64 image;
+    private String image;
 }
