@@ -59,8 +59,7 @@ public class PropertyControllerTest {
         var responseProperty = userMockMvc.appendPathVar(uuid).get()
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.designation").value("Edifício São João"))
-                .andExpect(jsonPath("$.institutionName").value("CONPRESP"))
-                .andExpect(jsonPath("$.constructionFloorQuantity").value(3))
+                .andExpect(jsonPath("$.construction.constructionYear").value("1960"))
                 .andDo(print());
     }
 
