@@ -15,7 +15,7 @@ public class Property extends Auditable {
     @Id
     private String id = UUID.randomUUID().toString();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resolution_item_ID")
     @NonNull
     private HeritageResolution resolutionItem;
@@ -32,12 +32,12 @@ public class Property extends Auditable {
     @NonNull
     private String type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "construction_ID")
     @NonNull
     private Construction construction;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "address_lot_ID")
     @NonNull
     private AddressLot addressLot;
@@ -45,25 +45,20 @@ public class Property extends Auditable {
     @NonNull
     private String author;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photographic_documentation_ID")
-    @NonNull
     private PhotographicDocumentation photographicDocumentation;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "graphic_documentation_ID")
-    @NonNull
     private GraphicDocumentation graphicDocumentation;
 
     @Column(columnDefinition = "TEXT")
-    @NonNull
     private String bibliographicSource;
 
     @Column(columnDefinition = "TEXT")
-    @NonNull
     private String otherInfo;
 
     @Column(columnDefinition = "TEXT")
-    @NonNull
     private String observation;
 }
