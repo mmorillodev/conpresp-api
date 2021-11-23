@@ -5,21 +5,20 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.Year;
 
 @Table(name = "construction")
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Construction {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
-    @JsonFormat(pattern = "yyyy")
-    private Year constructionYear;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate constructionYear;
 
     @NonNull
     private String architecturalStyle;
@@ -51,6 +50,6 @@ public class Construction {
     private String conservationLevelComment;
 
     @NonNull
-    @Column(columnDefinition = "TEXT")
+    @Column
     private String floorObservation;
 }

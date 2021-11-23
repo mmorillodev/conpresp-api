@@ -4,10 +4,13 @@ import com.conpresp.conprespapi.dto.*;
 import com.conpresp.conprespapi.exception.NotEqualsException;
 import com.conpresp.conprespapi.exception.PasswordInUseException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
+import com.conpresp.conprespapi.repository.GroupRepository;
+import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,6 +23,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ProfileRepository profileRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
 
     @PostMapping
     public ResponseEntity<?> createUser(

@@ -16,8 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -55,16 +53,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-        http.addFilterBefore(filter, CsrfFilter.class);
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority(ROLE_MODERATOR, ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.POST, "/users").hasAuthority(ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.DELETE, "/users").hasAuthority(ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.PUT, "/users/**").hasAuthority(ROLE_ADMINISTRATOR)
-                .antMatchers(HttpMethod.POST, "/property").hasAnyAuthority(ROLE_ADMINISTRATOR, ROLE_MODERATOR)
                 .antMatchers("/auth").permitAll()
                 .anyRequest().authenticated();
 
