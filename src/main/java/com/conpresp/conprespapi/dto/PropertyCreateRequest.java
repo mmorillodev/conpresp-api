@@ -1,5 +1,6 @@
 package com.conpresp.conprespapi.dto;
 
+import com.conpresp.conprespapi.entity.Institution;
 import com.conpresp.conprespapi.entity.Property;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,9 +49,9 @@ public class PropertyCreateRequest {
 
     private String observation;
 
-    public Property toProperty() {
+    public Property toProperty(Institution institution) {
         return new Property(
-                this.getHeritageResolutionRequest().toHeritageResolution(),
+                this.getHeritageResolutionRequest().toHeritageResolution(institution),
                 this.getDesignation(),
                 this.getClassification(),
                 this.getCurrentUsage(),

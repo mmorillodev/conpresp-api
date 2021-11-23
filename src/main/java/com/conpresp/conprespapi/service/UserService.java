@@ -39,12 +39,8 @@ public class UserService {
             throw new NotEqualsException();
         }
 
-        var profile = profileRepository.findByName(userCreateRequest.getProfile()).orElse(null);
-        var group = groupRepository.findByName(userCreateRequest.getUserGroup()).orElse(null);
-
-        if (profile == null || group == null) {
-            throw new ResourceCreationException();
-        }
+        var profile = profileRepository.findByName(userCreateRequest.getProfile()).orElseThrow(ResourceCreationException::new);
+        var group = groupRepository.findByName(userCreateRequest.getUserGroup()).orElseThrow(ResourceCreationException::new);
 
         var createdUser = userRepository.save(userCreateRequest.toUser(passwordEncoder, profile, group));
 

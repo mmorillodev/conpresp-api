@@ -3,6 +3,7 @@ package com.conpresp.conprespapi.controller;
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.MockMvcTestBuilder;
 import com.conpresp.conprespapi.dto.*;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,7 @@ public class PropertyControllerTest {
 
     private PropertyCreateRequest getMockedProperty() {
         var propertyResolution = new PropertyResolutionRequest("Edifício São João", "05/91");
-        var institutionRequest = new InstitutionRequest("CONPRESP", "Estadual");
-        var heritageResolution = new HeritageResolutionRequest(propertyResolution, "2010", institutionRequest);
+        var heritageResolution = new HeritageResolutionRequest(propertyResolution, "2010", "CONPRESP");
         var constructionRequest = new ConstructionRequest("1960", "Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
         var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
         var graphic = new GraphicRequest("Imagem");

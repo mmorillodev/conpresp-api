@@ -22,7 +22,7 @@ public class HeritageResolution {
     private PropertyResolution propertyResolution;
 
     @NonNull
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy")
     private Year year;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
