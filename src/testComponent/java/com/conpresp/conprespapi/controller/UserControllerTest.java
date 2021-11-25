@@ -2,9 +2,9 @@ package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.MockMvcTestBuilder;
-import com.conpresp.conprespapi.dto.UserCreateRequest;
-import com.conpresp.conprespapi.dto.UserPasswordRequest;
-import com.conpresp.conprespapi.dto.UserUpdateRequest;
+import com.conpresp.conprespapi.dto.user.UserCreateRequest;
+import com.conpresp.conprespapi.dto.user.UserPasswordRequest;
+import com.conpresp.conprespapi.dto.user.UserUpdateRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

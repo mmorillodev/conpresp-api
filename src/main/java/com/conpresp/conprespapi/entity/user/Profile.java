@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.entity;
+package com.conpresp.conprespapi.entity.user;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.request;
 
 import com.conpresp.conprespapi.entity.HeritageResolution;
 import lombok.AllArgsConstructor;

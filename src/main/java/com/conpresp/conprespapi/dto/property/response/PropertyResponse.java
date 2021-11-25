@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.response;
 
 import com.conpresp.conprespapi.entity.Property;
 import lombok.AllArgsConstructor;
@@ -20,25 +20,25 @@ public class PropertyResponse {
 
     private String type;
 
-    private Construction construction;
+    private ConstructionResponse construction;
 
-    private Address address;
+    private AddressResponse address;
 
     private String author;
 
     public static PropertyResponse fromProperty(Property property) {
         return new PropertyResponse(
                 new HeritageResolution(
-                        new PropertyResolution(property.getResolutionItem().getPropertyResolution().getProperty(),
+                        new PropertyResolutionResponse(property.getResolutionItem().getPropertyResolution().getProperty(),
                         property.getResolutionItem().getPropertyResolution().getResolution()),
                         property.getResolutionItem().getYear(),
-                        new Institution(property.getResolutionItem().getInstitution().getName(),
+                        new InstitutionResponse(property.getResolutionItem().getInstitution().getName(),
                         property.getResolutionItem().getInstitution().getScope())),
                 property.getDesignation(),
                 property.getClassification(),
                 property.getCurrentUsage(),
                 property.getType(),
-                new Construction(
+                new ConstructionResponse(
                         property.getConstruction().getConstructionYear(),
                         property.getConstruction().getArchitecturalStyle(),
                         property.getConstruction().getConstructiveTechnique(),
@@ -50,7 +50,7 @@ public class PropertyResponse {
                         property.getConstruction().getConservationLevel(),
                         property.getConstruction().getConservationLevelComment(),
                         property.getConstruction().getFloorObservation()),
-                new Address(
+                new AddressResponse(
                         property.getAddressLot().getAddressType(),
                         property.getAddressLot().getTitle(),
                         property.getAddressLot().getAddressStreet(),

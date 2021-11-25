@@ -2,7 +2,7 @@ package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.ComponentTest;
 import com.conpresp.conprespapi.MockMvcTestBuilder;
-import com.conpresp.conprespapi.dto.*;
+import com.conpresp.conprespapi.dto.property.request.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

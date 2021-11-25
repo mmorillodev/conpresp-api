@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,9 +10,9 @@ import java.time.Year;
 @AllArgsConstructor
 public class HeritageResolution {
 
-    private PropertyResolution propertyResolution;
+    private PropertyResolutionResponse propertyResolution;
 
     private Year year;
 
-    private Institution institution;
+    private InstitutionResponse institution;
 }

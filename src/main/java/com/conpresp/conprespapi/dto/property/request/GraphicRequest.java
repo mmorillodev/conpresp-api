@@ -1,24 +1,23 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.request;
 
-import com.conpresp.conprespapi.entity.PhotographicDocumentation;
+import com.conpresp.conprespapi.entity.GraphicDocumentation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Lob;
-import java.util.Base64;
 
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhotographicRequest {
+public class GraphicRequest {
 
     @Lob
     private String image;
 
-    public PhotographicDocumentation toPhotographicDocumentation() {
-        return new PhotographicDocumentation(
+    public GraphicDocumentation toGraphicDocumentation() {
+        return new GraphicDocumentation(
                 this.getImage()
         );
     }

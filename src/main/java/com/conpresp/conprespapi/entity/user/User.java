@@ -1,5 +1,6 @@
-package com.conpresp.conprespapi.entity;
+package com.conpresp.conprespapi.entity.user;
 
+import com.conpresp.conprespapi.entity.Auditable;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.Year;
 
 @Getter @Setter
 @AllArgsConstructor
-public class Construction {
+public class ConstructionResponse {
 
     private Year constructionYear;
 
