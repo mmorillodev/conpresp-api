@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class PropertyCreateRequest {
 
     @NotNull
-    private List<HeritageResolutionRequest> heritageResolutionRequest;
+    private List<HeritageResolutionRequest> heritageResolution;
 
     @NotBlank
     private String designation;
@@ -33,17 +33,17 @@ public class PropertyCreateRequest {
     private String type;
 
     @NotNull
-    private ConstructionRequest constructionRequest;
+    private ConstructionRequest construction;
 
     @NotNull
-    private AddressLotRequest addressLotRequest;
+    private AddressLotRequest addressLot;
 
     @NotBlank
     private String author;
 
-    private List<PhotographicRequest> photographicDocumentationRequest;
+    private List<PhotographicRequest> photographicDocumentation;
 
-    private List<GraphicRequest> graphicRequest;
+    private List<GraphicRequest> graphic;
 
     private String bibliographicSource;
 
@@ -53,16 +53,16 @@ public class PropertyCreateRequest {
 
     public Property toProperty() {
         return new Property(
-                this.getHeritageResolutionRequest().stream().map(HeritageResolutionRequest::toHeritageResolution).collect(Collectors.toList()),
+                this.getHeritageResolution().stream().map(HeritageResolutionRequest::toHeritageResolution).collect(Collectors.toList()),
                 this.getDesignation(),
                 this.getClassification(),
                 this.getCurrentUsage(),
                 this.getType(),
-                this.getConstructionRequest().toConstruction(),
-                this.getAddressLotRequest().toAddressLot(),
+                this.getConstruction().toConstruction(),
+                this.getAddressLot().toAddressLot(),
                 this.getAuthor(),
-                this.getPhotographicDocumentationRequest().stream().map(PhotographicRequest::toPhotographicDocumentation).collect(Collectors.toList()),
-                this.getGraphicRequest().stream().map(GraphicRequest::toGraphicDocumentation).collect(Collectors.toList()),
+                this.getPhotographicDocumentation().stream().map(PhotographicRequest::toPhotographicDocumentation).collect(Collectors.toList()),
+                this.getGraphic().stream().map(GraphicRequest::toGraphicDocumentation).collect(Collectors.toList()),
                 this.getBibliographicSource(),
                 this.getOtherInfo(),
                 this.getObservation()

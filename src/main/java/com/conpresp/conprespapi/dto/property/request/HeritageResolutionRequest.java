@@ -16,19 +16,19 @@ import java.time.Year;
 public class HeritageResolutionRequest {
 
     @NotNull
-    private PropertyResolutionRequest propertyResolutionRequest;
+    private PropertyResolutionRequest propertyResolution;
 
     @NotBlank
     private String year;
 
     @NotNull
-    private InstitutionRequest institutionRequest;
+    private InstitutionRequest institution;
 
     public HeritageResolution toHeritageResolution() {
         return new HeritageResolution(
-                this.getPropertyResolutionRequest().toPropertyResolution(),
+                this.getPropertyResolution().toPropertyResolution(),
                 Year.parse(this.getYear()),
-                this.getInstitutionRequest().toInstitution()
+                this.getInstitution().toInstitution()
         );
     }
 }
