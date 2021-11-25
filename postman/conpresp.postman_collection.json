@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "050a66a3-662d-409b-add0-55e02a8a2b7c",
+		"_postman_id": "ae8e43f7-bfc3-45a7-902d-375ea3b72782",
 		"name": "conpresp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -28,86 +28,6 @@
 					"port": "8080",
 					"path": [
 						"auth"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get users",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIyMWRiN2UyNC1kZmIxLTQxMGMtYjc3Zi0xNDk0NGFiMGMwYmQiLCJpYXQiOjE2MzY1MDEwOTEsImV4cCI6MTYzNjU4NzQ5MX0.se4Rxvvu2FvCY7cj8tZ16z8LXXmBTvf7sbEs228SUb8",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/users/{{user_id}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"{{user_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get user",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIyMWRiN2UyNC1kZmIxLTQxMGMtYjc3Zi0xNDk0NGFiMGMwYmQiLCJpYXQiOjE2MzY1MDEwOTEsImV4cCI6MTYzNjU4NzQ5MX0.se4Rxvvu2FvCY7cj8tZ16z8LXXmBTvf7sbEs228SUb8",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/users",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete users",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIyMWRiN2UyNC1kZmIxLTQxMGMtYjc3Zi0xNDk0NGFiMGMwYmQiLCJpYXQiOjE2MzY1MDEwOTEsImV4cCI6MTYzNjU4NzQ5MX0.se4Rxvvu2FvCY7cj8tZ16z8LXXmBTvf7sbEs228SUb8",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/users/{{user_id}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"{{user_id}}"
 					]
 				}
 			},
@@ -148,6 +68,59 @@
 			"response": []
 		},
 		{
+			"name": "Get user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIyMWRiN2UyNC1kZmIxLTQxMGMtYjc3Zi0xNDk0NGFiMGMwYmQiLCJpYXQiOjE2MzY1MDEwOTEsImV4cCI6MTYzNjU4NzQ5MX0.se4Rxvvu2FvCY7cj8tZ16z8LXXmBTvf7sbEs228SUb8",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIyMWRiN2UyNC1kZmIxLTQxMGMtYjc3Zi0xNDk0NGFiMGMwYmQiLCJpYXQiOjE2MzY1MDEwOTEsImV4cCI6MTYzNjU4NzQ5MX0.se4Rxvvu2FvCY7cj8tZ16z8LXXmBTvf7sbEs228SUb8",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/users/{{user_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Update user",
 			"request": {
 				"method": "PUT",
@@ -169,16 +142,53 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users",
+					"raw": "http://localhost:8080/users/{{user_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users"
+						"users",
+						"{{user_id}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete users",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIyMWRiN2UyNC1kZmIxLTQxMGMtYjc3Zi0xNDk0NGFiMGMwYmQiLCJpYXQiOjE2MzY1MDEwOTEsImV4cCI6MTYzNjU4NzQ5MX0.se4Rxvvu2FvCY7cj8tZ16z8LXXmBTvf7sbEs228SUb8",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/users/{{user_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Property",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
 			},
 			"response": []
 		}
