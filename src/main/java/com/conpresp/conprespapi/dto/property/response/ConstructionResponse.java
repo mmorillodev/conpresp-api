@@ -1,5 +1,6 @@
 package com.conpresp.conprespapi.dto.property.response;
 
+import com.conpresp.conprespapi.entity.Construction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,4 +32,20 @@ public class ConstructionResponse {
     private String conservationLevelComment;
 
     private String floorObservation;
+
+    public static ConstructionResponse fromConstruction(Construction construction) {
+        return new ConstructionResponse(
+                construction.getConstructionYear(),
+                construction.getArchitecturalStyle(),
+                construction.getConstructiveTechnique(),
+                construction.getFloorQuantity(),
+                construction.getConstructedArea(),
+                construction.getHeritageLevel(),
+                construction.getModificationLevel(),
+                construction.getModificationLevelComment(),
+                construction.getConservationLevel(),
+                construction.getConservationLevelComment(),
+                construction.getFloorObservation()
+        );
+    }
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PropertyResponse {
 
-    private HeritageResolution heritageResolution;
+    private HeritageResolutionResponse heritageResolution;
 
     private String designation;
 
@@ -22,44 +22,19 @@ public class PropertyResponse {
 
     private ConstructionResponse construction;
 
-    private AddressResponse address;
+    private AddressLotResponse address;
 
     private String author;
 
     public static PropertyResponse fromProperty(Property property) {
         return new PropertyResponse(
-                new HeritageResolution(
-                        new PropertyResolutionResponse(property.getResolutionItem().getPropertyResolution().getProperty(),
-                        property.getResolutionItem().getPropertyResolution().getResolution()),
-                        property.getResolutionItem().getYear(),
-                        new InstitutionResponse(property.getResolutionItem().getInstitution().getName(),
-                        property.getResolutionItem().getInstitution().getScope())),
+                HeritageResolutionResponse.fromHeritageResolution(property.getResolutionItem()),
                 property.getDesignation(),
                 property.getClassification(),
                 property.getCurrentUsage(),
                 property.getType(),
-                new ConstructionResponse(
-                        property.getConstruction().getConstructionYear(),
-                        property.getConstruction().getArchitecturalStyle(),
-                        property.getConstruction().getConstructiveTechnique(),
-                        property.getConstruction().getFloorQuantity(),
-                        property.getConstruction().getConstructedArea(),
-                        property.getConstruction().getHeritageLevel(),
-                        property.getConstruction().getModificationLevel(),
-                        property.getConstruction().getModificationLevelComment(),
-                        property.getConstruction().getConservationLevel(),
-                        property.getConstruction().getConservationLevelComment(),
-                        property.getConstruction().getFloorObservation()),
-                new AddressResponse(
-                        property.getAddressLot().getAddressType(),
-                        property.getAddressLot().getTitle(),
-                        property.getAddressLot().getAddressStreet(),
-                        property.getAddressLot().getAddressNumber(),
-                        property.getAddressLot().getAddressDistrict(),
-                        property.getAddressLot().getRegionalHall(),
-                        property.getAddressLot().getSector(),
-                        property.getAddressLot().getBlock(),
-                        property.getAddressLot().getLot()),
+                ConstructionResponse.fromConstruction(property.getConstruction()),
+                AddressLotResponse.fromAddressLot(property.getAddressLot()),
                 property.getAuthor()
         );
     }
