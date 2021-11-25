@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -56,7 +57,7 @@ public class PropertyControllerTest {
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        var responseProperty = userMockMvc.appendPathVar(uuid).get()
+        userMockMvc.appendPathVar(uuid).get()
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.designation").value("Edifício São João"))
                 .andExpect(jsonPath("$.construction.constructionYear").value("1960"))
@@ -72,6 +73,6 @@ public class PropertyControllerTest {
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PropertyCreateRequest(heritageResolution, "Edifício São João", "Imóvel", "Igreja,", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", photographicRequest, graphic, "Eu mesmo", "Nenhuma", "Muito belo o Prédio");
+        return new PropertyCreateRequest(List.of(heritageResolution), "Edifício São João", "Imóvel", "Igreja,", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", List.of(photographicRequest), List.of(graphic), "Eu mesmo", "Nenhuma", "Muito belo o Prédio");
     }
 }

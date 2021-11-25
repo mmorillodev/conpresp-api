@@ -16,7 +16,7 @@ public class HeritageResolution {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "property_resolution_ID")
     @NonNull
     private PropertyResolution propertyResolution;
@@ -25,7 +25,7 @@ public class HeritageResolution {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Year year;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "institution_ID")
     @NonNull
     private Institution institution;

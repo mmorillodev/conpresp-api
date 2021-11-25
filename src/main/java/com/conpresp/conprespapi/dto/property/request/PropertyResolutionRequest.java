@@ -22,8 +22,7 @@ public class PropertyResolutionRequest {
 
     public PropertyResolution toPropertyResolution() {
         return new PropertyResolution(
-          this.getProperty(),
-          this.getResolution()
+                this.getResolution()
         );
     }
 }

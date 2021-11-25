@@ -5,12 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class PropertyResponse {
 
-    private HeritageResolutionResponse heritageResolution;
+    private List<HeritageResolutionResponse> heritageResolution;
 
     private String designation;
 
@@ -28,7 +31,7 @@ public class PropertyResponse {
 
     public static PropertyResponse fromProperty(Property property) {
         return new PropertyResponse(
-                HeritageResolutionResponse.fromHeritageResolution(property.getResolutionItem()),
+                property.getHeritageResolution().stream().map(HeritageResolutionResponse::fromHeritageResolution).collect(Collectors.toList()),
                 property.getDesignation(),
                 property.getClassification(),
                 property.getCurrentUsage(),

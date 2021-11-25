@@ -10,13 +10,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PropertyResolutionResponse {
 
-    private String property;
-
     private String resolution;
 
     public static PropertyResolutionResponse fromPropertyResolution(PropertyResolution propertyResolution) {
         return new PropertyResolutionResponse(
-                propertyResolution.getProperty(),
                 propertyResolution.getResolution()
         );
     }

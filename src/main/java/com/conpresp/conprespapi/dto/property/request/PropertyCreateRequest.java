@@ -9,13 +9,16 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PropertyCreateRequest {
 
     @NotNull
-    private HeritageResolutionRequest heritageResolutionRequest;
+    private List<HeritageResolutionRequest> heritageResolutionRequest;
 
     @NotBlank
     private String designation;
@@ -38,9 +41,9 @@ public class PropertyCreateRequest {
     @NotBlank
     private String author;
 
-    private PhotographicRequest photographicDocumentationRequest;
+    private List<PhotographicRequest> photographicDocumentationRequest;
 
-    private GraphicRequest graphicRequest;
+    private List<GraphicRequest> graphicRequest;
 
     private String bibliographicSource;
 
@@ -50,7 +53,7 @@ public class PropertyCreateRequest {
 
     public Property toProperty() {
         return new Property(
-                this.getHeritageResolutionRequest().toHeritageResolution(),
+                this.getHeritageResolutionRequest().stream().map(HeritageResolutionRequest::toHeritageResolution).collect(Collectors.toList()),
                 this.getDesignation(),
                 this.getClassification(),
                 this.getCurrentUsage(),
@@ -58,8 +61,8 @@ public class PropertyCreateRequest {
                 this.getConstructionRequest().toConstruction(),
                 this.getAddressLotRequest().toAddressLot(),
                 this.getAuthor(),
-                this.getPhotographicDocumentationRequest().toPhotographicDocumentation(),
-                this.getGraphicRequest().toGraphicDocumentation(),
+                this.getPhotographicDocumentationRequest().stream().map(PhotographicRequest::toPhotographicDocumentation).collect(Collectors.toList()),
+                this.getGraphicRequest().stream().map(GraphicRequest::toGraphicDocumentation).collect(Collectors.toList()),
                 this.getBibliographicSource(),
                 this.getOtherInfo(),
                 this.getObservation()
