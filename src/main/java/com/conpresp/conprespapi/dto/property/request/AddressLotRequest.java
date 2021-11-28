@@ -20,13 +20,13 @@ public class AddressLotRequest {
     private String title;
 
     @NotBlank
-    private String addressStreet;
+    private String street;
 
     @NotBlank
-    private String addressNumber;
+    private String number;
 
     @NotBlank
-    private String addressDistrict;
+    private String district;
 
     @NotBlank
     private String regionalHall;
@@ -44,9 +44,9 @@ public class AddressLotRequest {
         return new AddressLot(
                 this.getAddressType(),
                 this.getTitle(),
-                this.getAddressStreet(),
-                this.getAddressNumber(),
-                this.getAddressDistrict(),
+                this.getStreet(),
+                this.getNumber(),
+                this.getDistrict(),
                 this.getRegionalHall(),
                 this.getSector(),
                 this.getBlock(),

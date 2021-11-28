@@ -15,11 +15,6 @@ public class Property extends Auditable {
     @Id
     private String id = UUID.randomUUID().toString();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "resolution_item_ID")
-    @NonNull
-    private List<HeritageResolution> heritageResolution;
-
     @NonNull
     private String designation;
 
@@ -32,13 +27,15 @@ public class Property extends Auditable {
     @NonNull
     private String type;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @NonNull
+    private List<PropertyResolution> propertyResolutions;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "construction_ID")
     @NonNull
     private Construction construction;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_lot_ID")
     @NonNull
     private AddressLot addressLot;
 
@@ -46,12 +43,10 @@ public class Property extends Auditable {
     private String author;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "photographic_documentation_ID")
     @NonNull
     private List<PhotographicDocumentation> photographicDocumentation;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "graphic_documentation_ID")
     @NonNull
     private List<GraphicDocumentation> graphicDocumentation;
 

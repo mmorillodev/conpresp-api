@@ -1,8 +1,10 @@
 package com.conpresp.conprespapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.Year;
 
 @Table(name = "property_resolution")
 @Entity
@@ -16,4 +18,11 @@ public class PropertyResolution {
 
     @NonNull
     private String resolution;
+
+    @NonNull
+    private String institution;
+
+    @NonNull
+    @JsonFormat(pattern = "yyyy")
+    private Year year;
 }

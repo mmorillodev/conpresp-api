@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PropertyResponse {
 
-    private List<HeritageResolutionResponse> heritageResolution;
+    private List<PropertyResolutionResponse> propertyResolutions;
 
     private String designation;
 
@@ -31,7 +31,7 @@ public class PropertyResponse {
 
     public static PropertyResponse fromProperty(Property property) {
         return new PropertyResponse(
-                property.getHeritageResolution().stream().map(HeritageResolutionResponse::fromHeritageResolution).collect(Collectors.toList()),
+                property.getPropertyResolutions().stream().map(PropertyResolutionResponse::fromPropertyResolution).collect(Collectors.toList()),
                 property.getDesignation(),
                 property.getClassification(),
                 property.getCurrentUsage(),
