@@ -1,6 +1,7 @@
 package com.conpresp.conprespapi.controller;
 
-import com.conpresp.conprespapi.dto.*;
+import com.conpresp.conprespapi.dto.error.ErrorResponse;
+import com.conpresp.conprespapi.dto.user.*;
 import com.conpresp.conprespapi.exception.NotEqualsException;
 import com.conpresp.conprespapi.exception.PasswordInUseException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;

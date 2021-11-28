@@ -1,9 +1,9 @@
 package com.conpresp.conprespapi.repository;
 
 import com.conpresp.conprespapi.DatabaseContainerInitializer;
-import com.conpresp.conprespapi.entity.Profile;
-import com.conpresp.conprespapi.entity.User;
-import com.conpresp.conprespapi.entity.UserGroup;
+import com.conpresp.conprespapi.entity.user.Profile;
+import com.conpresp.conprespapi.entity.user.User;
+import com.conpresp.conprespapi.entity.user.UserGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

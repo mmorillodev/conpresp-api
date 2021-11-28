@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

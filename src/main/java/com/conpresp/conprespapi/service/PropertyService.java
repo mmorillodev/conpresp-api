@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.service;
 
-import com.conpresp.conprespapi.dto.PropertyCreateRequest;
+import com.conpresp.conprespapi.dto.property.request.PropertyCreateRequest;
 import com.conpresp.conprespapi.entity.Property;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.InstitutionRepository;

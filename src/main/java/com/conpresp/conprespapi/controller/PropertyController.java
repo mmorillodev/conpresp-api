@@ -1,9 +1,7 @@
 package com.conpresp.conprespapi.controller;
 
-import com.conpresp.conprespapi.dto.PropertyCreateRequest;
-import com.conpresp.conprespapi.dto.PropertyResponse;
-import com.conpresp.conprespapi.dto.UserResponse;
-import com.conpresp.conprespapi.exception.ResourceCreationException;
+import com.conpresp.conprespapi.dto.property.request.PropertyCreateRequest;
+import com.conpresp.conprespapi.dto.property.response.PropertyResponse;
 import com.conpresp.conprespapi.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

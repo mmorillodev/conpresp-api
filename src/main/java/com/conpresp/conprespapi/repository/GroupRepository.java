@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.repository;
 
-import com.conpresp.conprespapi.entity.UserGroup;
+import com.conpresp.conprespapi.entity.user.UserGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,10 +1,7 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.request;
 
 import com.conpresp.conprespapi.entity.Construction;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -41,8 +38,10 @@ public class ConstructionRequest {
     @NotBlank
     private String conservationLevel;
 
+    @NotBlank
     private String conservationLevelComment;
 
+    @NotBlank
     private String floorObservation;
 
     public Construction toConstruction() {

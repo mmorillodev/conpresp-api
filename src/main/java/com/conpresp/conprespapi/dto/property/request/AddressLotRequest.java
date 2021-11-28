@@ -1,10 +1,12 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.request;
 
 import com.conpresp.conprespapi.entity.AddressLot;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter @Setter
 @NoArgsConstructor

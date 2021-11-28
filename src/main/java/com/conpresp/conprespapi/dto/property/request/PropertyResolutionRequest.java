@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.property.request;
 
 import com.conpresp.conprespapi.entity.PropertyResolution;
 import lombok.AllArgsConstructor;
@@ -22,8 +22,7 @@ public class PropertyResolutionRequest {
 
     public PropertyResolution toPropertyResolution() {
         return new PropertyResolution(
-          this.getProperty(),
-          this.getResolution()
+                this.getResolution()
         );
     }
 }

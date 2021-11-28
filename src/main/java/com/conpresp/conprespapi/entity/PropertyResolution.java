@@ -15,8 +15,5 @@ public class PropertyResolution {
     private Long id;
 
     @NonNull
-    private String property;
-
-    @NonNull
     private String resolution;
 }

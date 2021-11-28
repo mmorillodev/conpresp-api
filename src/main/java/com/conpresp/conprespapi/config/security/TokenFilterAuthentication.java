@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.config.security;
 
-import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.entity.user.User;
 import com.conpresp.conprespapi.repository.UserRepository;
 import com.conpresp.conprespapi.service.TokenService;
 import org.springframework.security.authentication.BadCredentialsException;

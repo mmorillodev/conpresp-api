@@ -1,9 +1,9 @@
 package com.conpresp.conprespapi.service;
 
-import com.conpresp.conprespapi.dto.UserCreateRequest;
-import com.conpresp.conprespapi.dto.UserPasswordRequest;
-import com.conpresp.conprespapi.dto.UserUpdateRequest;
-import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.dto.user.UserCreateRequest;
+import com.conpresp.conprespapi.dto.user.UserPasswordRequest;
+import com.conpresp.conprespapi.dto.user.UserUpdateRequest;
+import com.conpresp.conprespapi.entity.user.User;
 import com.conpresp.conprespapi.exception.NotEqualsException;
 import com.conpresp.conprespapi.exception.PasswordInUseException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;

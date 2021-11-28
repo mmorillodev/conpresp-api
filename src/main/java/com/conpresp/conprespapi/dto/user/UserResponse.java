@@ -1,7 +1,7 @@
-package com.conpresp.conprespapi.dto;
+package com.conpresp.conprespapi.dto.user;
 
-import com.conpresp.conprespapi.entity.User;
-import com.conpresp.conprespapi.entity.UserStatus;
+import com.conpresp.conprespapi.entity.user.User;
+import com.conpresp.conprespapi.entity.user.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

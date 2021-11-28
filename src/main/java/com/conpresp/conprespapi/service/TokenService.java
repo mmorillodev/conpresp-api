@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.service;
 
-import com.conpresp.conprespapi.entity.User;
+import com.conpresp.conprespapi.entity.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
