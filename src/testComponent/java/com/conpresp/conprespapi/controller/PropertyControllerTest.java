@@ -66,22 +66,6 @@ public class PropertyControllerTest {
     }
 
     @Test
-    void shouldReturnAListOfProperty() throws Exception {
-        var property = getMockedProperty();
-        var property2 = getMockedProperty2();
-
-        var response = userMockMvc.post(property);
-        var response2 = userMockMvc.post(property2);
-
-        userMockMvc.appendPathVar("all").get()
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.total").value(2))
-                .andExpect(jsonPath("$.property[0].construction.constructionYear").value("1960"))
-                .andExpect(jsonPath("$.property[1].construction.constructionYear").value("1980"))
-                .andDo(print());
-    }
-
-    @Test
     void shouldReturnAPageableListOfProperty() throws Exception {
         var property = getMockedProperty();
         var property2 = getMockedProperty2();
@@ -92,9 +76,9 @@ public class PropertyControllerTest {
         userMockMvc.post(property3);
 
         userMockMvc.appendPathVar("?size=2").get()
-                .andExpect(jsonPath("$.numberOfElements").value(3))
+                .andExpect(jsonPath("$.numberOfElements").value(2))
                 .andExpect(jsonPath("$.size").value(2))
-                .andExpect(jsonPath("$.totalPages").value(1));
+                .andExpect(jsonPath("$.totalPages").value(2));
     }
 
     @Test
@@ -109,7 +93,7 @@ public class PropertyControllerTest {
         userMockMvc.appendPathVar(uuid).delete();
 
         userMockMvc.get()
-                .andExpect(jsonPath("$.total").value(0));
+                .andExpect(jsonPath("$.totalElements").value(0)).andDo(print());
     }
 
 

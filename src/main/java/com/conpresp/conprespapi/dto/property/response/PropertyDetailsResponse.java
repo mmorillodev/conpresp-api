@@ -1,7 +1,5 @@
 package com.conpresp.conprespapi.dto.property.response;
 
-import com.conpresp.conprespapi.dto.property.request.GraphicRequest;
-import com.conpresp.conprespapi.dto.property.request.PhotographicRequest;
 import com.conpresp.conprespapi.entity.GraphicDocumentation;
 import com.conpresp.conprespapi.entity.PhotographicDocumentation;
 import com.conpresp.conprespapi.entity.Property;
@@ -15,7 +13,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PropertyResponse {
+public class PropertyDetailsResponse {
 
     private String id;
 
@@ -45,8 +43,8 @@ public class PropertyResponse {
 
     private List<GraphicDocumentation> graphic;
 
-    public static PropertyResponse fromProperty(Property property) {
-        return new PropertyResponse(
+    public static PropertyDetailsResponse fromProperty(Property property) {
+        return new PropertyDetailsResponse(
                 property.getId(),
                 property.getPropertyResolutions().stream().map(PropertyResolutionResponse::fromPropertyResolution).collect(Collectors.toList()),
                 property.getDesignation(),
