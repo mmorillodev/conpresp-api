@@ -38,7 +38,7 @@ public class PropertyController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getPage(@RequestParam("size") String size) {
+    public ResponseEntity<?> getHomePage(@RequestParam("size") String size) {
         return ResponseEntity.ok(propertyService.propertyPage(Integer.parseInt(size)));
     }
 
