@@ -1,10 +1,13 @@
 package com.conpresp.conprespapi.controller;
 
 import com.conpresp.conprespapi.dto.property.request.PropertyCreateRequest;
+import com.conpresp.conprespapi.dto.property.request.PropertyUpdateRequest;
 import com.conpresp.conprespapi.dto.property.response.PropertyListResponse;
 import com.conpresp.conprespapi.dto.property.response.PropertyResponse;
+import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -50,6 +53,18 @@ public class PropertyController {
         return propertyService.getPropertyById(uuid).map(property ->
                 ResponseEntity.ok().body(PropertyResponse.fromProperty(property))
         ).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{uuid}")
+    public ResponseEntity<PropertyResponse> updatePropertyById(
+            @PathVariable String uuid, @RequestBody @Valid PropertyUpdateRequest propertyUpdateRequest) {
+
+        try {
+            var updatedProperty = propertyService.updateProperty(uuid, propertyUpdateRequest);
+            return ResponseEntity.ok(PropertyResponse.fromProperty(updatedProperty));
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{uuid}")
