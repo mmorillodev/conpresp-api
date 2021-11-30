@@ -38,6 +38,11 @@ public class PropertyController {
     }
 
     @GetMapping
+    public ResponseEntity<?> getPage(@RequestParam("size") String size) {
+        return ResponseEntity.ok(propertyService.propertyPage(Integer.parseInt(size)));
+    }
+
+    @GetMapping("all")
     public PropertyListResponse getAllProperty() {
         var property = propertyService.getAllProperty();
 

@@ -6,6 +6,10 @@ import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,20 @@ public class PropertyService {
     public String createProperty(PropertyCreateRequest propertyCreateRequest) {
         var createdProperty = propertyRepository.save(propertyCreateRequest.toProperty());
         return createdProperty.getId();
+    }
+
+    public Page<Property> propertyPage(int size) {
+        PageRequest pageRequest = PageRequest.of(
+          0,
+                size,
+                Sort.Direction.ASC,
+                "name"
+        );
+
+        return new PageImpl<>(
+                propertyRepository.findAll(),
+                pageRequest, size
+        );
     }
 
     public List<Property> getAllProperty() {

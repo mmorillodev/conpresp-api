@@ -73,11 +73,28 @@ public class PropertyControllerTest {
         var response = userMockMvc.post(property);
         var response2 = userMockMvc.post(property2);
 
-        userMockMvc.get()
+        userMockMvc.appendPathVar("all").get()
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.total").value(2))
                 .andExpect(jsonPath("$.property[0].construction.constructionYear").value("1960"))
                 .andExpect(jsonPath("$.property[1].construction.constructionYear").value("1980"))
                 .andDo(print());
+    }
+
+    @Test
+    void shouldReturnAPageableListOfProperty() throws Exception {
+        var property = getMockedProperty();
+        var property2 = getMockedProperty2();
+        var property3 = getMockedUpdatedProperty();
+
+        userMockMvc.post(property);
+        userMockMvc.post(property2);
+        userMockMvc.post(property3);
+
+        userMockMvc.appendPathVar("?size=2").get()
+                .andExpect(jsonPath("$.numberOfElements").value(3))
+                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.totalPages").value(1));
     }
 
     @Test
