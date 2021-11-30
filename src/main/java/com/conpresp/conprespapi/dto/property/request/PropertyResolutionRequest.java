@@ -17,9 +17,6 @@ import java.time.Year;
 public class PropertyResolutionRequest {
 
     @NotBlank
-    private String property;
-
-    @NotBlank
     private String resolution;
 
     @NotBlank

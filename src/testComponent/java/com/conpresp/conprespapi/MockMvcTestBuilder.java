@@ -25,6 +25,7 @@ public class MockMvcTestBuilder {
         this.objectMapper = new ObjectMapper();
         this.pathVars = new ArrayList<>();
         this.headers = new HttpHeaders();
+        objectMapper.findAndRegisterModules();
     }
 
     public MockMvcTestBuilder appendHeader(Pair<String, String> header) {

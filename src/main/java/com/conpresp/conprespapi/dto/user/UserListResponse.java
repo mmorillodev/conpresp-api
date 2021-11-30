@@ -10,6 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 public class UserListResponse {
+
     private List<UserResponse> users;
+
     private int total;
 }

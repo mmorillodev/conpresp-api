@@ -7,6 +7,7 @@ import com.conpresp.conprespapi.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,5 +21,11 @@ public class PropertyService {
         return createdProperty.getId();
     }
 
+    public List<Property> getAllProperty() {
+        return propertyRepository.findAll();
+    }
+
     public Optional<Property> getPropertyById(String uuid)  { return propertyRepository.findById(uuid); }
+
+    public void deleteById(String uuid) { propertyRepository.deleteById(uuid); }
 }
