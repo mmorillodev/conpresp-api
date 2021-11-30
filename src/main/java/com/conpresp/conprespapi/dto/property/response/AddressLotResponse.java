@@ -9,23 +9,24 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AddressLotResponse {
 
-    private String Type;
 
-    private String Title;
+    private String type;
 
-    private String Street;
+    private String title;
 
-    private String Number;
+    private String street;
 
-    private String District;
+    private String number;
 
-    private String RegionalHall;
+    private String district;
 
-    private String Sector;
+    private String regionalHall;
 
-    private String Block;
+    private String sector;
 
-    private String Lot;
+    private String block;
+
+    private String lot;
 
     public static AddressLotResponse fromAddressLot(AddressLot address) {
         return new AddressLotResponse(

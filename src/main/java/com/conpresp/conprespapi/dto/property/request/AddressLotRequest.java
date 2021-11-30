@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class AddressLotRequest {
 
     @NotBlank
-    private String addressType;
+    private String type;
 
     @NotBlank
     private String title;
@@ -42,7 +42,7 @@ public class AddressLotRequest {
 
     public AddressLot toAddressLot() {
         return new AddressLot(
-                this.getAddressType(),
+                this.getType(),
                 this.getTitle(),
                 this.getStreet(),
                 this.getNumber(),

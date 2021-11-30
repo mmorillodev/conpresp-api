@@ -25,16 +25,10 @@ public class PropertyController {
     @PostMapping
     public ResponseEntity<?> createProperty(
             @Valid @RequestBody PropertyCreateRequest propertyCreateRequest,
-            UriComponentsBuilder uriComponentsBuilder) {
-        try {
+                UriComponentsBuilder uriComponentsBuilder) {
             var id = propertyService.createProperty(propertyCreateRequest);
-
             var uri = uriComponentsBuilder.path("/property/{id}").buildAndExpand(id).toUri();
             return ResponseEntity.created(uri).build();
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @GetMapping

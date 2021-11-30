@@ -186,11 +186,21 @@
 		{
 			"name": "Add Property",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4Mjk1MzI2LCJleHAiOjE2MzgzODE3MjZ9.n67I2Q6WAGzYvQjhfrcecuWYRmtvVHDLE-5gQupqbVU",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"heritageResolution\":{\r\n        \"propertyResolution\":{\r\n            \"property\":\"Edifício São João\",\r\n            \"resolution\":\"05/91\"\r\n        },\r\n        \"year\":\"2010\",\r\n        \"institution\": \"CONPRESP\"\r\n    },\r\n    \"designation\":\"Edifício São João\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"type\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"address\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"author\":\"Fieis Anonimos\"\r\n}",
+					"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Edifício São João\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"type\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"author\":\"Fieis Anonimos\",\r\n    \"bibliographicSource\": \"Eu Mesmo\",\r\n    \"otherInfo\": \"Nenhuma\",\r\n    \"observation\": \"Sou Lindo\",\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -206,6 +216,156 @@
 					"port": "8080",
 					"path": [
 						"property"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Property",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4Mjk2MTE1LCJleHAiOjE2MzgzODI1MTV9.-fPnGFc_SzwBP5X688NMRJWDXd9ICErk0XWqf_bDi_8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/property/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Property",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/property/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pageable Property",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/property?size=15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4Mjk2MTE1LCJleHAiOjE2MzgzODI1MTV9.-fPnGFc_SzwBP5X688NMRJWDXd9ICErk0XWqf_bDi_8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1980\"\r\n        }\r\n    ],\r\n    \"designation\":\"Edifício São João\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"type\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"constructiveTechnique\":\"Alvenaria de Aço\",\r\n        \"floorQuantity\":5,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada Muitas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"author\":\"Fieis Anonimos\",\r\n    \"bibliographicSource\": \"Eu Mesmo\",\r\n    \"otherInfo\": \"Nenhuma\",\r\n    \"observation\": \"Sou Lindo\",\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/property/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Property",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4Mjk2MTE1LCJleHAiOjE2MzgzODI1MTV9.-fPnGFc_SzwBP5X688NMRJWDXd9ICErk0XWqf_bDi_8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/property/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"{{uuid}}"
 					]
 				}
 			},
