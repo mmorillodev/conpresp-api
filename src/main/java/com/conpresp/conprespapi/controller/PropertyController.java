@@ -1,5 +1,6 @@
 package com.conpresp.conprespapi.controller;
 
+import com.conpresp.conprespapi.Specifications.PropertySpecifications;
 import com.conpresp.conprespapi.dto.property.request.PropertyCreateRequest;
 import com.conpresp.conprespapi.dto.property.request.PropertyUpdateRequest;
 import com.conpresp.conprespapi.dto.property.response.PropertyBasicInfoResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.time.Year;
 
 @RestController
 @RequestMapping("/property")
@@ -45,6 +47,15 @@ public class PropertyController {
         return propertyService.getPropertyById(uuid).map(property ->
                 ResponseEntity.ok().body(PropertyDetailsResponse.fromProperty(property))
         ).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/search")
+    public Page<PropertyBasicInfoResponse> search(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+                                                  @RequestParam(value = "designation", required = false) String designation) {
+        var specification = PropertySpecifications.searchByDesignation(designation);
+        var property = propertyService.search(specification, pageable);
+
+        return property.map(PropertyBasicInfoResponse::fromProperty);
     }
 
     @PutMapping("/{uuid}")

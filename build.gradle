@@ -39,6 +39,8 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 
+	annotationProcessor("javax.xml.bind:jaxb-api")
+	annotationProcessor("org.hibernate:hibernate-jpamodelgen")
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
@@ -52,6 +54,12 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+sourceSets.main.java.srcDirs += "${buildDir}/generated"
+
+compileJava {
+	options.annotationProcessorGeneratedSourcesDirectory = file("${buildDir}/generated")
 }
 
 sourceSets {
@@ -74,6 +82,8 @@ sourceSets {
 
 idea {
 	module {
+		sourceDirs += file("build/generated/src/main/java")
+
 		testSourceDirs += project.sourceSets.component.java.srcDirs
 		testSourceDirs += project.sourceSets.component.resources.srcDirs
 

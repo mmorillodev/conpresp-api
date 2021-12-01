@@ -25,6 +25,9 @@ public class Property extends Auditable {
     private String currentUsage;
 
     @NonNull
+    private String originalUsage;
+
+    @NonNull
     private String type;
 
     @OneToMany(cascade = CascadeType.ALL)

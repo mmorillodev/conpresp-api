@@ -6,6 +6,39 @@
 	},
 	"item": [
 		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Authorization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "User",
 			"item": [
 				{
@@ -180,7 +213,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Edifício São João\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"type\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"author\":\"Fieis Anonimos\",\r\n    \"bibliographicSource\": \"Eu Mesmo\",\r\n    \"otherInfo\": \"Nenhuma\",\r\n    \"observation\": \"Sou Lindo\",\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Corinthians\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"type\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"author\":\"Fieis Anonimos\",\r\n    \"bibliographicSource\": \"Eu Mesmo\",\r\n    \"otherInfo\": \"Nenhuma\",\r\n    \"observation\": \"Sou Lindo\",\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -260,6 +293,32 @@
 					"response": []
 				},
 				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/property/search?designation={{designation}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"property",
+								"search"
+							],
+							"query": [
+								{
+									"key": "designation",
+									"value": "{{designation}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Property",
 					"request": {
 						"auth": {
@@ -323,39 +382,6 @@
 							"path": [
 								"property",
 								"{{uuid}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Auth",
-			"item": [
-				{
-					"name": "Authorization",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/auth",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth"
 							]
 						}
 					},

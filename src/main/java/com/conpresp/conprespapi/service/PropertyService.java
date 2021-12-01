@@ -7,6 +7,7 @@ import com.conpresp.conprespapi.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,10 @@ public class PropertyService {
 
     public Page<Property> getAllProperty(Pageable pageable) {
         return propertyRepository.findAll(pageable);
+    }
+
+    public Page<Property> search(Specification<Property> specification, Pageable pageable) {
+        return propertyRepository.findAll(specification, pageable);
     }
 
     public Optional<Property> getPropertyById(String uuid)  { return propertyRepository.findById(uuid); }

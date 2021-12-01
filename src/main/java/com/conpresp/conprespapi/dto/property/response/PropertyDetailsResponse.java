@@ -25,6 +25,8 @@ public class PropertyDetailsResponse {
 
     private String currentUsage;
 
+    private String originalUsage;
+
     private String type;
 
     private ConstructionResponse construction;
@@ -50,6 +52,7 @@ public class PropertyDetailsResponse {
                 property.getDesignation(),
                 property.getClassification(),
                 property.getCurrentUsage(),
+                property.getOriginalUsage(),
                 property.getType(),
                 ConstructionResponse.fromConstruction(property.getConstruction()),
                 AddressLotResponse.fromAddressLot(property.getAddressLot()),

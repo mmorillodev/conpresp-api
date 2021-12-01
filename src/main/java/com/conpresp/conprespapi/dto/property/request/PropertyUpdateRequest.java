@@ -29,6 +29,9 @@ public class PropertyUpdateRequest {
     private String currentUsage;
 
     @NotBlank
+    private String originalUsage;
+
+    @NotBlank
     private String type;
 
     @NotNull
@@ -61,6 +64,7 @@ public class PropertyUpdateRequest {
         property.setDesignation(property.getDesignation());
         property.setClassification(property.getClassification());
         property.setCurrentUsage(property.getCurrentUsage());
+        property.setOriginalUsage(property.getOriginalUsage());
         property.setType(property.getType());
         property.setConstruction(this.getConstruction().toConstruction());
         property.setAddressLot(this.getAddressLot().toAddressLot());

@@ -30,6 +30,9 @@ public class PropertyCreateRequest {
     private String currentUsage;
 
     @NotBlank
+    private String originalUsage;
+
+    @NotBlank
     private String type;
 
     @NotNull
@@ -57,19 +60,20 @@ public class PropertyCreateRequest {
         var photographicDocumentations = getPhotographicDocumentation().stream().map(PhotographicRequest::toPhotographicDocumentation).collect(Collectors.toList());
 
         return new Property(
-                getDesignation(),
-                getClassification(),
-                getCurrentUsage(),
-                getType(),
+                this.getDesignation(),
+                this.getClassification(),
+                this.getCurrentUsage(),
+                this.getOriginalUsage(),
+                this.getType(),
                 propertyResolutions,
-                getConstruction().toConstruction(),
-                getAddressLot().toAddressLot(),
-                getAuthor(),
+                this.getConstruction().toConstruction(),
+                this.getAddressLot().toAddressLot(),
+                this.getAuthor(),
                 photographicDocumentations,
                 graphicDocumentations,
-                getBibliographicSource(),
-                getOtherInfo(),
-                getObservation()
+                this.getBibliographicSource(),
+                this.getOtherInfo(),
+                this.getObservation()
         );
     }
 }

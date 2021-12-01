@@ -82,6 +82,21 @@ public class PropertyControllerTest {
     }
 
     @Test
+    void shouldReturnAPropertyByDesignation() throws Exception {
+        var property = getMockedProperty();
+        var property2 = getMockedProperty2();
+        var property3 = getMockedUpdatedProperty();
+
+        userMockMvc.post(property);
+        userMockMvc.post(property2);
+        userMockMvc.post(property3);
+
+        userMockMvc.appendPathVar("search").appendPathVar("?designation=Estádio do Corinthians").get()
+                .andExpect(jsonPath("$.content[0].designation").value("Estádio do Corinthians"))
+                .andDo(print());
+    }
+
+    @Test
     void shouldDeleteAProperty() throws Exception {
         var property = getMockedProperty();
 
@@ -127,7 +142,7 @@ public class PropertyControllerTest {
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São João", "Imóvel", "Igreja,", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
+        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
     }
 
     private PropertyCreateRequest getMockedProperty2() {
@@ -137,16 +152,16 @@ public class PropertyControllerTest {
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São João", "Imóvel", "Igreja,", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
+        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São Paulo", "Imóvel", "Igreja", "Igreja",  "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
     }
 
     private PropertyUpdateRequest getMockedUpdatedProperty() {
         var propertyResolution = new PropertyResolutionRequest("08/80", "CODEPHAAT", Year.parse("1980"));
-        var constructionRequest = new ConstructionRequest("1980", "Moderno", "Alvenaria de Aço", 5, 45.0, "2", "Alta", "Foi modificada muitas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
+        var constructionRequest = new ConstructionRequest("1880", "Moderno", "Alvenaria de Aço", 5, 45.0, "2", "Alta", "Foi modificada muitas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
         var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PropertyUpdateRequest(List.of(propertyResolution), "Edifício São João", "Imóvel", "Igreja,", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
+        return new PropertyUpdateRequest(List.of(propertyResolution), "Estádio do Corinthians", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
     }
 }
