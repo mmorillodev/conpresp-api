@@ -1,14 +1,18 @@
 package com.conpresp.conprespapi.controller;
 
+import com.conpresp.conprespapi.Specifications.PropertySearchCriteria;
 import com.conpresp.conprespapi.Specifications.PropertySpecifications;
+import com.conpresp.conprespapi.dto.error.ErrorResponse;
 import com.conpresp.conprespapi.dto.property.request.PropertyCreateRequest;
 import com.conpresp.conprespapi.dto.property.request.PropertyUpdateRequest;
 import com.conpresp.conprespapi.dto.property.response.PropertyBasicInfoResponse;
 import com.conpresp.conprespapi.dto.property.response.PropertyDetailsResponse;
+import com.conpresp.conprespapi.exception.InvalidOperatorException;
 import com.conpresp.conprespapi.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -18,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.time.Year;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/property")
@@ -50,12 +55,38 @@ public class PropertyController {
     }
 
     @GetMapping("/search")
-    public Page<PropertyBasicInfoResponse> search(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-                                                  @RequestParam(value = "designation", required = false) String designation) {
-        var specification = PropertySpecifications.searchByDesignation(designation);
-        var property = propertyService.search(specification, pageable);
+    public Page<PropertyBasicInfoResponse> search
+            (@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+             @RequestParam(value = "designation", required = false) String designation,
+             @RequestParam(value = "originalUsage", required = false) String originalUsage,
+             @RequestParam(value = "addressType", required = false) String addressType,
+             @RequestParam(value = "addressTitle", required = false) String addressTitle,
+             @RequestParam(value = "street", required = false) String street,
+             @RequestParam(value = "addressNumber", required = false) String addressNumber,
+             @RequestParam(value = "district", required = false) String district,
+             @RequestParam(value = "regionalHall", required = false) String regionalHall,
+             @RequestParam(value = "author", required = false) String author,
+             @RequestParam(value = "constructionYear", required = false) String constructionYear,
+             @RequestParam(value = "architecturalStyle", required = false) String architecturalStyle)
+    {
+            PropertySearchCriteria searchCriteria = PropertySearchCriteria.builder()
+                    .designation(designation)
+                    .originalUsage(originalUsage)
+                    .addressType(addressType)
+                    .addressTitle(addressTitle)
+                    .street(street)
+                    .addressNumber(addressNumber)
+                    .district(district)
+                    .regionalHall(regionalHall)
+                    .author(author)
+                    .constructionYear(constructionYear)
+                    .architecturalStyle(architecturalStyle)
+                    .build();
 
-        return property.map(PropertyBasicInfoResponse::fromProperty);
+            var specification = PropertySpecifications.search(searchCriteria);
+            var property = propertyService.search(specification, pageable);
+
+            return property.map(PropertyBasicInfoResponse::fromProperty);
     }
 
     @PutMapping("/{uuid}")
