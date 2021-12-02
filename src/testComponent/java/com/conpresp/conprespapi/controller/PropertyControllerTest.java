@@ -137,31 +137,35 @@ public class PropertyControllerTest {
 
     private PropertyCreateRequest getMockedProperty() {
         var propertyResolution = new PropertyResolutionRequest("05/91", "CONPRESP", Year.parse("1990"));
-        var constructionRequest = new ConstructionRequest("1960", "Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
+        var constructionRequest = new ConstructionRequest("1960", "Fieis Anonimos", "Fieis Anonimos","Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
         var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
+        var description = new DescriptionRequest("Antigo", "Antigo, muito antigo", "Destruiu a floresta", "Eu mesmo", "Arroz", "Feijão");
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
+        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
     }
 
     private PropertyCreateRequest getMockedProperty2() {
         var propertyResolution = new PropertyResolutionRequest("08/80", "CODEPHAAT", Year.parse("1980"));
-        var constructionRequest = new ConstructionRequest("1980", "Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
+        var constructionRequest = new ConstructionRequest("1960", "Fieis Anonimos", "Fieis Anonimos","Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
         var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
+        var description = new DescriptionRequest("Antigo", "Antigo, muito antigo", "Destruiu a floresta", "Eu mesmo", "Arroz", "Feijão");
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São Paulo", "Imóvel", "Igreja", "Igreja",  "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
+        return new PropertyCreateRequest(List.of(propertyResolution), "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
+
     }
 
     private PropertyUpdateRequest getMockedUpdatedProperty() {
         var propertyResolution = new PropertyResolutionRequest("08/80", "CODEPHAAT", Year.parse("1980"));
-        var constructionRequest = new ConstructionRequest("1880", "Moderno", "Alvenaria de Aço", 5, 45.0, "2", "Alta", "Foi modificada muitas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
+        var constructionRequest = new ConstructionRequest("1980", "Fieis Anonimos", "Fieis Anonimos","Moderno", "Alvenaria de Tijólos", 5, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
         var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
+        var description = new DescriptionRequest("Antigo", "Antigo, muito antigo", "Destruiu a floresta", "Eu mesmo", "Arroz", "Feijão");
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PropertyUpdateRequest(List.of(propertyResolution), "Estádio do Corinthians", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, "Fieis Anonimos", "Eu mesmo", "Nenhuma", "Muito belo o Prédio", List.of(photographicRequest), List.of(graphic));
+        return new PropertyUpdateRequest(List.of(propertyResolution), "Estádio do Corinthians", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
     }
 }

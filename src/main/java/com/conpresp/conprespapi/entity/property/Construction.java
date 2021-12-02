@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.entity;
+package com.conpresp.conprespapi.entity.property;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -20,6 +20,12 @@ public class Construction {
     @NonNull
     @JsonFormat(pattern = "yyyy")
     private Year constructionYear;
+
+    @NonNull
+    private String author;
+
+    @NonNull
+    private String constructor;
 
     @NonNull
     private String architecturalStyle;

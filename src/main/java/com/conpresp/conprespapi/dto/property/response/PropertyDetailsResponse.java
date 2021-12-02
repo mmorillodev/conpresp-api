@@ -1,12 +1,14 @@
 package com.conpresp.conprespapi.dto.property.response;
 
-import com.conpresp.conprespapi.entity.GraphicDocumentation;
-import com.conpresp.conprespapi.entity.PhotographicDocumentation;
-import com.conpresp.conprespapi.entity.Property;
+import com.conpresp.conprespapi.dto.property.request.DescriptionRequest;
+import com.conpresp.conprespapi.entity.property.GraphicDocumentation;
+import com.conpresp.conprespapi.entity.property.PhotographicDocumentation;
+import com.conpresp.conprespapi.entity.property.Property;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,23 +29,25 @@ public class PropertyDetailsResponse {
 
     private String originalUsage;
 
-    private String type;
+    private String propertyType;
 
     private ConstructionResponse construction;
 
     private AddressLotResponse addressLot;
 
-    private String author;
-
-    private String bibliographicSource;
-
-    private String otherInfo;
-
-    private String observation;
+    private DescriptionResponse description;
 
     private List<PhotographicDocumentation> photographicDocumentation;
 
     private List<GraphicDocumentation> graphic;
+
+    private String createdBy;
+
+    private Timestamp createdAt;
+
+    private Timestamp updatedAt;
+
+    private String updatedBy;
 
     public static PropertyDetailsResponse fromProperty(Property property) {
         return new PropertyDetailsResponse(
@@ -53,15 +57,16 @@ public class PropertyDetailsResponse {
                 property.getClassification(),
                 property.getCurrentUsage(),
                 property.getOriginalUsage(),
-                property.getType(),
+                property.getPropertyType(),
                 ConstructionResponse.fromConstruction(property.getConstruction()),
                 AddressLotResponse.fromAddressLot(property.getAddressLot()),
-                property.getAuthor(),
-                property.getBibliographicSource(),
-                property.getOtherInfo(),
-                property.getObservation(),
+                DescriptionResponse.fromDescription(property.getDescription()),
                 property.getPhotographicDocumentation(),
-                property.getGraphicDocumentation()
+                property.getGraphicDocumentation(),
+                property.getCreatedBy(),
+                property.getCreatedAt(),
+                property.getUpdatedAt(),
+                property.getUpdatedBy()
         );
     }
 }

@@ -1,18 +1,15 @@
 package com.conpresp.conprespapi.controller;
 
-import com.conpresp.conprespapi.Specifications.PropertySearchCriteria;
-import com.conpresp.conprespapi.Specifications.PropertySpecifications;
-import com.conpresp.conprespapi.dto.error.ErrorResponse;
+import com.conpresp.conprespapi.Specifications.Property.PropertySearchCriteria;
+import com.conpresp.conprespapi.Specifications.Property.PropertySpecifications;
 import com.conpresp.conprespapi.dto.property.request.PropertyCreateRequest;
 import com.conpresp.conprespapi.dto.property.request.PropertyUpdateRequest;
 import com.conpresp.conprespapi.dto.property.response.PropertyBasicInfoResponse;
 import com.conpresp.conprespapi.dto.property.response.PropertyDetailsResponse;
-import com.conpresp.conprespapi.exception.InvalidOperatorException;
 import com.conpresp.conprespapi.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.time.Year;
 import java.util.Optional;
 
 @RestController
@@ -54,23 +50,26 @@ public class PropertyController {
         ).orElse(ResponseEntity.notFound().build());
     }
 
+    //TODO: Using Optional<> is bad practice, maybe Matheus will help me?
     @GetMapping("/search")
     public Page<PropertyBasicInfoResponse> search
             (@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-             @RequestParam(value = "designation", required = false) String designation,
-             @RequestParam(value = "originalUsage", required = false) String originalUsage,
-             @RequestParam(value = "addressType", required = false) String addressType,
-             @RequestParam(value = "addressTitle", required = false) String addressTitle,
-             @RequestParam(value = "street", required = false) String street,
-             @RequestParam(value = "addressNumber", required = false) String addressNumber,
-             @RequestParam(value = "district", required = false) String district,
-             @RequestParam(value = "regionalHall", required = false) String regionalHall,
-             @RequestParam(value = "author", required = false) String author,
-             @RequestParam(value = "constructionYear", required = false) String constructionYear,
-             @RequestParam(value = "architecturalStyle", required = false) String architecturalStyle)
+             @RequestParam(value = "designation", required = false) Optional<String> designation,
+             @RequestParam(value = "resolution", required = false) Optional<String> resolution,
+             @RequestParam(value = "originalUsage", required = false) Optional<String> originalUsage,
+             @RequestParam(value = "addressType", required = false) Optional<String> addressType,
+             @RequestParam(value = "addressTitle", required = false) Optional<String> addressTitle,
+             @RequestParam(value = "street", required = false) Optional<String> street,
+             @RequestParam(value = "addressNumber", required = false) Optional<String> addressNumber,
+             @RequestParam(value = "district", required = false) Optional<String> district,
+             @RequestParam(value = "regionalHall", required = false) Optional<String> regionalHall,
+             @RequestParam(value = "author", required = false) Optional<String> author,
+             @RequestParam(value = "constructionYear", required = false) Optional<String> constructionYear,
+             @RequestParam(value = "architecturalStyle", required = false) Optional<String> architecturalStyle)
     {
             PropertySearchCriteria searchCriteria = PropertySearchCriteria.builder()
                     .designation(designation)
+                    .resolution(resolution)
                     .originalUsage(originalUsage)
                     .addressType(addressType)
                     .addressTitle(addressTitle)

@@ -1,5 +1,6 @@
-package com.conpresp.conprespapi.entity;
+package com.conpresp.conprespapi.entity.property;
 
+import com.conpresp.conprespapi.entity.Auditable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +29,7 @@ public class Property extends Auditable {
     private String originalUsage;
 
     @NonNull
-    private String type;
+    private String propertyType;
 
     @OneToMany(cascade = CascadeType.ALL)
     @NonNull
@@ -42,8 +43,9 @@ public class Property extends Auditable {
     @NonNull
     private AddressLot addressLot;
 
+    @OneToOne(cascade = CascadeType.ALL)
     @NonNull
-    private String author;
+    private Description description;
 
     @OneToMany(cascade = CascadeType.ALL)
     @NonNull
@@ -53,15 +55,4 @@ public class Property extends Auditable {
     @NonNull
     private List<GraphicDocumentation> graphicDocumentation;
 
-    @Column(columnDefinition = "TEXT")
-    @NonNull
-    private String bibliographicSource;
-
-    @Column(columnDefinition = "TEXT")
-    @NonNull
-    private String otherInfo;
-
-    @Column(columnDefinition = "TEXT")
-    @NonNull
-    private String observation;
 }

@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.response;
 
-import com.conpresp.conprespapi.entity.Construction;
+import com.conpresp.conprespapi.entity.property.Construction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,10 @@ import java.time.Year;
 public class ConstructionResponse {
 
     private Year constructionYear;
+
+    private String author;
+
+    private String constructor;
 
     private String architecturalStyle;
 
@@ -36,6 +40,8 @@ public class ConstructionResponse {
     public static ConstructionResponse fromConstruction(Construction construction) {
         return new ConstructionResponse(
                 construction.getConstructionYear(),
+                construction.getAuthor(),
+                construction.getConstructor(),
                 construction.getArchitecturalStyle(),
                 construction.getConstructiveTechnique(),
                 construction.getFloorQuantity(),

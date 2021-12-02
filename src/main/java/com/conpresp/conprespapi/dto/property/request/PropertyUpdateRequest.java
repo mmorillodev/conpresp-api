@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.request;
 
-import com.conpresp.conprespapi.entity.Property;
+import com.conpresp.conprespapi.entity.property.Property;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class PropertyUpdateRequest {
     private String originalUsage;
 
     @NotBlank
-    private String type;
+    private String propertyType;
 
     @NotNull
     private ConstructionRequest construction;
@@ -40,14 +40,8 @@ public class PropertyUpdateRequest {
     @NotNull
     private AddressLotRequest addressLot;
 
-    @NotBlank
-    private String author;
-
-    private String bibliographicSource;
-
-    private String otherInfo;
-
-    private String observation;
+    @NotNull
+    private DescriptionRequest description;
 
     private List<PhotographicRequest> photographicDocumentation;
 
@@ -61,17 +55,14 @@ public class PropertyUpdateRequest {
         property.setPropertyResolutions(propertyResolutions);
         property.setGraphicDocumentation(graphicDocumentations);
         property.setPhotographicDocumentation(photographicDocumentations);
-        property.setDesignation(property.getDesignation());
-        property.setClassification(property.getClassification());
-        property.setCurrentUsage(property.getCurrentUsage());
-        property.setOriginalUsage(property.getOriginalUsage());
-        property.setType(property.getType());
+        property.setDesignation(this.getDesignation());
+        property.setClassification(this.getClassification());
+        property.setCurrentUsage(this.getCurrentUsage());
+        property.setOriginalUsage(this.getOriginalUsage());
+        property.setPropertyType(this.getPropertyType());
         property.setConstruction(this.getConstruction().toConstruction());
         property.setAddressLot(this.getAddressLot().toAddressLot());
-        property.setAuthor(property.getAuthor());
-        property.setBibliographicSource(property.getBibliographicSource());
-        property.setOtherInfo(property.getOtherInfo());
-        property.setObservation(property.getObservation());
+        property.setDescription(this.getDescription().toDescription());
 
         return property;
     }

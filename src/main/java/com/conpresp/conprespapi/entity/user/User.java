@@ -40,8 +40,8 @@ public class User extends Auditable implements UserDetails {
     @NonNull
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private UserStatus status = UserStatus.ACTIVE;
+    @NonNull
+    private String status = UserStatus.ACTIVE.name();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,7 +54,7 @@ public class User extends Auditable implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
+    public @NonNull String getPassword() {
         return password;
     }
 
@@ -75,6 +75,6 @@ public class User extends Auditable implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return status.equals(UserStatus.ACTIVE);
+        return status.equals(UserStatus.ACTIVE.name());
     }
 }

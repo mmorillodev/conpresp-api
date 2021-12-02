@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.request;
 
-import com.conpresp.conprespapi.entity.Construction;
+import com.conpresp.conprespapi.entity.property.Construction;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -14,6 +14,12 @@ public class ConstructionRequest {
 
     @NotBlank
     private String constructionYear;
+
+    @NotBlank
+    private String author;
+
+    @NotBlank
+    private String constructor;
 
     @NotBlank
     private String architecturalStyle;
@@ -47,6 +53,8 @@ public class ConstructionRequest {
     public Construction toConstruction() {
         return new Construction(
                 Year.parse(this.getConstructionYear()),
+                this.getAuthor(),
+                this.getConstructor(),
                 this.getArchitecturalStyle(),
                 this.getConstructiveTechnique(),
                 this.getFloorQuantity(),
