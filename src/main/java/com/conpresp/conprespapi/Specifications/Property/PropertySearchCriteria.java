@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.Specifications;
+package com.conpresp.conprespapi.Specifications.Property;
 
 import lombok.Builder;
 import lombok.Getter;

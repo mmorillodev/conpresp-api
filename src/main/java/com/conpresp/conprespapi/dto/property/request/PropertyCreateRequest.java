@@ -33,7 +33,7 @@ public class PropertyCreateRequest {
     private String originalUsage;
 
     @NotBlank
-    private String type;
+    private String propertyType;
 
     @NotNull
     private ConstructionRequest construction;
@@ -41,14 +41,8 @@ public class PropertyCreateRequest {
     @NotNull
     private AddressLotRequest addressLot;
 
-    @NotBlank
-    private String author;
-
-    private String bibliographicSource;
-
-    private String otherInfo;
-
-    private String observation;
+    @NotNull
+    private DescriptionRequest description;
 
     private List<PhotographicRequest> photographicDocumentation;
 
@@ -64,16 +58,13 @@ public class PropertyCreateRequest {
                 this.getClassification(),
                 this.getCurrentUsage(),
                 this.getOriginalUsage(),
-                this.getType(),
+                this.getPropertyType(),
                 propertyResolutions,
                 this.getConstruction().toConstruction(),
                 this.getAddressLot().toAddressLot(),
-                this.getAuthor(),
+                this.getDescription().toDescription(),
                 photographicDocumentations,
-                graphicDocumentations,
-                this.getBibliographicSource(),
-                this.getOtherInfo(),
-                this.getObservation()
+                graphicDocumentations
         );
     }
 }

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserResponse {
+public class UserDetailResponse {
     private String id;
 
     private String profile;
@@ -34,8 +34,8 @@ public class UserResponse {
 
     private String updatedBy;
 
-    public static UserResponse fromUser(User u) {
-        return new UserResponse(
+    public static UserDetailResponse fromUser(User u) {
+        return new UserDetailResponse(
                 u.getId(),
                 u.getProfile().getName(),
                 u.getUserGroup().getName(),

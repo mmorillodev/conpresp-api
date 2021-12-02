@@ -8,12 +8,15 @@ import com.conpresp.conprespapi.exception.ResourceCreationException;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -41,29 +44,26 @@ public class UserController {
     }
 
     @GetMapping
-    public UserListResponse getAll() {
-        var users = userService.getUsers();
+    public Page<UserBasicResponse> getAllUsers(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        var users = userService.getUsers(pageable);
 
-        return new UserListResponse(
-                users.stream().map(UserResponse::fromUser).collect(Collectors.toList()),
-                users.size()
-        );
+        return users.map(UserBasicResponse::fromUser);
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<?> getUserByUuid(@PathVariable String uuid) {
+    @GetMapping("/{uuid}") 
+    public ResponseEntity<UserDetailResponse> getUserByUuid(@PathVariable String uuid) {
         return userService.getUserById(uuid).map(user ->
-                ResponseEntity.ok().body(UserResponse.fromUser(user))
+                ResponseEntity.ok().body(UserDetailResponse.fromUser(user))
         ).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable String uuid,
-                                                   @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+    public ResponseEntity<UserDetailResponse> updateUser(@PathVariable String uuid,
+                                                         @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
 
         try {
             var updatedUser = userService.updateUser(uuid, userUpdateRequest);
-            return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
+            return ResponseEntity.ok(UserDetailResponse.fromUser(updatedUser));
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -74,7 +74,7 @@ public class UserController {
                                             @Valid @RequestBody UserPasswordRequest userPasswordRequest) {
         try {
             var updatedUser = userService.updatePassword(uuid, userPasswordRequest);
-            return ResponseEntity.ok(UserResponse.fromUser(updatedUser));
+            return ResponseEntity.ok(UserDetailResponse.fromUser(updatedUser));
         }catch (ChangeSetPersister.NotFoundException e){
             return ResponseEntity.notFound().build();
         } catch (NotEqualsException e) {

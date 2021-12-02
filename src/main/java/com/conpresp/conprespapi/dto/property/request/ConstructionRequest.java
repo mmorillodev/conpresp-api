@@ -16,6 +16,12 @@ public class ConstructionRequest {
     private String constructionYear;
 
     @NotBlank
+    private String author;
+
+    @NotBlank
+    private String constructor;
+
+    @NotBlank
     private String architecturalStyle;
 
     @NotBlank
@@ -47,6 +53,8 @@ public class ConstructionRequest {
     public Construction toConstruction() {
         return new Construction(
                 Year.parse(this.getConstructionYear()),
+                this.getAuthor(),
+                this.getConstructor(),
                 this.getArchitecturalStyle(),
                 this.getConstructiveTechnique(),
                 this.getFloorQuantity(),

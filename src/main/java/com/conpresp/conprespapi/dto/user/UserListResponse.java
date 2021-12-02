@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class UserListResponse {
 
-    private List<UserResponse> users;
+    private List<UserDetailResponse> users;
 
     private int total;
 }

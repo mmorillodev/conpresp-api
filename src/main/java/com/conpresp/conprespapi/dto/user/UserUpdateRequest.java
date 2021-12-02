@@ -27,4 +27,7 @@ public class UserUpdateRequest {
     @Email
     private String email;
 
+    @NotBlank
+    private String userGroup;
+
 }

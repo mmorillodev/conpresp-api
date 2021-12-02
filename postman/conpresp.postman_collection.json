@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\"\n}",
+							"raw": "{\n    \"email\": \"Raphael_nask@hotmail.com\",\n    \"password\": \"123456789\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,6 +44,16 @@
 				{
 					"name": "Add user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjM5MzUsImV4cCI6MTYzODUxMDMzNX0.w4oDX5Gm-UwkOlp_NbL_HvDa44dcbG-xkVAzOWtizzc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -54,7 +64,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Matheus\",\n    \"lastName\": \"Morillo\",\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\",\n    \"profile\": \"ADMINISTRATOR\"\n}",
+							"raw": "{\n    \"firstName\": \"Matheus\",\n    \"lastName\": \"Morillo\",\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\",\n    \"confirmPassword\": \"123456789\",\n    \"profile\": \"ADMINISTRATOR\",\n    \"userGroup\": \"DHP\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -78,6 +88,16 @@
 				{
 					"name": "Get users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjM5MzUsImV4cCI6MTYzODUxMDMzNX0.w4oDX5Gm-UwkOlp_NbL_HvDa44dcbG-xkVAzOWtizzc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -88,7 +108,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/users/{{user_id}}",
+							"raw": "http://localhost:8080/users/{{uuid}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -96,7 +116,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"{{user_id}}"
+								"{{uuid}}"
 							]
 						}
 					},
@@ -105,6 +125,16 @@
 				{
 					"name": "Get user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjM5MzUsImV4cCI6MTYzODUxMDMzNX0.w4oDX5Gm-UwkOlp_NbL_HvDa44dcbG-xkVAzOWtizzc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -131,6 +161,16 @@
 				{
 					"name": "Update user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjQwNTgsImV4cCI6MTYzODUxMDQ1OH0.p-mKsFEi1CRLVAoT_yms4qRiDDCvpTeJb7gxGFgAjxo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -142,7 +182,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Matheus\",\n    \"lastName\": \"Morillo\",\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\",\n    \"profile\": \"ADMINISTRATOR\"\n}",
+							"raw": "{\n    \"firstName\": \"Matheus\",\n    \"lastName\": \"Morillo\",\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\",\n    \"profile\": \"ADMINISTRATOR\",\n    \"userGroup\": \"DHP\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -150,7 +190,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/{{user_id}}",
+							"raw": "http://localhost:8080/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -158,7 +198,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"{{user_id}}"
+								"1"
 							]
 						}
 					},
@@ -167,6 +207,16 @@
 				{
 					"name": "Delete users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjQ0OTIsImV4cCI6MTYzODUxMDg5Mn0.rS8MXs2fTtYMdlY90AydddEMiX_I88c2pe42-xYGt8M",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -204,7 +254,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4Mjk1MzI2LCJleHAiOjE2MzgzODE3MjZ9.n67I2Q6WAGzYvQjhfrcecuWYRmtvVHDLE-5gQupqbVU",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjQ0OTIsImV4cCI6MTYzODUxMDg5Mn0.rS8MXs2fTtYMdlY90AydddEMiX_I88c2pe42-xYGt8M",
 									"type": "string"
 								}
 							]
@@ -213,7 +263,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Corinthians\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"type\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"author\":\"Fieis Anonimos\",\r\n    \"bibliographicSource\": \"Eu Mesmo\",\r\n    \"otherInfo\": \"Nenhuma\",\r\n    \"observation\": \"Sou Lindo\",\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Corinthians\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"propertyType\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -298,7 +348,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/property/search?designation={{designation}}",
+							"raw": "http://localhost:8080/property/search",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -311,7 +361,58 @@
 							"query": [
 								{
 									"key": "designation",
-									"value": "{{designation}}"
+									"value": "Estádio",
+									"disabled": true
+								},
+								{
+									"key": "street",
+									"value": "AV. Faria Lima",
+									"disabled": true
+								},
+								{
+									"key": "constructionYear",
+									"value": "1800",
+									"disabled": true
+								},
+								{
+									"key": "architecturalStyle",
+									"value": "Gótico",
+									"disabled": true
+								},
+								{
+									"key": "author",
+									"value": "Fieis Anonimos",
+									"disabled": true
+								},
+								{
+									"key": "originalUsage",
+									"value": "Igreja",
+									"disabled": true
+								},
+								{
+									"key": "addressType",
+									"value": "Prédio",
+									"disabled": true
+								},
+								{
+									"key": "addressTitle",
+									"value": "São João",
+									"disabled": true
+								},
+								{
+									"key": "addressNumber",
+									"value": "532",
+									"disabled": true
+								},
+								{
+									"key": "district",
+									"value": "Brigadeiro",
+									"disabled": true
+								},
+								{
+									"key": "regionalHall",
+									"value": "São Paulo",
+									"disabled": true
 								}
 							]
 						}
@@ -326,7 +427,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4Mjk2MTE1LCJleHAiOjE2MzgzODI1MTV9.-fPnGFc_SzwBP5X688NMRJWDXd9ICErk0XWqf_bDi_8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjM5MzUsImV4cCI6MTYzODUxMDMzNX0.w4oDX5Gm-UwkOlp_NbL_HvDa44dcbG-xkVAzOWtizzc",
 									"type": "string"
 								}
 							]
@@ -335,7 +436,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1980\"\r\n        }\r\n    ],\r\n    \"designation\":\"Edifício São João\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"type\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"constructiveTechnique\":\"Alvenaria de Aço\",\r\n        \"floorQuantity\":5,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada Muitas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"author\":\"Fieis Anonimos\",\r\n    \"bibliographicSource\": \"Eu Mesmo\",\r\n    \"otherInfo\": \"Nenhuma\",\r\n    \"observation\": \"Sou Lindo\",\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Corinthians\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"propertyType\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -365,7 +466,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4Mjk2MTE1LCJleHAiOjE2MzgzODI1MTV9.-fPnGFc_SzwBP5X688NMRJWDXd9ICErk0XWqf_bDi_8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjQ1ODcsImV4cCI6MTYzODUxMDk4N30.EeQUPvlFssZJcWeP4QqpTMARh089I3135LKQZg8UWpI",
 									"type": "string"
 								}
 							]

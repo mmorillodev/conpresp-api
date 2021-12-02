@@ -22,6 +22,12 @@ public class Construction {
     private Year constructionYear;
 
     @NonNull
+    private String author;
+
+    @NonNull
+    private String constructor;
+
+    @NonNull
     private String architecturalStyle;
 
     @NonNull

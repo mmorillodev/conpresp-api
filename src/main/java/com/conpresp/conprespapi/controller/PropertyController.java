@@ -1,18 +1,15 @@
 package com.conpresp.conprespapi.controller;
 
-import com.conpresp.conprespapi.Specifications.PropertySearchCriteria;
-import com.conpresp.conprespapi.Specifications.PropertySpecifications;
-import com.conpresp.conprespapi.dto.error.ErrorResponse;
+import com.conpresp.conprespapi.Specifications.Property.PropertySearchCriteria;
+import com.conpresp.conprespapi.Specifications.Property.PropertySpecifications;
 import com.conpresp.conprespapi.dto.property.request.PropertyCreateRequest;
 import com.conpresp.conprespapi.dto.property.request.PropertyUpdateRequest;
 import com.conpresp.conprespapi.dto.property.response.PropertyBasicInfoResponse;
 import com.conpresp.conprespapi.dto.property.response.PropertyDetailsResponse;
-import com.conpresp.conprespapi.exception.InvalidOperatorException;
 import com.conpresp.conprespapi.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.time.Year;
 import java.util.Optional;
 
 @RestController

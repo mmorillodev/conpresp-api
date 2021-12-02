@@ -12,6 +12,8 @@ import com.conpresp.conprespapi.repository.ProfileRepository;
 import com.conpresp.conprespapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +49,8 @@ public class UserService {
         return createdUser.getId();
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public Page<User> getUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public Optional<User> getUserById(String uuid) {
@@ -61,11 +63,13 @@ public class UserService {
 
     public User updateUser(String uuid, UserUpdateRequest userUpdateRequest) throws ChangeSetPersister.NotFoundException {
         var profile = profileRepository.findByName(userUpdateRequest.getProfile()).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        var userGroup = groupRepository.findByName(userUpdateRequest.getUserGroup()).orElseThrow(ChangeSetPersister.NotFoundException::new);
         var user = userRepository.findById(uuid).orElseThrow(ChangeSetPersister.NotFoundException::new);
         user.setProfile(profile);
         user.setFirstName(userUpdateRequest.getFirstName());
         user.setLastName(userUpdateRequest.getLastName());
         user.setEmail(userUpdateRequest.getEmail());
+        user.setUserGroup(userGroup);
 
         userRepository.save(user);
 

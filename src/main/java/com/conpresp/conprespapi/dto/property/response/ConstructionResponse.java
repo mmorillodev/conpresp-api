@@ -13,6 +13,10 @@ public class ConstructionResponse {
 
     private Year constructionYear;
 
+    private String author;
+
+    private String constructor;
+
     private String architecturalStyle;
 
     private String constructiveTechnique;
@@ -36,6 +40,8 @@ public class ConstructionResponse {
     public static ConstructionResponse fromConstruction(Construction construction) {
         return new ConstructionResponse(
                 construction.getConstructionYear(),
+                construction.getAuthor(),
+                construction.getConstructor(),
                 construction.getArchitecturalStyle(),
                 construction.getConstructiveTechnique(),
                 construction.getFloorQuantity(),

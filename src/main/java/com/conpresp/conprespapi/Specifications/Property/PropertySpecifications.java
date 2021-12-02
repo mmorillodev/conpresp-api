@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.Specifications;
+package com.conpresp.conprespapi.Specifications.Property;
 
 import com.conpresp.conprespapi.entity.property.AddressLot_;
 import com.conpresp.conprespapi.entity.property.Construction_;
@@ -71,7 +71,7 @@ public class PropertySpecifications {
     }
 
     public static Specification<Property> searchByAuthor(Optional<String> author) {
-        return (root, query, criteriaBuilder) -> author.map(constructionAuthor -> criteriaBuilder.like(root.get(Property_.AUTHOR), "%" + author.get() + "%"))
+        return (root, query, criteriaBuilder) -> author.map(constructionAuthor -> criteriaBuilder.like(root.get(Property_.CONSTRUCTION).get(Construction_.AUTHOR), "%" + author.get() + "%"))
                 .orElse(null);
     }
 
