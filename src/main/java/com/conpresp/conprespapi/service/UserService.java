@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,8 @@ public class UserService {
         return userRepository.findById(uuid);
     }
 
+    public Page<User> search(Specification<User> specification, Pageable pageable) { return userRepository.findAll(specification, pageable); }
+
     public void deleteById(String uuid) {
         userRepository.deleteById(uuid);
     }
@@ -70,6 +73,7 @@ public class UserService {
         user.setLastName(userUpdateRequest.getLastName());
         user.setEmail(userUpdateRequest.getEmail());
         user.setUserGroup(userGroup);
+        user.setStatus(userUpdateRequest.getStatus());
 
         userRepository.save(user);
 

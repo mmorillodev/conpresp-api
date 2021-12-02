@@ -30,4 +30,7 @@ public class UserUpdateRequest {
     @NotBlank
     private String userGroup;
 
+    @NotBlank
+    private String status;
+
 }

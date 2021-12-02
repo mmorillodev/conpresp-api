@@ -24,7 +24,7 @@ public class UserDetailResponse {
 
     private String email;
 
-    private UserStatus status;
+    private String status;
 
     private String createdBy;
 

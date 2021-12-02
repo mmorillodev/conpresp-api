@@ -1,5 +1,7 @@
 package com.conpresp.conprespapi.controller;
 
+import com.conpresp.conprespapi.Specifications.User.UserSearchCriteria;
+import com.conpresp.conprespapi.Specifications.User.UserSpecifications;
 import com.conpresp.conprespapi.dto.error.ErrorResponse;
 import com.conpresp.conprespapi.dto.user.*;
 import com.conpresp.conprespapi.exception.NotEqualsException;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -50,11 +53,35 @@ public class UserController {
         return users.map(UserBasicResponse::fromUser);
     }
 
-    @GetMapping("/{uuid}") 
+    @GetMapping("/{uuid}")
     public ResponseEntity<UserDetailResponse> getUserByUuid(@PathVariable String uuid) {
         return userService.getUserById(uuid).map(user ->
                 ResponseEntity.ok().body(UserDetailResponse.fromUser(user))
         ).orElse(ResponseEntity.notFound().build());
+    }
+
+    //TODO: Using Optional<> is bad practice, maybe Matheus will help me?
+    @GetMapping("/search")
+    public Page<UserBasicResponse> search
+            (@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+             @RequestParam(value = "name", required = false) Optional<String> name,
+             @RequestParam(value = "lastName", required = false) Optional<String> lastName,
+             @RequestParam(value = "email", required = false) Optional<String> email,
+             @RequestParam(value = "profile", required = false) Optional<String> profile,
+             @RequestParam(value = "status", required = false) Optional<String> status)
+    {
+        UserSearchCriteria searchCriteria = UserSearchCriteria.builder()
+                .name(name)
+                .lastName(lastName)
+                .email(email)
+                .profile(profile)
+                .status(status)
+                .build();
+
+        var specification = UserSpecifications.search(searchCriteria);
+        var user = userService.search(specification, pageable);
+
+        return user.map(UserBasicResponse::fromUser);
     }
 
     @PutMapping("/{uuid}")

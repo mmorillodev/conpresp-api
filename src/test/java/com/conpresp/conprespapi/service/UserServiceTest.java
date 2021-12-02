@@ -62,7 +62,7 @@ class UserServiceTest {
 
     @Test
     void shouldReturnUpdatedUser() throws ChangeSetPersister.NotFoundException {
-        var updateRequest = new UserUpdateRequest("COMMON","Name", "Last name", "other@mail.com", "UAM");
+        var updateRequest = new UserUpdateRequest("COMMON","Name", "Last name", "other@mail.com", "UAM", "ACTIVE");
 
         when(userRepository.findById("UUID")).thenReturn(Optional.of(new User()));
         when(profileRepository.findByName("COMMON")).thenReturn(Optional.of(new Profile()));

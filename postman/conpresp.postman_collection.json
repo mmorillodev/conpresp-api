@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"Raphael_nask@hotmail.com\",\n    \"password\": \"123456789\"\n}",
+							"raw": "{\n    \"email\": \"Raphael_nask@hotmail.com\",\n    \"password\": \"1234567891011\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -159,6 +159,63 @@
 					"response": []
 				},
 				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjczODEsImV4cCI6MTYzODUxMzc4MX0.S-aPoKRle8mQnvtXDgoCS9L9-fflRXRNfApI7xbld6o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Raphael",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Nask",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "Raphael_nask@hotmail.com",
+									"disabled": true
+								},
+								{
+									"key": "profile",
+									"value": "ADMINISTRATOR",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "INACTIVE",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update user",
 					"request": {
 						"auth": {
@@ -182,7 +239,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Matheus\",\n    \"lastName\": \"Morillo\",\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\",\n    \"profile\": \"ADMINISTRATOR\",\n    \"userGroup\": \"DHP\"\n}",
+							"raw": "{\n    \"firstName\": \"Matheus\",\n    \"lastName\": \"Morillo\",\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\",\n    \"profile\": \"ADMINISTRATOR\",\n    \"userGroup\": \"DHP\",\n    \"status\": \"ACTIVE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -190,7 +247,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/1",
+							"raw": "http://localhost:8080/users/{{uuid}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -198,7 +255,47 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"1"
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjU0NzMsImV4cCI6MTYzODUxMTg3M30.40PNAmtj76vCRuKAI1ci4wWjuPk92ATMmDUwYUPPcp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"1234567891011\",\r\n    \"confirmPassword\": \"1234567891011\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/{{uuid}}/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"{{uuid}}",
+								"change-password"
 							]
 						}
 					},
@@ -227,7 +324,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/users/{{user_id}}",
+							"raw": "http://localhost:8080/users/{{uuid}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -235,7 +332,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"{{user_id}}"
+								"{{uuid}}"
 							]
 						}
 					},

@@ -28,7 +28,7 @@ public class UserBasicResponse {
                 user.getLastName(),
                 user.getEmail(),
                 user.getProfile().getName(),
-                user.getStatus().name()
+                user.getStatus()
         );
     }
 }

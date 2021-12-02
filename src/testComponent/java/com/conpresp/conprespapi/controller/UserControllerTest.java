@@ -201,7 +201,7 @@ class UserControllerTest {
         var location = response.getResponse().getHeader("location");
         var uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        var userUpdateRequest = new UserUpdateRequest("COMMON","Rodrigo", "Nascimento", "Nask@Hotmail.com", "UAM");
+        var userUpdateRequest = new UserUpdateRequest("COMMON","Rodrigo", "Nascimento", "Nask@Hotmail.com", "UAM", "ACTIVE");
 
         userMockMvc.appendPathVar(uuid).put(userUpdateRequest)
                 .andExpect(status().isOk())
@@ -215,7 +215,7 @@ class UserControllerTest {
 
     @Test
     void shoudReturnNotFoundWhenTryingUpdateAnNonexistentUser() throws Exception {
-        var userUpdateRequest = new UserUpdateRequest("COMMON", "Rodrigo", "Nascimento", "Nask@Hotmail.com", "UAM");
+        var userUpdateRequest = new UserUpdateRequest("COMMON", "Rodrigo", "Nascimento", "Nask@Hotmail.com", "UAM", "ACTIVE");
 
         userMockMvc.appendPathVar("InvalidId").put(userUpdateRequest)
                 .andExpect(status().isNotFound());
