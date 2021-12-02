@@ -55,11 +55,11 @@ public class PropertyUpdateRequest {
         property.setPropertyResolutions(propertyResolutions);
         property.setGraphicDocumentation(graphicDocumentations);
         property.setPhotographicDocumentation(photographicDocumentations);
-        property.setDesignation(property.getDesignation());
-        property.setClassification(property.getClassification());
-        property.setCurrentUsage(property.getCurrentUsage());
-        property.setOriginalUsage(property.getOriginalUsage());
-        property.setPropertyType(property.getPropertyType());
+        property.setDesignation(this.getDesignation());
+        property.setClassification(this.getClassification());
+        property.setCurrentUsage(this.getCurrentUsage());
+        property.setOriginalUsage(this.getOriginalUsage());
+        property.setPropertyType(this.getPropertyType());
         property.setConstruction(this.getConstruction().toConstruction());
         property.setAddressLot(this.getAddressLot().toAddressLot());
         property.setDescription(this.getDescription().toDescription());
