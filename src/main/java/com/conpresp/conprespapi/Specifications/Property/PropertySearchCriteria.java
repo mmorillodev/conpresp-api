@@ -11,6 +11,8 @@ import java.util.Optional;
 public class PropertySearchCriteria {
     private Optional<String> designation;
 
+    private Optional<String> resolution;
+
     private Optional<String> originalUsage;
 
     private Optional<String> addressType;

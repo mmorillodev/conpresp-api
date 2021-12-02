@@ -55,6 +55,7 @@ public class PropertyController {
     public Page<PropertyBasicInfoResponse> search
             (@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
              @RequestParam(value = "designation", required = false) Optional<String> designation,
+             @RequestParam(value = "resolution", required = false) Optional<String> resolution,
              @RequestParam(value = "originalUsage", required = false) Optional<String> originalUsage,
              @RequestParam(value = "addressType", required = false) Optional<String> addressType,
              @RequestParam(value = "addressTitle", required = false) Optional<String> addressTitle,
@@ -68,6 +69,7 @@ public class PropertyController {
     {
             PropertySearchCriteria searchCriteria = PropertySearchCriteria.builder()
                     .designation(designation)
+                    .resolution(resolution)
                     .originalUsage(originalUsage)
                     .addressType(addressType)
                     .addressTitle(addressTitle)
