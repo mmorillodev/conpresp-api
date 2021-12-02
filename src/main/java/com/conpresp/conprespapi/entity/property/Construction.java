@@ -1,4 +1,4 @@
-package com.conpresp.conprespapi.entity;
+package com.conpresp.conprespapi.entity.property;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.response;
 
-import com.conpresp.conprespapi.entity.Construction;
+import com.conpresp.conprespapi.entity.property.Construction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

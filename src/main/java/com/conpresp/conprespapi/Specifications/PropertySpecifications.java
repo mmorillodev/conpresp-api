@@ -1,9 +1,9 @@
 package com.conpresp.conprespapi.Specifications;
 
-import com.conpresp.conprespapi.entity.AddressLot_;
-import com.conpresp.conprespapi.entity.Construction_;
-import com.conpresp.conprespapi.entity.Property;
-import com.conpresp.conprespapi.entity.Property_;
+import com.conpresp.conprespapi.entity.property.AddressLot_;
+import com.conpresp.conprespapi.entity.property.Construction_;
+import com.conpresp.conprespapi.entity.property.Property;
+import com.conpresp.conprespapi.entity.property.Property_;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.Year;

@@ -1,8 +1,8 @@
 package com.conpresp.conprespapi.dto.property.response;
 
-import com.conpresp.conprespapi.entity.GraphicDocumentation;
-import com.conpresp.conprespapi.entity.PhotographicDocumentation;
-import com.conpresp.conprespapi.entity.Property;
+import com.conpresp.conprespapi.entity.property.GraphicDocumentation;
+import com.conpresp.conprespapi.entity.property.PhotographicDocumentation;
+import com.conpresp.conprespapi.entity.property.Property;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

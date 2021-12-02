@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.request;
 
-import com.conpresp.conprespapi.entity.GraphicDocumentation;
+import com.conpresp.conprespapi.entity.property.GraphicDocumentation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

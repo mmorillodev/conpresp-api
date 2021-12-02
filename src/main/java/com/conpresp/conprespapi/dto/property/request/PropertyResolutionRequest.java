@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.request;
 
-import com.conpresp.conprespapi.entity.PropertyResolution;
+import com.conpresp.conprespapi.entity.property.PropertyResolution;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

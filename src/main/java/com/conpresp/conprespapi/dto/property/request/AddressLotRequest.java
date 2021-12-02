@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.request;
 
-import com.conpresp.conprespapi.entity.AddressLot;
+import com.conpresp.conprespapi.entity.property.AddressLot;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

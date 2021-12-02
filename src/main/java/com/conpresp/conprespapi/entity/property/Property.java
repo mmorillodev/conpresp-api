@@ -1,5 +1,6 @@
-package com.conpresp.conprespapi.entity;
+package com.conpresp.conprespapi.entity.property;
 
+import com.conpresp.conprespapi.entity.Auditable;
 import lombok.*;
 
 import javax.persistence.*;

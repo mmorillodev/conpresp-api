@@ -1,8 +1,7 @@
 package com.conpresp.conprespapi.service;
 
 import com.conpresp.conprespapi.dto.property.request.*;
-import com.conpresp.conprespapi.entity.Property;
-import com.conpresp.conprespapi.exception.ResourceCreationException;
+import com.conpresp.conprespapi.entity.property.Property;
 import com.conpresp.conprespapi.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -10,9 +9,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PropertyService {

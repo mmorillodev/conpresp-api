@@ -1,6 +1,6 @@
 package com.conpresp.conprespapi.dto.property.request;
 
-import com.conpresp.conprespapi.entity.Construction;
+import com.conpresp.conprespapi.entity.property.Construction;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
