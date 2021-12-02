@@ -50,23 +50,22 @@ public class PropertyController {
         ).orElse(ResponseEntity.notFound().build());
     }
 
-    //TODO: Using Optional<> is bad practice, maybe Matheus will help me?
     @GetMapping("/search")
-    public Page<PropertyBasicInfoResponse> search
-            (@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-             @RequestParam(value = "designation", required = false) Optional<String> designation,
-             @RequestParam(value = "resolution", required = false) Optional<String> resolution,
-             @RequestParam(value = "originalUsage", required = false) Optional<String> originalUsage,
-             @RequestParam(value = "addressType", required = false) Optional<String> addressType,
-             @RequestParam(value = "addressTitle", required = false) Optional<String> addressTitle,
-             @RequestParam(value = "street", required = false) Optional<String> street,
-             @RequestParam(value = "addressNumber", required = false) Optional<String> addressNumber,
-             @RequestParam(value = "district", required = false) Optional<String> district,
-             @RequestParam(value = "regionalHall", required = false) Optional<String> regionalHall,
-             @RequestParam(value = "author", required = false) Optional<String> author,
-             @RequestParam(value = "constructionYear", required = false) Optional<String> constructionYear,
-             @RequestParam(value = "architecturalStyle", required = false) Optional<String> architecturalStyle)
-    {
+    public Page<PropertyBasicInfoResponse> search(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+             @RequestParam(value = "designation", required = false) String designation,
+             @RequestParam(value = "resolution", required = false) String resolution,
+             @RequestParam(value = "originalUsage", required = false) String originalUsage,
+             @RequestParam(value = "addressType", required = false) String addressType,
+             @RequestParam(value = "addressTitle", required = false) String addressTitle,
+             @RequestParam(value = "street", required = false) String street,
+             @RequestParam(value = "addressNumber", required = false) String addressNumber,
+             @RequestParam(value = "district", required = false) String district,
+             @RequestParam(value = "regionalHall", required = false) String regionalHall,
+             @RequestParam(value = "author", required = false) String author,
+             @RequestParam(value = "constructionYear", required = false) String constructionYear,
+             @RequestParam(value = "architecturalStyle", required = false) String architecturalStyle
+    ) {
             PropertySearchCriteria searchCriteria = PropertySearchCriteria.builder()
                     .designation(designation)
                     .resolution(resolution)

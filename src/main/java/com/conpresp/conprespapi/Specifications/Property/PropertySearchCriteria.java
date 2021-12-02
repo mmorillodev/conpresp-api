@@ -9,27 +9,27 @@ import java.util.Optional;
 @Getter @Setter
 @Builder
 public class PropertySearchCriteria {
-    private Optional<String> designation;
+    private String designation;
 
-    private Optional<String> resolution;
+    private String resolution;
 
-    private Optional<String> originalUsage;
+    private String originalUsage;
 
-    private Optional<String> addressType;
+    private String addressType;
 
-    private Optional<String> addressTitle;
+    private String addressTitle;
 
-    private Optional<String> street;
+    private String street;
 
-    private Optional<String> addressNumber;
+    private String addressNumber;
 
-    private Optional<String> district;
+    private String district;
 
-    private Optional<String> regionalHall;
+    private String regionalHall;
 
-    private Optional<String> author;
+    private String author;
 
-    private Optional<String> constructionYear;
+    private String constructionYear;
 
-    private Optional<String> architecturalStyle;
+    private String architecturalStyle;
 }

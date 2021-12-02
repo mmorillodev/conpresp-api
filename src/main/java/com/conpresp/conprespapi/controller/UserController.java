@@ -60,16 +60,15 @@ public class UserController {
         ).orElse(ResponseEntity.notFound().build());
     }
 
-    //TODO: Using Optional<> is bad practice, maybe Matheus will help me?
     @GetMapping("/search")
-    public Page<UserBasicResponse> search
-            (@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-             @RequestParam(value = "name", required = false) Optional<String> name,
-             @RequestParam(value = "lastName", required = false) Optional<String> lastName,
-             @RequestParam(value = "email", required = false) Optional<String> email,
-             @RequestParam(value = "profile", required = false) Optional<String> profile,
-             @RequestParam(value = "status", required = false) Optional<String> status)
-    {
+    public Page<UserBasicResponse> search(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+             @RequestParam(value = "name", required = false) String name,
+             @RequestParam(value = "lastName", required = false) String lastName,
+             @RequestParam(value = "email", required = false) String email,
+             @RequestParam(value = "profile", required = false) String profile,
+             @RequestParam(value = "status", required = false) String status
+    ) {
         UserSearchCriteria searchCriteria = UserSearchCriteria.builder()
                 .name(name)
                 .lastName(lastName)
@@ -102,7 +101,7 @@ public class UserController {
         try {
             var updatedUser = userService.updatePassword(uuid, userPasswordRequest);
             return ResponseEntity.ok(UserDetailResponse.fromUser(updatedUser));
-        }catch (ChangeSetPersister.NotFoundException e){
+        } catch (ChangeSetPersister.NotFoundException e){
             return ResponseEntity.notFound().build();
         } catch (NotEqualsException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse("The given password are not the same."));

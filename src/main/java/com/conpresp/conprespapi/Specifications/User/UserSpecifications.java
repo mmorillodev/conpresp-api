@@ -17,29 +17,44 @@ public class UserSpecifications {
                 .and(searchByStatus(searchCriteria.getStatus()));
     }
 
-    public static Specification<User> searchByName(Optional<String> name) {
-        return (root, query, criteriaBuilder) -> name.map(firstName -> criteriaBuilder.like(root.get(User_.FIRST_NAME), "%" + name.get() + "%"))
-                .orElse(null);
+    public static Specification<User> searchByName(String name) {
+        return (root, query, criteriaBuilder) -> {
+            if (name == null) return null;
+
+            return criteriaBuilder.like(root.get(User_.FIRST_NAME), "%" + name + "%");
+        };
     }
 
-    public static Specification<User> searchByLastName(Optional<String> name) {
-        return (root, query, criteriaBuilder) -> name.map(lastName -> criteriaBuilder.like(root.get(User_.LAST_NAME), "%" + name.get() + "%"))
-                .orElse(null);
+    public static Specification<User> searchByLastName(String name) {
+        return (root, query, criteriaBuilder) -> {
+            if (name == null) return null;
+
+            return criteriaBuilder.like(root.get(User_.LAST_NAME), "%" + name + "%");
+        };
     }
 
-    public static Specification<User> searchByEmail(Optional<String> email) {
-        return (root, query, criteriaBuilder) -> email.map(userEmail -> criteriaBuilder.like(root.get(User_.EMAIL), "%" + email.get() + "%"))
-                .orElse(null);
+    public static Specification<User> searchByEmail(String email) {
+        return (root, query, criteriaBuilder) -> {
+            if (email == null) return null;
+
+            return criteriaBuilder.like(root.get(User_.EMAIL), "%" + email + "%");
+        };
     }
 
-    public static Specification<User> searchByProfile(Optional<String> profile) {
-        return (root, query, criteriaBuilder) -> profile.map(profileName -> criteriaBuilder.like(root.get(User_.PROFILE).get(Profile_.NAME), "%" + profile.get() + "%"))
-                .orElse(null);
+    public static Specification<User> searchByProfile(String profile) {
+        return (root, query, criteriaBuilder) -> {
+            if (profile == null) return null;
+
+            return criteriaBuilder.like(root.get(User_.PROFILE).get(Profile_.NAME), "%" + profile + "%");
+        };
     }
 
-    public static Specification<User> searchByStatus(Optional<String> status) {
-        return (root, query, criteriaBuilder) -> status.map(userStatus -> criteriaBuilder.equal(root.get(User_.STATUS), status.get()))
-                .orElse(null);
+    public static Specification<User> searchByStatus(String status) {
+        return (root, query, criteriaBuilder) -> {
+            if (status == null) return null;
+
+            return criteriaBuilder.equal(root.get(User_.STATUS), status);
+        };
     }
 
 }

@@ -10,13 +10,13 @@ import java.util.Optional;
 @Builder
 public class UserSearchCriteria {
 
-    private Optional<String> name;
+    private String name;
 
-    private Optional<String> lastName;
+    private String lastName;
 
-    private Optional<String> email;
+    private String email;
 
-    private Optional<String> profile;
+    private String profile;
 
-    private Optional<String> status;
+    private String status;
 }
