@@ -32,11 +32,13 @@
 							"path": [
 								"auth"
 							]
-						}
+						},
+						"description": "Endpoint de login, logo ele é aberto para todos os usuários. Aceita dois parâmetros sendo eles:\n\n*   username\n*   senha\n    \n\nRespostas esperadas:\n\n*   HTTP 200 OK - Usuário autenticado\n*   HTTP 400 Bad Request - Email ou senha inválidos\n*   HTTP 403 Forbidden - Usuário inativado"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Endpoint de login, logo ele é aberto para todos os usuários. Aceita dois parâmetros sendo eles:\n\n*   username\n*   senha\n    \n\nRespostas esperadas:\n\n*   HTTP 200 OK - Usuário autenticado\n*   HTTP 400 Bad Request - Email ou senha inválidos\n*   HTTP 403 Forbidden - Usuário inativado"
 		},
 		{
 			"name": "User",
@@ -81,12 +83,13 @@
 							"path": [
 								"users"
 							]
-						}
+						},
+						"description": "Endpoint para adicionar usuários, somente aceita requisições de usuários administradores. Aceita 7 parâmetros sendo eles:\n\n*   firstname - primeiro nome do usuário\n*   lasname - sobrenome do usuário\n*   email - e-mail do usuário\n*   password - senha do usuário\n*   confirmPassword - confirmação de senha do usuário, tem que ser a mesma senha do campo password\n*   profile - perfil do usuário\n*   userGroup - grupo do usuário\n    \n\nRespostas esperadas:\n\n*   HTTP 200 created - usuário criado\n*   HTTP 401 Bad Request - Algum campo está invalido, nesse caso no corpo da resposta terá a causa do erro"
 					},
 					"response": []
 				},
 				{
-					"name": "Get users",
+					"name": "Get user",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -118,43 +121,8 @@
 								"users",
 								"{{uuid}}"
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get user",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg0MjM5MzUsImV4cCI6MTYzODUxMDMzNX0.w4oDX5Gm-UwkOlp_NbL_HvDa44dcbG-xkVAzOWtizzc",
-									"type": "string"
-								}
-							]
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIyMWRiN2UyNC1kZmIxLTQxMGMtYjc3Zi0xNDk0NGFiMGMwYmQiLCJpYXQiOjE2MzY1MDEwOTEsImV4cCI6MTYzNjU4NzQ5MX0.se4Rxvvu2FvCY7cj8tZ16z8LXXmBTvf7sbEs228SUb8",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users"
-							]
-						}
+						"description": "Endpoint para pesquisar usuários, necessita do UUID do usuário no final da URL.\n\nResposta:\n\n*   HTTP 200 OK - usuário encontrado\n*   HTTP 404 NOT FOUND - usuário não encontrado"
 					},
 					"response": []
 				},
@@ -211,7 +179,8 @@
 									"disabled": true
 								}
 							]
-						}
+						},
+						"description": "Endpoint de pesquisa de usuários, aceitas na url os seguintes parâmetros:\n\n*   name\n*   lastName\n*   email\n*   profile\n*   status\n    \n\nResposta:\n\n*   HTTP 200 OK - um objeto de paginação, os usuários estarão no campo \"content\""
 					},
 					"response": []
 				},
@@ -239,7 +208,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Matheus\",\n    \"lastName\": \"Morillo\",\n    \"email\": \"matheus.morillo2000@gmail.com\",\n    \"password\": \"123456789\",\n    \"profile\": \"ADMINISTRATOR\",\n    \"userGroup\": \"DHP\",\n    \"status\": \"ACTIVE\"\n}",
+							"raw": "{\n    \"firstName\": \"Raphael\",\n    \"lastName\": \"Nask\",\n    \"email\": \"raphael_nask@hotmail.com\",\n    \"profile\": \"ADMINISTRATOR\",\n    \"userGroup\": \"DHP\",\n    \"status\": \"ACTIVE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -257,7 +226,8 @@
 								"users",
 								"{{uuid}}"
 							]
-						}
+						},
+						"description": "Endpoint para atualizar os usuários necessita do *UUID* do usuário a ser atualizado, somente usuários administradores podem utilizar. Aceita os seguintes parâmetros:\n\n*   firstName\n*   lastName\n*   email\n*   password\n*   profile\n*   userGroup\n*   status\n    \n\nResposta:\n\n*   HTTP 200 OK - contém um objeto com o usuário atualizado.\n*   HTTP 404 NOT FOUND"
 					},
 					"response": []
 				},
@@ -297,7 +267,8 @@
 								"{{uuid}}",
 								"change-password"
 							]
-						}
+						},
+						"description": "Endpoint para atualizar a senha, necessita do *UUID* do usuário a ser atualizado, somente usuários administradores podem utilizar o endpoint. Aceita os seguintes parâmetros:\n\n*   password\n*   confirmPassword\n    \n\nResposta:\n\n*   HTTP 200 OK\n*   HTTP 404 NOT FOUND"
 					},
 					"response": []
 				},
@@ -334,7 +305,8 @@
 								"users",
 								"{{uuid}}"
 							]
-						}
+						},
+						"description": "Endpoint para deletar usuários, necessita do *UUID* para funcionar, somente usuários administradores podem acessar o endpoint.\n\nRespostas:\n\n*   HTTP 204 NO CONTENT\n*   HTTP 404 NOT FOUND"
 					},
 					"response": []
 				}
@@ -377,7 +349,8 @@
 							"path": [
 								"property"
 							]
-						}
+						},
+						"description": "Endpoint para inserir novas propriedades, somentes usuários moderadores e administradores podem acessar o endpont.\n\nResposta:\n\n*   HTTP 201 CREATED - propriedade criada\n*   HTTP 401 BAD REQUEST - nesse caso será informado no corpo da resposta o motivo do erro."
 					},
 					"response": []
 				},
@@ -407,35 +380,8 @@
 								"property",
 								"{{uuid}}"
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Pageable Property",
-					"request": {
-						"auth": {
-							"type": "noauth"
 						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/property?size=15",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"property"
-							],
-							"query": [
-								{
-									"key": "size",
-									"value": "15"
-								}
-							]
-						}
+						"description": "Endpoint para pesquisar a propriedade, necessita do *UUID* da propriedade.\n\nResposta:\n\n*   HTTP 200 OK - propriedade encontrada\n*   HTTP 404 NOT FOUND - propriedade não encontrada"
 					},
 					"response": []
 				},
@@ -445,15 +391,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/property/search",
+							"raw": "http://localhost:8080/property",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"property",
-								"search"
+								"property"
 							],
 							"query": [
 								{
@@ -510,9 +455,15 @@
 									"key": "regionalHall",
 									"value": "São Paulo",
 									"disabled": true
+								},
+								{
+									"key": "resolution",
+									"value": "Res. 25 de 98",
+									"disabled": true
 								}
 							]
-						}
+						},
+						"description": "Endpoint para pesquisa de propriedades, aceita os seguintes parâmetros na url:\n\n*   designation\n*   street\n*   constructionYear\n*   archtecturalStyle\n*   author\n*   originalUsage\n*   addressType\n*   addressTitle\n*   addressNumber\n*   district\n*   regionalHall\n*   resolution\n    \n\nResposta:\n\n*   HTTP 200 OK - contém um objeto de paginação, as propriedades vão estar no campo \"content\""
 					},
 					"response": []
 				},
@@ -533,7 +484,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Corinthians\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"propertyType\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Santos\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"propertyType\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1500\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -541,7 +492,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/property/{{uuid}}",
+							"raw": "http://localhost:8080/property/ce825c42-2006-4da1-8725-83336ef7f22a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -549,9 +500,10 @@
 							"port": "8080",
 							"path": [
 								"property",
-								"{{uuid}}"
+								"ce825c42-2006-4da1-8725-83336ef7f22a"
 							]
-						}
+						},
+						"description": "Endpoint para atualizar a propriedade, somente administradores e moderadores podem utilizar, necessita do *UUID* para funcionar.\n\nResposta:"
 					},
 					"response": []
 				},
@@ -581,7 +533,8 @@
 								"property",
 								"{{uuid}}"
 							]
-						}
+						},
+						"description": "Endpoint para deletar propriedade, necessita do *UUID* para funcionar, somente usuários administradores podem acessar o endpoint.\n\nRespostas:\n\n*   HTTP 204 NO CONTENT\n*   HTTP 404 NOT FOUND"
 					},
 					"response": []
 				}
