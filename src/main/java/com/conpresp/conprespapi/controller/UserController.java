@@ -15,11 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -47,10 +47,22 @@ public class UserController {
     }
 
     @GetMapping
-    public Page<UserBasicResponse> getAllUsers(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        var users = userService.getUsers(pageable);
+    public Page<UserBasicResponse> search(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam MultiValueMap<String, String> params
+    ) {
+        UserSearchCriteria searchCriteria = UserSearchCriteria.builder()
+                .name(params.getFirst("name"))
+                .lastName(params.getFirst("lastName"))
+                .email(params.getFirst("email"))
+                .profile(params.getFirst("profile"))
+                .status(params.getFirst("status"))
+                .build();
 
-        return users.map(UserBasicResponse::fromUser);
+        var specification = UserSpecifications.search(searchCriteria);
+        var user = userService.search(specification, pageable);
+
+        return user.map(UserBasicResponse::fromUser);
     }
 
     @GetMapping("/{uuid}")
@@ -58,29 +70,6 @@ public class UserController {
         return userService.getUserById(uuid).map(user ->
                 ResponseEntity.ok().body(UserDetailResponse.fromUser(user))
         ).orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/search")
-    public Page<UserBasicResponse> search(
-            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-             @RequestParam(value = "name", required = false) String name,
-             @RequestParam(value = "lastName", required = false) String lastName,
-             @RequestParam(value = "email", required = false) String email,
-             @RequestParam(value = "profile", required = false) String profile,
-             @RequestParam(value = "status", required = false) String status
-    ) {
-        UserSearchCriteria searchCriteria = UserSearchCriteria.builder()
-                .name(name)
-                .lastName(lastName)
-                .email(email)
-                .profile(profile)
-                .status(status)
-                .build();
-
-        var specification = UserSpecifications.search(searchCriteria);
-        var user = userService.search(specification, pageable);
-
-        return user.map(UserBasicResponse::fromUser);
     }
 
     @PutMapping("/{uuid}")
@@ -101,7 +90,7 @@ public class UserController {
         try {
             var updatedUser = userService.updatePassword(uuid, userPasswordRequest);
             return ResponseEntity.ok(UserDetailResponse.fromUser(updatedUser));
-        } catch (ChangeSetPersister.NotFoundException e){
+        } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (NotEqualsException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse("The given password are not the same."));

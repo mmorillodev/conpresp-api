@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -37,8 +38,27 @@ public class PropertyController {
     }
 
     @GetMapping
-    public Page<PropertyBasicInfoResponse> getAllProperty(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        var property = propertyService.getAllProperty(pageable);
+    public Page<PropertyBasicInfoResponse> search(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam MultiValueMap<String, String> params
+    ) {
+        PropertySearchCriteria searchCriteria = PropertySearchCriteria.builder()
+                .designation(params.getFirst("designation"))
+                .resolution(params.getFirst("resolution"))
+                .originalUsage(params.getFirst("originalUsage"))
+                .addressType(params.getFirst("addressType"))
+                .addressTitle(params.getFirst("addressTitle"))
+                .street(params.getFirst("street"))
+                .addressNumber(params.getFirst("addressNumber"))
+                .district(params.getFirst("district"))
+                .regionalHall(params.getFirst("regionalHall"))
+                .author(params.getFirst("author"))
+                .constructionYear(params.getFirst("constructionYear"))
+                .architecturalStyle(params.getFirst("architecturalStyle"))
+                .build();
+
+        var specification = PropertySpecifications.search(searchCriteria);
+        var property = propertyService.search(specification, pageable);
 
         return property.map(PropertyBasicInfoResponse::fromProperty);
     }
@@ -48,43 +68,6 @@ public class PropertyController {
         return propertyService.getPropertyById(uuid).map(property ->
                 ResponseEntity.ok().body(PropertyDetailsResponse.fromProperty(property))
         ).orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/search")
-    public Page<PropertyBasicInfoResponse> search(
-            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-             @RequestParam(value = "designation", required = false) String designation,
-             @RequestParam(value = "resolution", required = false) String resolution,
-             @RequestParam(value = "originalUsage", required = false) String originalUsage,
-             @RequestParam(value = "addressType", required = false) String addressType,
-             @RequestParam(value = "addressTitle", required = false) String addressTitle,
-             @RequestParam(value = "street", required = false) String street,
-             @RequestParam(value = "addressNumber", required = false) String addressNumber,
-             @RequestParam(value = "district", required = false) String district,
-             @RequestParam(value = "regionalHall", required = false) String regionalHall,
-             @RequestParam(value = "author", required = false) String author,
-             @RequestParam(value = "constructionYear", required = false) String constructionYear,
-             @RequestParam(value = "architecturalStyle", required = false) String architecturalStyle
-    ) {
-            PropertySearchCriteria searchCriteria = PropertySearchCriteria.builder()
-                    .designation(designation)
-                    .resolution(resolution)
-                    .originalUsage(originalUsage)
-                    .addressType(addressType)
-                    .addressTitle(addressTitle)
-                    .street(street)
-                    .addressNumber(addressNumber)
-                    .district(district)
-                    .regionalHall(regionalHall)
-                    .author(author)
-                    .constructionYear(constructionYear)
-                    .architecturalStyle(architecturalStyle)
-                    .build();
-
-            var specification = PropertySpecifications.search(searchCriteria);
-            var property = propertyService.search(specification, pageable);
-
-            return property.map(PropertyBasicInfoResponse::fromProperty);
     }
 
     @PutMapping("/{uuid}")
