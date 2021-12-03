@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"Raphael_nask@hotmail.com\",\n    \"password\": \"1234567891011\"\n}",
+							"raw": "{\n    \"email\": \"Raphael@mail.com\",\n    \"password\": \"1234567891011\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -142,15 +142,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/search",
+							"raw": "http://localhost:8080/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"users",
-								"search"
+								"users"
 							],
 							"query": [
 								{
@@ -175,12 +174,12 @@
 								},
 								{
 									"key": "status",
-									"value": "INACTIVE",
+									"value": "ACTIVE",
 									"disabled": true
 								}
 							]
 						},
-						"description": "Endpoint de pesquisa de usuários, aceitas na url os seguintes parâmetros:\n\n*   name\n*   lastName\n*   email\n*   profile\n*   status\n    \n\nResposta:\n\n*   HTTP 200 OK - um objeto de paginação, os usuários estarão no campo \"content\""
+						"description": "Endpoint de pesquisa de usuários, aceita na url os seguintes parâmetros:\n\n*   name\n*   lastName\n*   email\n*   profile\n*   status\n    \n\nCaso não tenha parâmetros na url é retornado uma paginação com todos os usuários.\n\nResposta:\n\n*   HTTP 200 OK - um objeto de paginação, os usuários estarão no campo \"content\""
 					},
 					"response": []
 				},
@@ -463,7 +462,7 @@
 								}
 							]
 						},
-						"description": "Endpoint para pesquisa de propriedades, aceita os seguintes parâmetros na url:\n\n*   designation\n*   street\n*   constructionYear\n*   archtecturalStyle\n*   author\n*   originalUsage\n*   addressType\n*   addressTitle\n*   addressNumber\n*   district\n*   regionalHall\n*   resolution\n    \n\nResposta:\n\n*   HTTP 200 OK - contém um objeto de paginação, as propriedades vão estar no campo \"content\""
+						"description": "Endpoint para pesquisa de propriedades, aceita os seguintes parâmetros na url:\n\n*   designation\n*   street\n*   constructionYear\n*   archtecturalStyle\n*   author\n*   originalUsage\n*   addressType\n*   addressTitle\n*   addressNumber\n*   district\n*   regionalHall\n*   resolution\n    \n\nCaso não tenha parâmetros na url, será retornado uma paginação com todas as propriedades. Cada pagina tem um tamanho de 10 propriedades.\n\nResposta:\n\n*   HTTP 200 OK - contém um objeto de paginação, as propriedades vão estar no campo \"content\""
 					},
 					"response": []
 				},
@@ -492,7 +491,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/property/ce825c42-2006-4da1-8725-83336ef7f22a",
+							"raw": "http://localhost:8080/property/{{uuid}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -500,7 +499,7 @@
 							"port": "8080",
 							"path": [
 								"property",
-								"ce825c42-2006-4da1-8725-83336ef7f22a"
+								"{{uuid}}"
 							]
 						},
 						"description": "Endpoint para atualizar a propriedade, somente administradores e moderadores podem utilizar, necessita do *UUID* para funcionar.\n\nResposta:"
