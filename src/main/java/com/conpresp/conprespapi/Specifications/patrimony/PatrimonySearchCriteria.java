@@ -32,4 +32,6 @@ public class PatrimonySearchCriteria {
     private String architecturalStyle;
 
     private String conservationLevel;
+
+    private String createdBy;
 }

@@ -22,7 +22,8 @@ public class PatrimonySpecifications {
                 .and(searchByRegionalHall(searchCriteria.getRegionalHall()))
                 .and(searchByAuthor(searchCriteria.getAuthor()))
                 .and(searchByArchitecturalStyle(searchCriteria.getArchitecturalStyle()))
-                .and(searchByConservationLevel(searchCriteria.getConservationLevel()));
+                .and(searchByConservationLevel(searchCriteria.getConservationLevel()))
+                .and(searchByCreatedBy(searchCriteria.getCreatedBy()));
     }
 
     public static Specification<Patrimony> searchByDenomination(String denomination) {
@@ -33,10 +34,17 @@ public class PatrimonySpecifications {
         };
     }
 
+    public static Specification<Patrimony> searchByCreatedBy(String createdBy) {
+        return ((root, query, criteriaBuilder) -> {
+            if (createdBy == null) { return null; }
+            return criteriaBuilder.like(root.get(Patrimony_.createdBy), createdBy);
+        });
+    }
+
     public static Specification<Patrimony> searchByConservationLevel(String conservationLevel) {
         return ((root, query, criteriaBuilder) -> {
             if (conservationLevel == null) { return null; }
-                return criteriaBuilder.like(root.get(Patrimony_.construction).get(Construction_.conservationLevel), conservationLevel);
+                return criteriaBuilder.like(root.get(Patrimony_.construction).get(Construction_.conservationLevel), "%" + conservationLevel + "%");
         });
     }
 
@@ -46,7 +54,7 @@ public class PatrimonySpecifications {
 
             ListJoin<Patrimony, HeritageResolution> resolutionJoin = root.join(Patrimony_.heritageResolutions);
 
-            return criteriaBuilder.equal(resolutionJoin.get(HeritageResolution_.resolution), resolution);
+            return criteriaBuilder.equal(resolutionJoin.get(HeritageResolution_.resolution), "" + resolution + "");
         };
     }
 
