@@ -82,9 +82,9 @@ class UserControllerTest {
 
         userMockMvc.get()
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.total").value(2))
-                .andExpect(jsonPath("$.users[0].firstName").value("Raphael"))
-                .andExpect(jsonPath("$.users[1].firstName").value("Matheus"));
+                .andExpect(jsonPath("$.numberOfElements").value(2))
+                .andExpect(jsonPath("$.content[0].firstName").value("Matheus"))
+                .andExpect(jsonPath("$.content[1].firstName").value("Raphael"));
     }
 
     @Test
@@ -106,8 +106,8 @@ class UserControllerTest {
 
         userMockMvc.get()
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.total").value(1))
-                .andExpect(jsonPath("$.users[0].firstName").value("Raphael"));
+                .andExpect(jsonPath("$.numberOfElements").value(1))
+                .andExpect(jsonPath("$.content[0].firstName").value("Raphael"));
     }
 
     @Test

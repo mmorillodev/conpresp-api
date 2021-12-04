@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ae8e43f7-bfc3-45a7-902d-375ea3b72782",
+		"_postman_id": "3ae6302c-cf39-4b3c-9b83-2fa93aaf12ea",
 		"name": "conpresp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -312,10 +312,10 @@
 			]
 		},
 		{
-			"name": "Property",
+			"name": "Patrimony",
 			"item": [
 				{
-					"name": "Add Property",
+					"name": "Add Patrimony",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -331,7 +331,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Corinthians\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"propertyType\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"designation\":\"Estádio do Corinthians\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"type\":\"Religioso\",\r\n    \"heritageResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"construction\":{\r\n        \"constructionYear\":\"1960\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -339,14 +339,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/property",
+							"raw": "http://localhost:8080/patrimony",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"property"
+								"patrimony"
 							]
 						},
 						"description": "Endpoint para inserir novas propriedades, somentes usuários moderadores e administradores podem acessar o endpont.\n\nResposta:\n\n*   HTTP 201 CREATED - propriedade criada\n*   HTTP 401 BAD REQUEST - nesse caso será informado no corpo da resposta o motivo do erro."
@@ -354,7 +354,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Property",
+					"name": "Get Patrimony",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -369,14 +369,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/property/{{uuid}}",
+							"raw": "http://localhost:8080/patrimony/{{uuid}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"property",
+								"patrimony",
 								"{{uuid}}"
 							]
 						},
@@ -390,14 +390,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/property",
+							"raw": "http://localhost:8080/patrimony",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"property"
+								"patrimony"
 							],
 							"query": [
 								{
@@ -467,7 +467,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Property",
+					"name": "Update Patrimony",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -483,7 +483,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"propertyResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"designation\":\"Estádio do Santos\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"propertyType\":\"Religioso\",\r\n    \"construction\":{\r\n        \"constructionYear\":\"1500\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"designation\":\"Estádio do Santos\",\r\n    \"classification\":\"Imóvel\",\r\n    \"currentUsage\":\"Igreja,\",\r\n    \"originalUsage\": \"Igreja\",\r\n    \"type\":\"Religioso\",\r\n    \"heritageResolutions\":[\r\n        {\r\n            \"resolution\":\"05/91\",\r\n            \"institution\":\"CONPRESP\",\r\n            \"year\":\"1990\"\r\n        }\r\n    ],\r\n    \"construction\":{\r\n        \"constructionYear\":\"1500\",\r\n        \"architecturalStyle\":\"Gótico\",\r\n        \"author\": \"Fiéis Anônimos\",\r\n        \"constructor\": \"Fiéis Anônimos\",\r\n        \"constructiveTechnique\":\"Alvenaria de Tijólos\",\r\n        \"floorQuantity\":3,\r\n        \"constructedArea\":45.0,\r\n        \"heritageLevel\":\"2\",\r\n        \"modificationLevel\":\"Média\",\r\n        \"modificationLevelComment\":\"Foi modificada algumas vezes com o propósito de manutenção\",\r\n        \"conservationLevel\":\"Alto\",\r\n        \"conservationLevelComment\":\"Está bem conservado\",\r\n        \"floorObservation\":\"Nenhuma\"\r\n    },\r\n    \"addressLot\":{\r\n        \"type\":\"Prédio\",\r\n        \"title\":\"São João\",\r\n        \"street\":\"AV. Faria Lima\",\r\n        \"number\":\"532\",\r\n        \"district\":\"Brigadeiro\",\r\n        \"regionalHall\":\"São Paulo\",\r\n        \"sector\":\"3\",\r\n        \"block\":\"5\",\r\n        \"lot\":\"2\"\r\n    },\r\n    \"description\": {\r\n        \"historicalData\": \"Antigo\",\r\n        \"architecturalData\": \"Antigo, muito antigo\",\r\n        \"ambienceData\": \"Destruiu a floresta\",\r\n        \"bibliographicSource\": \"Eu mesmo\",\r\n        \"otherInfo\": \"Arroz\",\r\n        \"observation\": \"Feijão\"\r\n    },\r\n    \"photographicDocumentation\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ],\r\n    \"graphic\": [\r\n        {\r\n        \"image\": \"Uma foto minha\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -491,14 +491,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/property/{{uuid}}",
+							"raw": "http://localhost:8080/patrimony/{{uuid}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"property",
+								"patrimony",
 								"{{uuid}}"
 							]
 						},
@@ -507,7 +507,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Property",
+					"name": "Delete Patrimony",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -522,14 +522,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/property/{{uuid}}",
+							"raw": "http://localhost:8080/patrimony/{{uuid}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"property",
+								"patrimony",
 								"{{uuid}}"
 							]
 						},
