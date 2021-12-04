@@ -23,9 +23,9 @@ public class PatrimonyBasicInfoResponse {
 
     private String addressStreet;
 
-    private String modificationLevel;
+    private String conservationLevel;
 
-    private String modificationLevelComment;
+    private String conservationLevelComment;
 
     public static PatrimonyBasicInfoResponse fromPatrimony(Patrimony patrimony) {
         return new PatrimonyBasicInfoResponse(
@@ -34,8 +34,8 @@ public class PatrimonyBasicInfoResponse {
                 patrimony.getHeritageResolutions().stream().map(PatrimonyResolutionResponse::fromHeritageResolution).collect(Collectors.toList()),
                 patrimony.getAddressLot().getAddressType(),
                 patrimony.getAddressLot().getAddressStreet(),
-                patrimony.getConstruction().getModificationLevel(),
-                patrimony.getConstruction().getModificationLevelComment()
+                patrimony.getConstruction().getConservationLevel(),
+                patrimony.getConstruction().getConservationLevelComment()
         );
     }
 }
