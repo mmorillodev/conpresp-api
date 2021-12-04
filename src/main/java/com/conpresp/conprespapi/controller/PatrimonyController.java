@@ -42,7 +42,7 @@ public class PatrimonyController {
             @RequestParam MultiValueMap<String, String> params
     ) {
         PatrimonySearchCriteria searchCriteria = PatrimonySearchCriteria.builder()
-                .denomination(params.getFirst("designation"))
+                .denomination(params.getFirst("denomination"))
                 .resolution(params.getFirst("resolution"))
                 .originalUsage(params.getFirst("originalUsage"))
                 .addressType(params.getFirst("addressType"))
