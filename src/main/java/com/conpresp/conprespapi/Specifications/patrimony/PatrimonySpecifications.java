@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.ListJoin;
 import java.time.Year;
+import java.util.Properties;
 
 public class PatrimonySpecifications {
 
@@ -20,7 +21,8 @@ public class PatrimonySpecifications {
                 .and(searchByDistrict(searchCriteria.getDistrict()))
                 .and(searchByRegionalHall(searchCriteria.getRegionalHall()))
                 .and(searchByAuthor(searchCriteria.getAuthor()))
-                .and(searchByArchitecturalStyle(searchCriteria.getArchitecturalStyle()));
+                .and(searchByArchitecturalStyle(searchCriteria.getArchitecturalStyle()))
+                .and(searchByConservationLevel(searchCriteria.getConservationLevel()));
     }
 
     public static Specification<Patrimony> searchByDenomination(String denomination) {
@@ -29,6 +31,13 @@ public class PatrimonySpecifications {
 
             return criteriaBuilder.like(root.get(Patrimony_.denomination), "%" + denomination + "%");
         };
+    }
+
+    public static Specification<Patrimony> searchByConservationLevel(String conservationLevel) {
+        return ((root, query, criteriaBuilder) -> {
+            if (conservationLevel == null) { return null; }
+                return criteriaBuilder.like(root.get(Patrimony_.construction).get(Construction_.conservationLevel), conservationLevel);
+        });
     }
 
     public static Specification<Patrimony> searchByResolution(String resolution) {

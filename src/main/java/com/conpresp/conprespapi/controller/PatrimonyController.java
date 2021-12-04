@@ -54,6 +54,7 @@ public class PatrimonyController {
                 .author(params.getFirst("author"))
                 .constructionYear(params.getFirst("constructionYear"))
                 .architecturalStyle(params.getFirst("architecturalStyle"))
+                .conservationLevel(params.getFirst("conservationLevel"))
                 .build();
 
         var specification = PatrimonySpecifications.search(searchCriteria);

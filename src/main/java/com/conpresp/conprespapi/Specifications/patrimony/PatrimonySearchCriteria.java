@@ -30,4 +30,6 @@ public class PatrimonySearchCriteria {
     private String constructionYear;
 
     private String architecturalStyle;
+
+    private String conservationLevel;
 }
