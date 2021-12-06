@@ -27,6 +27,8 @@ public class PatrimonyBasicInfoResponse {
 
     private String conservationLevelComment;
 
+    private String currentUsage;
+
     public static PatrimonyBasicInfoResponse fromPatrimony(Patrimony patrimony) {
         return new PatrimonyBasicInfoResponse(
                 patrimony.getId(),
@@ -35,7 +37,8 @@ public class PatrimonyBasicInfoResponse {
                 patrimony.getAddressLot().getAddressType(),
                 patrimony.getAddressLot().getAddressStreet(),
                 patrimony.getConstruction().getConservationLevel(),
-                patrimony.getConstruction().getConservationLevelComment()
+                patrimony.getConstruction().getConservationLevelComment(),
+                patrimony.getCurrentUsage()
         );
     }
 }
