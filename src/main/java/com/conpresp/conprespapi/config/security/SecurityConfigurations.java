@@ -70,7 +70,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/patrimony/**").hasAuthority(ROLE_ADMINISTRATOR)
                 .antMatchers("/auth").permitAll()
 
-                .anyRequest().authenticated();
+                .anyRequest().authenticated().and().cors();
 
         http.httpBasic().disable();
 

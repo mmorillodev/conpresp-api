@@ -7,6 +7,7 @@ import com.conpresp.conprespapi.dto.user.*;
 import com.conpresp.conprespapi.exception.NotEqualsException;
 import com.conpresp.conprespapi.exception.PasswordInUseException;
 import com.conpresp.conprespapi.exception.ResourceCreationException;
+import com.conpresp.conprespapi.service.TokenService;
 import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -19,6 +20,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -27,6 +29,14 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+
+    private final TokenService tokenService;
+
+    @Autowired
+    public UserController(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     @PostMapping
     public ResponseEntity<?> createUser(
@@ -70,6 +80,13 @@ public class UserController {
         return userService.getUserById(uuid).map(user ->
                 ResponseEntity.ok().body(UserDetailResponse.fromUser(user))
         ).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/user-info")
+    public ResponseEntity<UserDetailResponse> getUserBySession(HttpServletRequest request) {
+        var token = request.getHeader("Authorization").split(" ");
+        return userService.getUserById(tokenService.getUserId(token[1])).map(user ->
+                ResponseEntity.ok().body(UserDetailResponse.fromUser(user))).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{uuid}")
