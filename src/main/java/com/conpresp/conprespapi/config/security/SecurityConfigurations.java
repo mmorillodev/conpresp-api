@@ -29,6 +29,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     private static final String ROLE_MODERATOR = "MODERATOR";
     private static final String ROLE_ADMINISTRATOR = "ADMINISTRATOR";
+    private static final String ROLE_COMMON = "COMMON";
 
     @Autowired
     public SecurityConfigurations(AuthenticationService authenticationService,TokenService tokenService, UserRepository userRepository) {
@@ -60,9 +61,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         filter.setForceEncoding(true);
         http.addFilterBefore(filter, CsrfFilter.class);
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority(ROLE_MODERATOR, ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority(ROLE_MODERATOR, ROLE_ADMINISTRATOR, ROLE_COMMON)
                 .antMatchers(HttpMethod.POST, "/users").hasAuthority(ROLE_ADMINISTRATOR)
-                .antMatchers(HttpMethod.DELETE, "/users").hasAuthority(ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.DELETE, "/users/**").hasAuthority(ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.PUT, "/users/**").hasAuthority(ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.GET, "/patrimony/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/patrimony").hasAnyAuthority(ROLE_ADMINISTRATOR, ROLE_MODERATOR)
