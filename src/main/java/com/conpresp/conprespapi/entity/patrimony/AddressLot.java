@@ -25,6 +25,9 @@ public class AddressLot {
     private String addressStreet;
 
     @NonNull
+    private String address;
+
+    @NonNull
     private String addressNumber;
 
     @NonNull

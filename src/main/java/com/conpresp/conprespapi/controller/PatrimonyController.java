@@ -48,6 +48,7 @@ public class PatrimonyController {
                 .addressType(params.getFirst("addressType"))
                 .addressTitle(params.getFirst("addressTitle"))
                 .street(params.getFirst("street"))
+                .address(params.getFirst("address"))
                 .addressNumber(params.getFirst("addressNumber"))
                 .district(params.getFirst("district"))
                 .regionalHall(params.getFirst("regionalHall"))

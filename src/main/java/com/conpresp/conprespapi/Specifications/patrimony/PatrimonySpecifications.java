@@ -5,7 +5,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.ListJoin;
 import java.time.Year;
-import java.util.Properties;
 
 public class PatrimonySpecifications {
 
@@ -13,10 +12,11 @@ public class PatrimonySpecifications {
         return searchByDenomination(searchCriteria.getDenomination())
                 .and(searchByResolution(searchCriteria.getResolution()))
                 .and(searchByYear(searchCriteria.getConstructionYear()))
-                .and(searchByStreet(searchCriteria.getStreet()))
                 .and(searchByOriginalUsage(searchCriteria.getOriginalUsage()))
                 .and(searchByAddressType(searchCriteria.getAddressType()))
                 .and(searchByAddressTitle(searchCriteria.getAddressTitle()))
+                .and(searchByStreet(searchCriteria.getStreet()))
+                .and(searchByLocation(searchCriteria.getAddress()))
                 .and(searchByAddressNumber(searchCriteria.getAddressNumber()))
                 .and(searchByDistrict(searchCriteria.getDistrict()))
                 .and(searchByRegionalHall(searchCriteria.getRegionalHall()))
@@ -36,15 +36,19 @@ public class PatrimonySpecifications {
 
     public static Specification<Patrimony> searchByCreatedBy(String createdBy) {
         return ((root, query, criteriaBuilder) -> {
-            if (createdBy == null) { return null; }
+            if (createdBy == null) {
+                return null;
+            }
             return criteriaBuilder.like(root.get(Patrimony_.createdBy), createdBy);
         });
     }
 
     public static Specification<Patrimony> searchByConservationLevel(String conservationLevel) {
         return ((root, query, criteriaBuilder) -> {
-            if (conservationLevel == null) { return null; }
-                return criteriaBuilder.like(root.get(Patrimony_.construction).get(Construction_.conservationLevel), "%" + conservationLevel + "%");
+            if (conservationLevel == null) {
+                return null;
+            }
+            return criteriaBuilder.like(root.get(Patrimony_.construction).get(Construction_.conservationLevel), "%" + conservationLevel + "%");
         });
     }
 
@@ -71,6 +75,14 @@ public class PatrimonySpecifications {
             if (originalUsage == null) return null;
 
             return criteriaBuilder.like(root.get(Patrimony_.originalUsage), "%" + originalUsage + "%");
+        };
+    }
+
+    public static Specification<Patrimony> searchByLocation(String addressStreet) {
+        return (root, query, criteriaBuilder) -> {
+          if (addressStreet == null) return null;
+
+          return criteriaBuilder.like(root.get(Patrimony_.ADDRESS_LOT).get(AddressLot_.ADDRESS), "%" + addressStreet + "%");
         };
     }
 

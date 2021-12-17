@@ -16,6 +16,8 @@ public class AddressLotResponse {
 
     private String street;
 
+    private String address;
+
     private String number;
 
     private String district;
@@ -33,6 +35,7 @@ public class AddressLotResponse {
                 address.getAddressType(),
                 address.getTitle(),
                 address.getAddressStreet(),
+                address.getAddress(),
                 address.getAddressNumber(),
                 address.getAddressDistrict(),
                 address.getRegionalHall(),

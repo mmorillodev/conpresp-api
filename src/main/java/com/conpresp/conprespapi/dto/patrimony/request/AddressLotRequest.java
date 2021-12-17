@@ -13,14 +13,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class AddressLotRequest {
 
-    @NotBlank
     private String type;
 
-    @NotBlank
     private String title;
 
-    @NotBlank
     private String street;
+
+    private String address;
 
     @NotBlank
     private String number;
@@ -45,6 +44,7 @@ public class AddressLotRequest {
                 this.getType(),
                 this.getTitle(),
                 this.getStreet(),
+                (this.getType() + " " + this.getTitle() + " " + this.getStreet()).trim().replaceAll("\\s{2,}", " "),
                 this.getNumber(),
                 this.getDistrict(),
                 this.getRegionalHall(),
