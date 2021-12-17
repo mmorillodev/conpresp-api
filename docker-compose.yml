@@ -6,3 +6,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: conpresp
+
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d

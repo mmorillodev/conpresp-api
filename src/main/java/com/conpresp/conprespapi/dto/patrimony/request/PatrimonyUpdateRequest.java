@@ -20,6 +20,9 @@ public class PatrimonyUpdateRequest {
     private List<HeritageResolutionRequest> heritageResolutions;
 
     @NotBlank
+    private String resolutionItem;
+
+    @NotBlank
     private String denomination;
 
     @NotBlank
@@ -55,6 +58,7 @@ public class PatrimonyUpdateRequest {
         patrimony.setHeritageResolutions(heritageResolutions);
         patrimony.setGraphicDocumentation(graphicDocumentations);
         patrimony.setPhotographicDocumentation(photographicDocumentations);
+        patrimony.setResolutionItem(this.getResolutionItem());
         patrimony.setDenomination(this.getDenomination());
         patrimony.setClassification(this.getClassification());
         patrimony.setCurrentUsage(this.getCurrentUsage());

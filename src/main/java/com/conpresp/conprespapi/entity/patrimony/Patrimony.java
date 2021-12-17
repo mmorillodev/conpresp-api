@@ -17,6 +17,9 @@ public class Patrimony extends Auditable {
     private String id = UUID.randomUUID().toString();
 
     @NonNull
+    private String resolutionItem;
+
+    @NonNull
     private String denomination;
 
     @NonNull

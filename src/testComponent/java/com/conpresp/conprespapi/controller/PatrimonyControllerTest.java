@@ -143,7 +143,7 @@ public class PatrimonyControllerTest {
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PatrimonyCreateRequest(List.of(patrimonyResolution), "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
+        return new PatrimonyCreateRequest(List.of(patrimonyResolution), "2", "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
     }
 
     private PatrimonyCreateRequest getMockedPatrimony2() {
@@ -154,7 +154,7 @@ public class PatrimonyControllerTest {
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PatrimonyCreateRequest(List.of(patrimonyResolution), "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
+        return new PatrimonyCreateRequest(List.of(patrimonyResolution), "2", "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
 
     }
 
@@ -166,6 +166,6 @@ public class PatrimonyControllerTest {
         var graphic = new GraphicRequest("Imagem");
         var photographicRequest = new PhotographicRequest("Imagem");
 
-        return new PatrimonyUpdateRequest(List.of(patrimonyResolution), "Estádio do Corinthians", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
+        return new PatrimonyUpdateRequest(List.of(patrimonyResolution), "2", "Estádio do Corinthians", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
     }
 }

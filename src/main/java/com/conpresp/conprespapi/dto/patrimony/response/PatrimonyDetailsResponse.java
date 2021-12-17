@@ -20,6 +20,8 @@ public class PatrimonyDetailsResponse {
 
     private List<PatrimonyResolutionResponse> heritageResolutions;
 
+    private String resolutionItem;
+
     private String denomination;
 
     private String classification;
@@ -52,6 +54,7 @@ public class PatrimonyDetailsResponse {
         return new PatrimonyDetailsResponse(
                 patrimony.getId(),
                 patrimony.getHeritageResolutions().stream().map(PatrimonyResolutionResponse::fromHeritageResolution).collect(Collectors.toList()),
+                patrimony.getResolutionItem(),
                 patrimony.getDenomination(),
                 patrimony.getClassification(),
                 patrimony.getCurrentUsage(),

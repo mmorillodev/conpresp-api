@@ -21,6 +21,9 @@ public class PatrimonyCreateRequest {
     private List<HeritageResolutionRequest> heritageResolutions;
 
     @NotBlank
+    private String resolutionItem;
+
+    @NotBlank
     private String denomination;
 
     @NotBlank
@@ -54,6 +57,7 @@ public class PatrimonyCreateRequest {
         var photographicDocumentations = getPhotographicDocumentation().stream().map(PhotographicRequest::toPhotographicDocumentation).collect(Collectors.toList());
 
         return new Patrimony(
+                this.getResolutionItem(),
                 this.getDenomination(),
                 this.getClassification(),
                 this.getCurrentUsage(),
