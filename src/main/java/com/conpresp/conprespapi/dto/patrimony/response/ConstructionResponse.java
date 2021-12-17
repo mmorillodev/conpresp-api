@@ -13,6 +13,8 @@ public class ConstructionResponse {
 
     private Year constructionYear;
 
+    private Boolean approximateDate;
+
     private String author;
 
     private String constructor;
@@ -40,6 +42,7 @@ public class ConstructionResponse {
     public static ConstructionResponse fromConstruction(Construction construction) {
         return new ConstructionResponse(
                 construction.getConstructionYear(),
+                construction.getApproximateDate(),
                 construction.getAuthor(),
                 construction.getConstructor(),
                 construction.getArchitecturalStyle(),

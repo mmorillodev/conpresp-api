@@ -21,6 +21,9 @@ public class Construction {
     private Year constructionYear;
 
     @NonNull
+    private Boolean approximateDate;
+
+    @NonNull
     private String author;
 
     @NonNull

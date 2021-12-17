@@ -16,6 +16,9 @@ public class ConstructionRequest {
     private String constructionYear;
 
     @NotBlank
+    private Boolean approximateDate;
+
+    @NotBlank
     private String author;
 
     @NotBlank
@@ -53,6 +56,7 @@ public class ConstructionRequest {
     public Construction toConstruction() {
         return new Construction(
                 Year.parse(this.getConstructionYear()),
+                this.getApproximateDate(),
                 this.getAuthor(),
                 this.getConstructor(),
                 this.getArchitecturalStyle(),

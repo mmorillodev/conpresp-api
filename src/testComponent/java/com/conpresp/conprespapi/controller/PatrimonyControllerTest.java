@@ -137,22 +137,22 @@ public class PatrimonyControllerTest {
 
     private PatrimonyCreateRequest getMockedPatrimony() {
         var patrimonyResolution = new HeritageResolutionRequest("05/91", "CONPRESP", Year.parse("1990"));
-        var constructionRequest = new ConstructionRequest("1960", "Fieis Anonimos", "Fieis Anonimos","Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
-        var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
+        var constructionRequest = new ConstructionRequest("1960", true, "Fieis Anonimos", "Fieis Anonimos","Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
+        var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
         var description = new DescriptionRequest("Antigo", "Antigo, muito antigo", "Destruiu a floresta", "Eu mesmo", "Arroz", "Feijão");
-        var graphic = new GraphicRequest("Imagem");
-        var photographicRequest = new PhotographicRequest("Imagem");
+        var graphic = new GraphicRequest("Imagem", "");
+        var photographicRequest = new PhotographicRequest("Imagem", "");
 
         return new PatrimonyCreateRequest(List.of(patrimonyResolution), "2", "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
     }
 
     private PatrimonyCreateRequest getMockedPatrimony2() {
         var patrimonyResolution = new HeritageResolutionRequest("08/80", "CODEPHAAT", Year.parse("1980"));
-        var constructionRequest = new ConstructionRequest("1960", "Fieis Anonimos", "Fieis Anonimos","Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
-        var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
+        var constructionRequest = new ConstructionRequest("1960", true, "Fieis Anonimos", "Fieis Anonimos","Gótico", "Alvenaria de Tijólos", 3, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
+        var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
         var description = new DescriptionRequest("Antigo", "Antigo, muito antigo", "Destruiu a floresta", "Eu mesmo", "Arroz", "Feijão");
-        var graphic = new GraphicRequest("Imagem");
-        var photographicRequest = new PhotographicRequest("Imagem");
+        var graphic = new GraphicRequest("Imagem", "");
+        var photographicRequest = new PhotographicRequest("Imagem", "");
 
         return new PatrimonyCreateRequest(List.of(patrimonyResolution), "2", "Edifício São João", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
 
@@ -160,11 +160,11 @@ public class PatrimonyControllerTest {
 
     private PatrimonyUpdateRequest getMockedUpdatedPatrimony() {
         var patrimonyResolution = new HeritageResolutionRequest("08/80", "CODEPHAAT", Year.parse("1980"));
-        var constructionRequest = new ConstructionRequest("1980", "Fieis Anonimos", "Fieis Anonimos","Moderno", "Alvenaria de Tijólos", 5, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
-        var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
+        var constructionRequest = new ConstructionRequest("1980", true ,"Fieis Anonimos", "Fieis Anonimos","Moderno", "Alvenaria de Tijólos", 5, 45.0, "2", "Média", "Foi modificada algumas vezes com o propósito de manutenção", "Alto", "Está bem conservado", "Nenhuma");
+        var addressLot = new AddressLotRequest("Prédio", "São João", "AV. Faria Lima", "AV. Faria Lima", "532", "Brigadeiro", "São Paulo", "3", "5", "2");
         var description = new DescriptionRequest("Antigo", "Antigo, muito antigo", "Destruiu a floresta", "Eu mesmo", "Arroz", "Feijão");
-        var graphic = new GraphicRequest("Imagem");
-        var photographicRequest = new PhotographicRequest("Imagem");
+        var graphic = new GraphicRequest("Imagem", "");
+        var photographicRequest = new PhotographicRequest("Imagem", "");
 
         return new PatrimonyUpdateRequest(List.of(patrimonyResolution), "2", "Estádio do Corinthians", "Imóvel", "Igreja", "Igreja", "Religioso", constructionRequest, addressLot, description, List.of(photographicRequest), List.of(graphic));
     }

@@ -1,6 +1,7 @@
 package com.conpresp.conprespapi.entity.patrimony;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -15,6 +16,9 @@ public class GraphicDocumentation {
     private Long id;
 
     @NonNull
-    @Lob
+    private String imageName;
+
+    @NonNull
+    @Type(type="org.hibernate.type.StringType")
     private String image;
 }
