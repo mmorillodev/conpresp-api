@@ -1,6 +1,5 @@
 package com.conpresp.conprespapi.entity.patrimony;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +16,6 @@ public class Construction {
     private Long id;
 
     @NonNull
-    @JsonFormat(pattern = "yyyy")
     private Year constructionYear;
 
     @NonNull
