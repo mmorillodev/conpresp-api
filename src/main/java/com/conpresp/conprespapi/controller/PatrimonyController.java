@@ -56,6 +56,7 @@ public class PatrimonyController {
                 .constructionYear(params.getFirst("constructionYear"))
                 .architecturalStyle(params.getFirst("architecturalStyle"))
                 .conservationLevel(params.getFirst("conservationLevel"))
+                .modificationLevel(params.getFirst("modificationLevel"))
                 .createdBy(params.getFirst("createdBy"))
                 .build();
 

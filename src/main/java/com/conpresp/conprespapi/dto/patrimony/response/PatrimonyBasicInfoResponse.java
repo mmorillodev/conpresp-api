@@ -21,7 +21,7 @@ public class PatrimonyBasicInfoResponse {
 
     private String type;
 
-    private String addressStreet;
+    private String address;
 
     private String conservationLevel;
 
@@ -37,7 +37,7 @@ public class PatrimonyBasicInfoResponse {
                 patrimony.getDenomination(),
                 patrimony.getHeritageResolutions().stream().map(PatrimonyResolutionResponse::fromHeritageResolution).collect(Collectors.toList()),
                 patrimony.getType(),
-                patrimony.getAddressLot().getAddressStreet(),
+                patrimony.getAddressLot().getAddress(),
                 patrimony.getConstruction().getConservationLevel(),
                 patrimony.getConstruction().getConservationLevelComment(),
                 patrimony.getConstruction().getModificationLevel(),

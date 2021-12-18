@@ -23,6 +23,7 @@ public class PatrimonySpecifications {
                 .and(searchByAuthor(searchCriteria.getAuthor()))
                 .and(searchByArchitecturalStyle(searchCriteria.getArchitecturalStyle()))
                 .and(searchByConservationLevel(searchCriteria.getConservationLevel()))
+                .and(searchByModificationLevel(searchCriteria.getModificationLevel()))
                 .and(searchByCreatedBy(searchCriteria.getCreatedBy()));
     }
 
@@ -45,11 +46,18 @@ public class PatrimonySpecifications {
 
     public static Specification<Patrimony> searchByConservationLevel(String conservationLevel) {
         return ((root, query, criteriaBuilder) -> {
-            if (conservationLevel == null) {
-                return null;
-            }
+            if (conservationLevel == null) return null;
+
             return criteriaBuilder.like(root.get(Patrimony_.construction).get(Construction_.conservationLevel), "%" + conservationLevel + "%");
         });
+    }
+
+    public static Specification<Patrimony> searchByModificationLevel(String modificationLevel) {
+        return (root, query, criteriaBuilder) -> {
+          if (modificationLevel == null) return null;
+
+          return criteriaBuilder.like(root.get(Patrimony_.construction).get(Construction_.modificationLevel), "%" + modificationLevel + "%");
+        };
     }
 
     public static Specification<Patrimony> searchByResolution(String resolution) {
@@ -82,7 +90,7 @@ public class PatrimonySpecifications {
         return (root, query, criteriaBuilder) -> {
           if (addressStreet == null) return null;
 
-          return criteriaBuilder.like(root.get(Patrimony_.ADDRESS_LOT).get(AddressLot_.ADDRESS), "%" + addressStreet + "%");
+          return criteriaBuilder.like(root.get(Patrimony_.addressLot).get(AddressLot_.address), "%" + addressStreet + "%");
         };
     }
 

@@ -35,5 +35,7 @@ public class PatrimonySearchCriteria {
 
     private String conservationLevel;
 
+    private String modificationLevel;
+
     private String createdBy;
 }
