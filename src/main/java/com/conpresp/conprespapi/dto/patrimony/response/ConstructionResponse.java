@@ -27,6 +27,8 @@ public class ConstructionResponse {
 
     private Double constructedArea;
 
+    private Double areaLot;
+
     private String heritageLevel;
 
     private String modificationLevel;
@@ -49,6 +51,7 @@ public class ConstructionResponse {
                 construction.getConstructiveTechnique(),
                 construction.getFloorQuantity(),
                 construction.getConstructedArea(),
+                construction.getAreaLot(),
                 construction.getHeritageLevel(),
                 construction.getModificationLevel(),
                 construction.getModificationLevelComment(),

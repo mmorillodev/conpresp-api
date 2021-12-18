@@ -37,6 +37,9 @@ public class ConstructionRequest {
     private Double constructedArea;
 
     @NotBlank
+    private Double areaLot;
+
+    @NotBlank
     private String heritageLevel;
 
     @NotBlank
@@ -63,6 +66,7 @@ public class ConstructionRequest {
                 this.getConstructiveTechnique(),
                 this.getFloorQuantity(),
                 this.getConstructedArea(),
+                this.getAreaLot(),
                 this.getHeritageLevel(),
                 this.getModificationLevel(),
                 this.getModificationLevelComment(),

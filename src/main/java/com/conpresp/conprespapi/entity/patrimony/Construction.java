@@ -40,6 +40,9 @@ public class Construction {
     private Double constructedArea;
 
     @NonNull
+    private Double areaLot;
+
+    @NonNull
     private String heritageLevel;
 
     @NonNull

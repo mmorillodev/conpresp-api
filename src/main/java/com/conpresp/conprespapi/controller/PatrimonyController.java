@@ -6,7 +6,11 @@ import com.conpresp.conprespapi.dto.patrimony.request.PatrimonyCreateRequest;
 import com.conpresp.conprespapi.dto.patrimony.request.PatrimonyUpdateRequest;
 import com.conpresp.conprespapi.dto.patrimony.response.PatrimonyBasicInfoResponse;
 import com.conpresp.conprespapi.dto.patrimony.response.PatrimonyDetailsResponse;
+import com.conpresp.conprespapi.entity.Auditable;
+import com.conpresp.conprespapi.entity.user.Profile;
+import com.conpresp.conprespapi.entity.user.UserGroup;
 import com.conpresp.conprespapi.service.PatrimonyService;
+import com.conpresp.conprespapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
@@ -26,6 +30,9 @@ public class PatrimonyController {
 
     @Autowired
     private PatrimonyService patrimonyService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public ResponseEntity<?> createPatrimony(
@@ -69,7 +76,8 @@ public class PatrimonyController {
     @GetMapping("/{uuid}")
     public ResponseEntity<PatrimonyDetailsResponse> getPatrimonyByUuid(@PathVariable String uuid) {
         return patrimonyService.getPatrimonyById(uuid).map(patrimonies ->
-                ResponseEntity.ok().body(PatrimonyDetailsResponse.fromPatrimony(patrimonies))
+                ResponseEntity.ok().body(PatrimonyDetailsResponse.fromPatrimony(patrimonies,
+                        userService.getUserProfileByEmail(patrimonies.getCreatedBy())))
         ).orElse(ResponseEntity.notFound().build());
     }
 
@@ -79,7 +87,8 @@ public class PatrimonyController {
 
         try {
             var updatedPatrimony = patrimonyService.updatePatrimony(uuid, patrimonyUpdateRequest);
-            return ResponseEntity.ok(PatrimonyDetailsResponse.fromPatrimony(updatedPatrimony));
+            return ResponseEntity.ok(PatrimonyDetailsResponse.fromPatrimony(updatedPatrimony,
+                    userService.getUserProfileByEmail(updatedPatrimony.getCreatedBy())));
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.notFound().build();
         }

@@ -18,6 +18,8 @@ public class PatrimonyDetailsResponse {
 
     private String id;
 
+    private String userGroup;
+
     private List<PatrimonyResolutionResponse> heritageResolutions;
 
     private String resolutionItem;
@@ -50,9 +52,10 @@ public class PatrimonyDetailsResponse {
 
     private String updatedBy;
 
-    public static PatrimonyDetailsResponse fromPatrimony(Patrimony patrimony) {
+    public static PatrimonyDetailsResponse fromPatrimony(Patrimony patrimony, String userGroup) {
         return new PatrimonyDetailsResponse(
                 patrimony.getId(),
+                userGroup,
                 patrimony.getHeritageResolutions().stream().map(PatrimonyResolutionResponse::fromHeritageResolution).collect(Collectors.toList()),
                 patrimony.getResolutionItem(),
                 patrimony.getDenomination(),

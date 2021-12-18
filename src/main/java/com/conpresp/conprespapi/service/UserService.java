@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -57,6 +58,11 @@ public class UserService {
     public Optional<User> getUserById(String uuid) {
         return userRepository.findById(uuid);
     }
+
+    public String getUserProfileByEmail(String email) {
+        return userRepository.findByEmail(email).map(userGroup -> userGroup.getUserGroup().getName()).orElse("Não Encontrado");
+    }
+
 
     public Page<User> search(Specification<User> specification, Pageable pageable) { return userRepository.findAll(specification, pageable); }
 
