@@ -65,7 +65,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users").hasAuthority(ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.DELETE, "/users/**").hasAuthority(ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.PUT, "/users/**").hasAuthority(ROLE_ADMINISTRATOR)
-                .antMatchers(HttpMethod.GET, "/patrimony/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/patrimony/**").hasAnyAuthority(ROLE_MODERATOR, ROLE_ADMINISTRATOR, ROLE_COMMON)
                 .antMatchers(HttpMethod.POST, "/patrimony").hasAnyAuthority(ROLE_ADMINISTRATOR, ROLE_MODERATOR)
                 .antMatchers(HttpMethod.PUT, "/patrimony/**").hasAnyAuthority(ROLE_ADMINISTRATOR, ROLE_MODERATOR)
                 .antMatchers(HttpMethod.DELETE, "/patrimony/**").hasAuthority(ROLE_ADMINISTRATOR)
