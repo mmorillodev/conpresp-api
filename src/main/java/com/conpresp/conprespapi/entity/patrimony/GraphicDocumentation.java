@@ -19,6 +19,6 @@ public class GraphicDocumentation {
     private String imageName;
 
     @NonNull
-    @Type(type="org.hibernate.type.StringType")
+    @Lob
     private String image;
 }
