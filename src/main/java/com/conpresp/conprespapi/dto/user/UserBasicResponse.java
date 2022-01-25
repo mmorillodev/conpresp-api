@@ -21,8 +21,6 @@ public class UserBasicResponse {
 
     private String status;
 
-    private String userGroup;
-
     public static UserBasicResponse fromUser(User user) {
         return new UserBasicResponse(
                 user.getId(),
@@ -30,8 +28,7 @@ public class UserBasicResponse {
                 user.getLastName(),
                 user.getEmail(),
                 user.getProfile().getName(),
-                user.getStatus(),
-                user.getUserGroup().getName()
+                user.getStatus()
         );
     }
 }
