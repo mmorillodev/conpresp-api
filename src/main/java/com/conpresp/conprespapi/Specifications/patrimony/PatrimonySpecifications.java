@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.ListJoin;
 import java.time.Year;
+import java.time.format.DateTimeParseException;
 
 public class PatrimonySpecifications {
 
@@ -40,7 +41,7 @@ public class PatrimonySpecifications {
             if (createdBy == null) {
                 return null;
             }
-            return criteriaBuilder.like(root.get(Patrimony_.createdBy), createdBy);
+            return criteriaBuilder.like(root.get(Patrimony_.createdBy), "%" + createdBy + "%");
         });
     }
 
@@ -66,7 +67,7 @@ public class PatrimonySpecifications {
 
             ListJoin<Patrimony, HeritageResolution> resolutionJoin = root.join(Patrimony_.heritageResolutions);
 
-            return criteriaBuilder.equal(resolutionJoin.get(HeritageResolution_.resolution), "" + resolution + "");
+            return criteriaBuilder.equal(resolutionJoin.get(HeritageResolution_.resolution), resolution);
         };
     }
 
@@ -74,7 +75,11 @@ public class PatrimonySpecifications {
         return (root, query, criteriaBuilder) -> {
             if (year == null) return null;
 
-            return criteriaBuilder.equal(root.get(Patrimony_.construction).get(Construction_.constructionYear), Year.parse(year));
+            try {
+                return criteriaBuilder.equal(root.get(Patrimony_.construction).get(Construction_.constructionYear), Year.parse(year));
+            } catch (DateTimeParseException e) {
+                return null;
+            }
         };
     }
 

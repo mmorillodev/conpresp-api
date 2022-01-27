@@ -67,6 +67,7 @@ public class UserController {
                 .email(params.getFirst("email"))
                 .profile(params.getFirst("profile"))
                 .status(params.getFirst("status"))
+                .group(params.getFirst("group"))
                 .build();
 
         var specification = UserSpecifications.search(searchCriteria);

@@ -2,6 +2,7 @@ package com.conpresp.conprespapi.Specifications.User;
 
 import com.conpresp.conprespapi.entity.user.Profile_;
 import com.conpresp.conprespapi.entity.user.User;
+import com.conpresp.conprespapi.entity.user.UserGroup_;
 import com.conpresp.conprespapi.entity.user.User_;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,7 +15,8 @@ public class UserSpecifications {
                 .and(searchByLastName(searchCriteria.getLastName()))
                 .and(searchByEmail(searchCriteria.getEmail()))
                 .and(searchByProfile(searchCriteria.getProfile()))
-                .and(searchByStatus(searchCriteria.getStatus()));
+                .and(searchByStatus(searchCriteria.getStatus()))
+                .and(searchByGroup(searchCriteria.getGroup()));
     }
 
     public static Specification<User> searchByName(String name) {
@@ -53,7 +55,15 @@ public class UserSpecifications {
         return (root, query, criteriaBuilder) -> {
             if (status == null) return null;
 
-            return criteriaBuilder.equal(root.get(User_.STATUS), status);
+            return criteriaBuilder.equal(root.get(User_.STATUS), "%" + status + "%");
+        };
+    }
+
+    public static Specification<User> searchByGroup(String group) {
+        return (root, query, criteriaBuilder) -> {
+            if (group == null) return null;
+
+            return criteriaBuilder.like(root.get(User_.USER_GROUP).get(UserGroup_.NAME), "%" + group + "%");
         };
     }
 

@@ -19,4 +19,6 @@ public class UserSearchCriteria {
     private String profile;
 
     private String status;
+
+    private String group;
 }
